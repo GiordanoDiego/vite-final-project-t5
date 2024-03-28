@@ -1,3 +1,13 @@
 @use './partials/variables.scss' as *;
 @use './partials/mixins.scss' as *;
 
+.header_container{
+    background-color: #3687eb;
+    color: white;
+}
+.logo_container{
+    img{
+        max-width: 100px;
+        display: block;
+    }
+}

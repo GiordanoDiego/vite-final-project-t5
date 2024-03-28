@@ -24,8 +24,21 @@ export default {
 
 <template>
      <header>
-        <div class="my_container">
-            header
+        <div class="header_container">
+            <div class="container">
+            <div class="row">
+                <div class="col-2 logo_container">
+                    <div class="  ">
+                        <img src="/img/logo_vv.svg" alt="">
+                    </div>
+                    <div>
+                    </div>
+                </div>
+                <div class="col">
+                    right
+                </div>
+            </div>
+        </div>
         </div>
      </header>
 </template>

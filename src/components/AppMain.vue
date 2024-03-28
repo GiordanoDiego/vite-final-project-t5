@@ -26,7 +26,7 @@ export default {
 
 <template>
     <main>
-        <div class="my_container">
+        <div class="container">
             main
         </div>
     </main>

@@ -25,7 +25,7 @@ export default {
 
 <template>
     <footer>
-        <div class="my_container">
+        <div class="container">
             footer
         </div>
     </footer>
