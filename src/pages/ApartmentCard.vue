@@ -46,11 +46,11 @@
                 </div>
             </div>
 
-            <!-- <div class="link-container">
+            <div class="link-container">
                 <router-link :to=" { name: 'apartments.show', params: { slug: apartment.slug } } ">
-                    <span>Vai al progetto</span>            
+                    <span>Vai all'appartamento</span>            
                 </router-link>
-            </div> -->
+            </div>
 
         </div>
     

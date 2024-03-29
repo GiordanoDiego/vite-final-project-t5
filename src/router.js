@@ -4,7 +4,8 @@
 import { createRouter, createWebHistory } from "vue-router"; 
 
 import IndexPage from './pages/IndexPage.vue';
-import ApartmentPage from './pages/ApartmentPage.vue'
+import ApartmentPage from './pages/ApartmentPage.vue';
+import SingleApartment from './pages/SingleApartment.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -19,7 +20,11 @@ const router = createRouter({
             name: 'apartments.index',
             component: ApartmentPage
         },
-
+        {
+            path: '/blog/:slug',
+            name: 'apartments.show',
+            component: SingleApartment
+        },
     ]
 });
 
