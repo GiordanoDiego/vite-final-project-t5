@@ -43,7 +43,7 @@ import axios from 'axios';
             <div v-for="sponsor in apartment.sponsors" :key="sponsor.id">
                 <h5 class="my-3 text-success">
                     Sponsor: {{ sponsor?.title ?? 'NULL' }}
-                    <!-- Linguaggio: {{ sponsor ? sponsor.title : 'NULL' }} -->
+                    <!-- Sponsor: {{ sponsor ? sponsor.title : 'NULL' }} -->
                 </h5>
             </div>
 
