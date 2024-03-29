@@ -21,14 +21,17 @@
 
         <div class="col-3 single-apartment">
 
-            <h2 class="text-center text-primary">
+            <h4 class="text-center text-primary">
                 {{ apartment.title }}
-            </h2>
+            </h4>
 
-            <h5 class="my-3 text-success">
-                Sponsor: {{ apartment.service?.title ?? 'NULL' }}
-                <!-- Sponsor: {{ apartment.service ? apartment.service.title : 'NULL' }} -->
+            <div v-for="sponsor in apartment.sponsors" :key="sponsor.id">
+                <h5 class="my-3 text-success">
+                Sponsor: {{ sponsor?.title ?? 'NULL' }}
+                <!-- Sponsor: {{ sponsor ? sponsor.title : 'NULL' }} -->
             </h5>
+
+            </div>
 
             <div v-if="apartment.cover_img != null">
                 <img :src="apartment.full_cover_img" :alt="apartment.title">
@@ -36,9 +39,9 @@
 
             <div class="row">
                 <div class="col-12">
-                    Sponsor: 
-                    <span v-for="sponsor in apartment.sponsor" :key="sponsor.id" class="badge rounded-pill text-bg-primary">
-                        {{ sponsor.title }}
+                    Servizi: 
+                    <span v-for="service in apartment.services" :key="service.id" class="badge rounded-pill text-bg-primary">
+                        {{ service.title }}
                     </span>
                 </div>
             </div>
@@ -59,7 +62,7 @@
         border-radius: 5px;
         padding: 15px;
         margin: 20px auto;
-        height: 400px;
+        height: 300px;
 
         img {
             width: 100%;

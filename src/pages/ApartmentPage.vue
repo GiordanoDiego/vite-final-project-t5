@@ -49,7 +49,7 @@ import { RouterView } from 'vue-router';
                 }
             },
             goToPage(pageNumber) {
-                this.goToPage(pageNumber);
+                this.getApartments(pageNumber);
             }
         },
         created() {
@@ -99,7 +99,8 @@ import { RouterView } from 'vue-router';
 <style lang="scss" scoped>
 
     .apartment-card {
-        width: calc(100% / 2);
+        width: calc((100% / 4) - 40px);
+        margin: 20px;
     }
 
     nav {
