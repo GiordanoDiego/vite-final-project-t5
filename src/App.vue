@@ -26,9 +26,6 @@ export default {
 
     },  
     mounted(){ //montarlo
-    axios.get('https://rickandmortyapi.com/api/character?page=1').then((response) => {
-        console.log(response);
-    });
     }
 }
 

@@ -34,5 +34,11 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-    @use'../assets/SCSS/main.scss';
+
+    main {
+        
+        height: 100vh;
+
+    }
+
 </style>

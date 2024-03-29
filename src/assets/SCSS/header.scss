@@ -1,13 +1,38 @@
 @use './partials/variables.scss' as *;
 @use './partials/mixins.scss' as *;
 
-.header_container{
-    background-color: #3687eb;
-    color: white;
-}
-.logo_container{
-    img{
-        max-width: 100px;
-        display: block;
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+    .header_container{
+        background-color: #3687eb;
+        color: white;
+    }
+    .logo_container{
+        img{
+            max-width: 100px;
+            display: block;
+        }
+    }    
+
+    nav {
+
+        ul {
+            display: flex;
+            list-style: none;
+            justify-content: center;
+        }
+
+        li {
+            margin: 0 10px;
+            span {
+                color: #FAA0C7;
+                text-transform: uppercase;
+            }
+
+        }
     }
 }
