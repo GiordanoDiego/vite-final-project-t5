@@ -33,7 +33,7 @@
 
             </div>
 
-            <div v-if="apartment.cover_img != null">
+            <div>
                 <img :src="apartment.full_cover_img" :alt="apartment.title">
             </div>
 
