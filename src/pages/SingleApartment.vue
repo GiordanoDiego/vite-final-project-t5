@@ -118,7 +118,7 @@ import axios from 'axios';
                 </div>
 
                 <div>
-                    <img :src="apartment.full_cover_img" :alt="apartment.title">
+                    <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
                 </div>
 
                 <div class="row">
@@ -183,45 +183,51 @@ import axios from 'axios';
 
 <style lang="scss" scoped>
 @use '../assets/SCSS/partials/variables.scss' as *;
-    .single-apartment {
-        border: 2px solid black;
-        border-radius: 5px;
-        padding: 15px;
-        margin: 20px auto;
-        height: 400px;
 
-        h2{
-            color: $primary_text_color;
-        }
-        
-        img {
-            width: 100%;
-        }
+.single-apartment {
+    border: 2px solid black;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 20px auto;
+    height: 400px;
+
+    h2{
+        color: $secondary_text_color;
+    }
+    
+    img {
+        width: 100%;
+    }
+}
+
+section {
+    position: relative;
+
+    h3{
+        color: $secondary_text_color;
+        margin: 20px 0;
     }
 
-    section {
-        position: relative;
-        h3{
+    form{
+        label{
             color: $primary_text_color;
-            margin: 20px 0;
-        }
-
-        form{
-
-            .submit_button{
-                background-color: $primary_background_color;
-                color: $primary_text_color;
+            &:last-child{
+                color: black;
             }
-            
         }
+        .submit_button{
+            background-color: $primary_background_color;
+            color: $secondary_text_color;
+        }
+    }
 
-        .reset_button{
-            position: absolute;
-            right: 0;
-            bottom: 0;
-            
-        }
+    .reset_button{
+        position: absolute;
+        right: 0;
+        bottom: 0;
         
     }
+    
+}
 
 </style>
