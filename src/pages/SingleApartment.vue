@@ -103,35 +103,38 @@ import axios from 'axios';
 </script>
 
 <template>
-        <div v-if="apartment != null" class="col-3 single-apartment">
+        <div class="d-flex col-12 ">
+            <div v-if="apartment != null" class="col-3 single-apartment ">
 
-            <h2 class="text-center text-primary">
-                {{ apartment.title }}
-            </h2>
+                <h2 class="text-center">
+                    {{ apartment.title }}
+                </h2>
 
-            <div v-for="sponsor in apartment.sponsors" :key="sponsor.id">
-                <h5 class="my-3 text-success">
-                    Sponsor: {{ sponsor?.title ?? 'NULL' }}
-                    <!-- Sponsor: {{ sponsor ? sponsor.title : 'NULL' }} -->
-                </h5>
-            </div>
+                <div v-for="sponsor in apartment.sponsors" :key="sponsor.id">
+                    <h5 class="my-3 text-success">
+                        Sponsor: {{ sponsor?.title ?? 'NULL' }}
+                        <!-- Sponsor: {{ sponsor ? sponsor.title : 'NULL' }} -->
+                    </h5>
+                </div>
 
-            <div>
-                <img :src="apartment.full_cover_img" :alt="apartment.title">
-            </div>
+                <div>
+                    <img :src="apartment.full_cover_img" :alt="apartment.title">
+                </div>
 
-            <div class="row">
-                <div class="col-12">
-                    Servizi: 
-                    <span v-for="service in apartment.services" :key="service.id" class="badge rounded-pill text-bg-primary">
-                        {{ service.title }}
-                    </span>
+                <div class="row">
+                    <div class="col-12">
+                        Servizi: 
+                        <span v-for="service in apartment.services" :key="service.id" class="badge rounded-pill text-bg-primary">
+                            {{ service.title }}
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <section>
-            <div v-if="!alert && !messageSent"  id="form-container">
+            <section class="col-4 justify-content-end">
+            <div v-if="!alert && !messageSent"  id="form-container" >
+                <h3>
+                    Vuoi contattare il propretario dell'immobile?
+                </h3>
                 <form method="POST" @submit.prevent="sendMessage()">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome</label>
@@ -153,11 +156,11 @@ import axios from 'axios';
                         </label>                
                     </div>
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn submit_button">
                         Invia
                     </button>
                 </form>
-                <button @click="resetForm()" class="btn btn-secondary ms-3" >
+                <button @click="resetForm()" class="btn ms-3 reset_button btn-secondary" >
                     Resetta
                 </button>
             </div>
@@ -172,10 +175,14 @@ import axios from 'axios';
                 </div>
             </div>
         </section>
+        </div>
+
+        
     
 </template>
 
 <style lang="scss" scoped>
+@use '../assets/SCSS/partials/variables.scss' as *;
     .single-apartment {
         border: 2px solid black;
         border-radius: 5px;
@@ -183,9 +190,38 @@ import axios from 'axios';
         margin: 20px auto;
         height: 400px;
 
+        h2{
+            color: $primary_text_color;
+        }
+        
         img {
             width: 100%;
         }
+    }
+
+    section {
+        position: relative;
+        h3{
+            color: $primary_text_color;
+            margin: 20px 0;
+        }
+
+        form{
+
+            .submit_button{
+                background-color: $primary_background_color;
+                color: $primary_text_color;
+            }
+            
+        }
+
+        .reset_button{
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            
+        }
+        
     }
 
 </style>

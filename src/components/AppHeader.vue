@@ -35,27 +35,27 @@ export default {
      <header>
         <div class="header_container">
             <div class="container">
-            <div class="row g-0 justify-content-between">
-                <div class="col-2 logo_container">
-                    <div class="  ">
-                        <img src="/img/logo_vv.svg" alt="">
+                <div class="row g-0 justify-content-between">
+                    <div class="col-2 logo_container">
+                        <div class="  ">
+                            <img src="/img/logo_vv.svg" alt="">
+                        </div>
+                        <div>
+                        </div>
                     </div>
-                    <div>
+                    <div class="col">
+                        <nav>
+                            <ul>
+                                <li v-for="link in links">
+                                    <router-link :to="{ name: link.url }" class="text-decoration-none">
+                                    <span>{{ link.name }}</span> 
+                                    </router-link>
+                                </li>
+                            </ul>
+                        </nav>  
                     </div>
-                </div>
-                <div class="col">
-                    <nav>
-                        <ul>
-                            <li v-for="link in links">
-                                <router-link :to="{ name: link.url }" class="text-decoration-none">
-                                <span>{{ link.name }}</span> 
-                                </router-link>
-                            </li>
-                        </ul>
-                    </nav>  
                 </div>
             </div>
-        </div>
         </div>
      </header>
 </template>
