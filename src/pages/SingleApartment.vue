@@ -20,9 +20,10 @@ import axios from 'axios';
                         console.log(res.data);
 
                         // Se la chiamata ha buon fine
-                        if (res.data.success) {
+                        if (res.data.success == true) {
                             // Si vedrà il singolo appartamento
                             this.apartment = res.data.results;
+                            console.log(this.apartment);
                             // Assegna l'ID dell'appartamento
                             this.apartmentId = this.apartment.id; 
 
@@ -64,7 +65,7 @@ import axios from 'axios';
                         })
                          .then(res => {
                             console.log('RISPOSTA API', res.data);
-                            console.log('ID APPARTAMENTO', apartment_id);
+                            console.log('ID APPARTAMENTO', this.apartment_id);
 
                             if (res.data.success) {
                                 this.messageSent = true;
@@ -88,7 +89,6 @@ import axios from 'axios';
 </script>
 
 <template>
-
         <div v-if="apartment != null" class="col-3 single-apartment">
 
             <h2 class="text-center text-primary">
@@ -151,7 +151,7 @@ import axios from 'axios';
             </div>
             <div v-show="messageSent" class="card mt-5">
                 <div class="card-body text-success">
-                    Messaggio inviato correttametne
+                    Messaggio inviato correttamente
                 </div>
             </div>
         </section>
