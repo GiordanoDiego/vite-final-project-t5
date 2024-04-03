@@ -10,7 +10,8 @@ import axios from 'axios';
                 accepted: false,
                 alert: false,
                 messageSent: false,
-                apartmentId: null 
+                apartmentId: null,
+                showError: false
             };
         },
         methods: {
@@ -69,17 +70,30 @@ import axios from 'axios';
 
                             if (res.data.success) {
                                 this.messageSent = true;
+                                this.showError = false;
                             }
                         })
                         .catch(err => {
                             console.log('ERRORE AXIOS', err);
-
                             this.alert = true;
+                            this.showError = true;
+                            this.alert = false
+                            //resetta il form
+                            this.resetForm();
                         })
                 }
                 else {
                     this.alert = true; 
                 }
+            },
+            resetForm(){
+                this.name = '';
+                this.email = '';
+                this.message = '';
+                this.accepted = false;
+                this.alert = false;
+                this.messageSent = false;
+                this.apartmentId = null;
             }
         },
         created() {
@@ -117,7 +131,7 @@ import axios from 'axios';
         </div>
 
         <section>
-            <div v-if="alert == false"  id="form-container">
+            <div v-if="!alert && !messageSent"  id="form-container">
                 <form method="POST" @submit.prevent="sendMessage()">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome</label>
@@ -143,13 +157,16 @@ import axios from 'axios';
                         Invia
                     </button>
                 </form>
+                <button @click="resetForm()" class="btn btn-secondary ms-3" >
+                    Resetta
+                </button>
             </div>
-            <div v-else class="card">
+            <div v-if="alert" class="card">
                 <div class="card-body">
                     Dati inseriti non correttamente
                 </div>
             </div>
-            <div v-show="messageSent" class="card mt-5">
+            <div v-if="messageSent" class="card mt-5">
                 <div class="card-body text-success">
                     Messaggio inviato correttamente
                 </div>
