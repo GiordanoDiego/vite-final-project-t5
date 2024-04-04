@@ -18,7 +18,8 @@ export default {
                     {
                         name: 'Appartamenti',
                         url: 'apartments.index'
-                    },                    
+                    }, 
+                                        
                 ]
         }
         
@@ -35,14 +36,15 @@ export default {
      <header>
         <div class="header_container">
             <div class="container">
-                <div class="row g-0 justify-content-between">
-                    <div class="col-2 logo_container">
+                    <div class="logo_container">
                         <div class="  ">
                             <img src="/img/logo_vv.svg" alt="">
-                        </div>
-                        <div>
-                        </div>
+                            
+                           
+                            
+                        </div>     
                     </div>
+                <div class="row g-0 align-items-center justify-content-between">
                     <div class="col">
                         <nav>
                             <ul>
@@ -51,6 +53,9 @@ export default {
                                     <span>{{ link.name }}</span> 
                                     </router-link>
                                 </li>
+                                <li><a href="http://127.0.0.1:8000/login">Login</a></li>
+                                <li><a href="http://127.0.0.1:8000/register">Register</a></li>
+                                                               
                             </ul>
                         </nav>  
                     </div>
@@ -63,4 +68,6 @@ export default {
 <style lang="scss" scoped>
     @use'../assets/SCSS/main.scss';
     @use '../assets/SCSS/header.scss';
+
+    
 </style>
