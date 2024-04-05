@@ -1,20 +1,97 @@
+<!--Assistenza
+Centro Assistenza
+AirCover
+Antidiscriminazione
+Supporto alla disabilità
+Opzioni di cancellazione
+Segnala problema nel quartiere
+
+Ospitare
+Apri un Airbnb
+AirCover per gli host
+Risorse per gli host
+Forum della community
+Ospitare responsabilmente
+Partecipa a una lezione gratuita sull'ospitalità
+
+
+
+Boolbnb
+Newsroom
+Nuove funzionalità
+Opportunità di lavoro
+Investitori
+Gift card
+Soggiorni con Airbnb.org
+-->
+
 <script>
 export default {
     data() {
         return {
-            SupportContact: [
+            Assistenza: [
                 {
-                    title: "disanto.vincenzo98@gmail.com"
+                    title: "Centro Assistenza"
                     
                 },
                 {
-                    title: "diego.giordano@gmail.com"
+                    title: "AirCover"
                 },
                 {
-                    title: "nicola.ceccagnoli@gmail.com"
+                    title: "Antidiscriminazione"
                 },
                 {
-                    title: "riccardo.minei@gmail.com"
+                    title: "Supporto alla disabilità"
+                },
+                {
+                    title: "Opzioni di cancellazione"
+                },
+                {
+                    title: "Segnala problema nel quartiere"
+                },
+                
+            ],
+            Ospitare: [
+                {
+                    title: "Apri un Boolbnb"
+                    
+                },
+                {
+                    title: "AirCover per gli host"
+                },
+                {
+                    title: "Risorse per gli host"
+                },
+                {
+                    title: "Forum della community"
+                },
+                {
+                    title: "Ospitare responsabilmente"
+                },
+                {
+                    title: "Partecipa a una lezione gratuita sull'ospitalità"
+                },
+                
+            ],
+            Boolbnb: [
+                {
+                    title: "Newsroom"
+                    
+                },
+                {
+                    title: "Nuove funzionalità"
+                },
+                {
+                    title: "Opportunità di lavoro"
+                },
+                {
+                    title: "Investitori"
+                },
+                {
+                    title: "Gift card"
+                },
+                {
+                    title: "Soggiorni con Airbnb.org"
                 },
                 
             ],
@@ -36,11 +113,33 @@ export default {
             <div class="row">
                 
 
-                <div class="col-sm-12 col-md-4 col-lg-2 mb-4  space">
+                <div class="col-3">
                     <div class="text-left">
-                        <h3>SupportContact</h3>
+                        <h5>Assistenza</h5>
                         <ul>
-                            <li v-for="(pippo,i) in SupportContact" :key="i" >{{pippo.title}}</li>
+                            <li v-for="(pippo,i) in Assistenza" :key="i" >{{pippo.title}}</li>
+                           
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col-3">
+                    <div class="text-left">
+                        <h5>Ospitare</h5>
+                        <ul>
+                            <li v-for="(pluto,i) in Ospitare" :key="i" >{{pluto.title}}</li>
+                           
+                        </ul>
+                    </div>
+                </div>
+
+
+                <div class="col-3">
+                    <div class="text-left">
+                        <h5>Boolbnb</h5>
+                        <ul>
+                            <li v-for="(paperino,i) in Boolbnb" :key="i" >{{paperino.title}}</li>
                            
                         </ul>
                     </div>
@@ -48,16 +147,7 @@ export default {
 
               
 
-                <div class="col-sm-12 col-md-4 col-lg-2 mb-3  space">
-                    <h3>NEWSLETTER</h3>
-                    <div>
-                        <input id="emailInput" type="email" class="form-control" placeholder="Email" >  
-                    </div>
-                    <div>
-                        <textarea   placeholder="Message"></textarea>  
-                    </div>
-                    <button class="form-control">SEND MESSAGE</button>
-                </div>
+                
             </div>
         </div>
 
