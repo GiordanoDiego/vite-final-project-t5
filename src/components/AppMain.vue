@@ -26,7 +26,7 @@ export default {
 
 <template>
     <main>
-        <div class="container">
+        <div class="container main-container">
             <!-- Importo la componente del routerview -->
             <router-view></router-view> 
         </div>
@@ -34,11 +34,8 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-
-    main {
-        
-        height: 100vh;
-
-    }
+    @use'../assets/SCSS/main.scss';
+    
+ 
 
 </style>

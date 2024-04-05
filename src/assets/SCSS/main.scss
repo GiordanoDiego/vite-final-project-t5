@@ -8,6 +8,11 @@
 /*RESET*/
 
 .container{
-    border: 1px dashed red
+    border: 1px dashed red;
+    
+}
+
+.main-container{
+    height: calc(100vh - 350px);//altezza header + footer
 }
 
