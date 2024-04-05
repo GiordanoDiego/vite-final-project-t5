@@ -4,21 +4,23 @@
 
 header {
     position: sticky;
+    height: 150px;
     top: 0;
     z-index: 1;
+    
 
     .header_container{
-        background-color: white;
-        color: black;
+        background-color: $primary_background_color;
     
+        .logo_container{
+            height: 100px;
+            padding-left: 5px;
+            padding-top: 5px;
+            img{
+                height: 100%;
+            }
+        }    
     }
-    .logo_container{
-        img{
-            max-width: 250px;
-            margin-left: 480px;
-            display: block;
-        }
-    }    
 
     nav {
 
@@ -26,19 +28,21 @@ header {
             display: flex;
             list-style: none;
             justify-content: center;
-        }
-
-        li {
-            margin: 0 10px;
-             a{
-        text-decoration: none;
-        }
-            span {
-                color: #FAA0C7;
-                text-transform: uppercase;
+            li {
+                margin: 0 10px;
+                text-decoration: none;
+                span{
+                    color: $secondary_text_color;
+                    text-transform: uppercase;
+                }
             }
-
         }
+
+        .header_icon{
+            color: $secondary_text_color;
+            font-size: 25px;
+        }
+
     }
    
    
