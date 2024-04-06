@@ -10,6 +10,7 @@ import AppMain from './components/AppMain.vue';
 import AppFooter from './components/AppFooter.vue';
 import {store} from './store.js' // import axios form 'axios';
 import axios from 'axios'; // importo elemento axios
+import SwiperComponent from './components/SwiperComponent.vue'; //import component swiper
 
 export default {
     data(){
@@ -20,7 +21,8 @@ export default {
     components: {
         AppHeader,
         AppMain,
-        AppFooter
+        AppFooter,
+        SwiperComponent
     },
     methods: {
 

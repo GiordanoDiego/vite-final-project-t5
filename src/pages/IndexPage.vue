@@ -3,6 +3,7 @@ import axios from 'axios';
 import ApartmentCard from './ApartmentCard.vue';
 import { RouterView } from 'vue-router';
 
+
     export default {
         data() {
             return {
@@ -16,7 +17,13 @@ import { RouterView } from 'vue-router';
         },
         components: {
             ApartmentCard,
-            RouterView
+            RouterView,
+         
+        },
+        computed: {
+            sponsoredApartments() {
+                return this.apartments.filter(apartment => apartment.sponsors.length > 0);
+                }
         },
         methods: {
             getApartments(page) {
@@ -56,7 +63,6 @@ import { RouterView } from 'vue-router';
             // this.goToPage(this.currentPage);
             this.getApartments(this.currentPage);
         }
-
     }
 </script>
 
@@ -65,10 +71,18 @@ import { RouterView } from 'vue-router';
     <h1 class="text-center my-3">
         Scopri tutti gli Appartamenti
     </h1>
-
+    <!-- card con appartamenti sponsorizzate con background verde chiaro -->
     <div class="container">
-        <div class="row g-0">
         
+        <div class="row g-0">
+            <h1>
+                appartamenti sponsorizzati
+            </h1>
+            <ApartmentCard v-for="singleApartment in sponsoredApartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card-sponsored" />
+            <hr>
+            <h1>
+                tutti appartamenti
+            </h1>
             <ApartmentCard v-for="singleApartment in apartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
 
             <nav class="d-flex justify-content-center mt-3">
@@ -98,10 +112,8 @@ import { RouterView } from 'vue-router';
 </template>
 
 <style lang="scss" scoped>
-
-    .apartment-card {
-        width: calc((100% / 4) - 40px);
-        margin: 20px;
+    .apartment-card-sponsored{
+        background-color: aquamarine;
     }
 
     nav {

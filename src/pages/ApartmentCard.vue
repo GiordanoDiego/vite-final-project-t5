@@ -34,14 +34,14 @@
                     <div class="col-12 address_container">
                         {{ apartment.address }} <!-- Modifica questa riga -->
                     </div>
-                    <div class="col-12">
-                        Servizi: 
-                        <span v-for="service in apartment.services" :key="service.id" class="badge rounded-pill text-bg-primary">
-                            {{ service.title }}
+                    <div class="col-12 d-flex justify-content-center mt-1">
+                        <span v-for="service in apartment.services" :key="service.id" class="badge rounded-pill single_service">
+                            <i :class="service.icon"></i>
+                            <span class="tooltip-text">{{ service.title }}</span>
                         </span>
                     </div>
                     <div class="link-container">
-                        <router-link :to="{ name: 'apartments.show', params: { slug: apartment.slug } }">
+                        <router-link :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn show_single_apartment_button">
                             <span>Vai all'appartamento</span>            
                         </router-link>
                     </div>
@@ -50,45 +50,68 @@
         </div>                  
     </div> 
          
-        <!-- vecchie card -->
-        <!-- <div class="col-3 single-apartment ">
 
-            <h4 class="text-center">
-                {{ apartment.title }}
-            </h4>
-
-            <div v-for="sponsor in apartment.sponsors" :key="sponsor.id">
-                <h5 class="my-3 text-success">
-                    Sponsor: {{ sponsor?.title ?? 'NULL' }}
-                    
-                </h5>
-            </div>
-
-            <div class="image_container">
-                <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
-            </div>
-
-            <div class="row">
-                <div class="col-12 mt-1">
-                    Servizi: 
-                    <span v-for="service in apartment.services" :key="service.id" class="badge rounded-pill text-bg-primary">
-                        {{ service.title }}
-                    </span>
-                </div>
-            </div>
-
-            <div class="link-container">
-                <router-link :to=" { name: 'apartments.show', params: { slug: apartment.slug } } ">
-                    <span>Vai all'appartamento</span>            
-                </router-link>
-            </div>
-
-        </div> -->
     
 </template>
 
 <style lang="scss" scoped>
 @use '../assets/SCSS/partials/variables.scss' as *;
    
+.card {
+
+background-color: #FEFFFA;
+transition: all 0.5s;
+overflow: hidden;
+
+&:hover{
+    cursor: pointer;
+    background-color: white;
+    box-shadow: 0px 0px 10px 3px #252525;
+
+    img {
+        transition: transform 0.5s;
+        transform: scale(1.1);
+    }
+}
+
+.show_single_apartment_button{
+    background-color: $button_background_color;
+    color: white;
+    padding: 2px 5px;
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+}
+
+.address_container{
+    font-size: 0.8em;
+}
+.single_service {
+    position: relative;
+    margin-right: 3px;
+    color: white;
+    background-color: $button_background_color;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    background-color: $button_background_color;
+    color: white;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%;
+
+    transform: translateX(-20%);
+}
+
+.single_service:hover .tooltip-text {
+    visibility: visible;
+}
+
+
+}
 
 </style>
