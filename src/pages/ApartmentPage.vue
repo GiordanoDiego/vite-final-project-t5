@@ -66,9 +66,10 @@ import { RouterView } from 'vue-router';
         Tutti gli Appartamenti
     </h1>
 
-    <div class="row g-0">
+    <div class="container">
+        <div class="row">
         
-        <ApartmentCard v-for="singleApartment in apartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
+        <ApartmentCard v-for="singleApartment in apartments" :key="singleApartment.id" :apartment="singleApartment"/>
 
         <nav class="d-flex justify-content-center mt-3">
             <ul class="my-pagination list-unstyled d-flex">
@@ -92,16 +93,12 @@ import { RouterView } from 'vue-router';
         </nav>
 
     </div>
+    </div>
 
 
 </template>
 
 <style lang="scss" scoped>
-
-    .apartment-card {
-        width: calc((100% / 4) - 40px);
-        margin: 20px;
-    }
 
     nav {
         ul {
