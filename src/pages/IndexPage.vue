@@ -8,12 +8,14 @@ import { RouterView } from 'vue-router';
     export default {
         data() {
             return {
-                // Definisco un array vuoto dove inserirò i risultati dell'API
                 apartments: [],
-                // Dichiaro il valore della pagina corrente
                 currentPage: 1,
-                // Dichiaro il valore dell'ultima pagina
                 lastPage: 2,
+                filterTitle: '',
+                minRooms: '',
+                minBeds: '', 
+                roomOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'],
+                bedOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'], 
             };
         }, 
         components: {
@@ -23,10 +25,23 @@ import { RouterView } from 'vue-router';
             RouterView,
         },
         computed: {
+            filteredApartments() {
+                let filtered = this.apartments;
+                if (this.filterTitle.trim()) {
+                    filtered = filtered.filter(apartment => apartment.title.toLowerCase().includes(this.filterTitle.toLowerCase()));
+                }
+                if (this.minRooms) {
+                    filtered = filtered.filter(apartment => apartment.n_rooms >= parseInt(this.minRooms));
+                }
+                if (this.minBeds) {
+                    filtered = filtered.filter(apartment => apartment.n_beds >= parseInt(this.minBeds));
+                }
+                return filtered;
+            },
             sponsoredApartments() {
                 return this.apartments.filter(apartment => apartment.sponsors.length > 0);
                 }
-        },
+             },
         methods: {
             getApartments(page) {
                 axios.get('http://127.0.0.1:8000/api/apartments/', {
@@ -79,10 +94,36 @@ import { RouterView } from 'vue-router';
             <hr>
              
             <h1>
-                tutti appartamenti
+                Tutti appartamenti
             </h1>
+             <!-- Filtro appartamenti per title -->
+            <div class="mb-2 mt-2 " >
+                <div class="col-12 col-lg-6">
+                    <div class="">
+                        <input v-model="filterTitle" type="text" name="filter" id="filter" class="form-control" placeholder="cerca per nome...">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    <!-- filtro per numero minimo di stanze -->
+                    <select v-model="minRooms" class="form-select" aria-label="Seleziona il numero minimo di stanze">
+                        <option value="">Filtra per stanze...</option>
+                        <option v-for="numRooms in roomOptions" :value="numRooms">{{ numRooms }}</option>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <!-- filtro per numero minimo di posti letto -->
+                    <select v-model="minBeds" class="form-select" aria-label="Seleziona il numero minimo di posti letto">
+                        <option value="">Filtra per posti letto...</option>
+                        <option v-for="numBeds in bedOptions" :value="numBeds">{{ numBeds }}</option>
+                    </select>
+                </div>
+            </div>
+     
             <!-- tutti gli appartamenti -->
-            <ApartmentCard v-for="singleApartment in apartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
+            <ApartmentCard v-for="singleApartment in filteredApartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
+
 
             <nav class="d-flex justify-content-center mt-3">
                 <ul class="my-pagination list-unstyled d-flex">
