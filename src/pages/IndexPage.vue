@@ -1,8 +1,9 @@
 <script >
 import axios from 'axios';
 import ApartmentCard from './ApartmentCard.vue';
+import ApartmentSponsored from './ApartmentSponsored.vue';
+import ApartmentSponsoredSwiper from './ApartmentSponsoredSwiper.vue';
 import { RouterView } from 'vue-router';
-
 
     export default {
         data() {
@@ -14,11 +15,12 @@ import { RouterView } from 'vue-router';
                 // Dichiaro il valore dell'ultima pagina
                 lastPage: 2,
             };
-        },
+        }, 
         components: {
             ApartmentCard,
+            ApartmentSponsored,
+            ApartmentSponsoredSwiper,
             RouterView,
-         
         },
         computed: {
             sponsoredApartments() {
@@ -68,21 +70,18 @@ import { RouterView } from 'vue-router';
 
 <template>
 
-    <h1 class="text-center my-3">
-        Scopri tutti gli Appartamenti
-    </h1>
     <!-- card con appartamenti sponsorizzate con background verde chiaro -->
     <div class="container">
         
         <div class="row g-0">
-            <h1>
-                appartamenti sponsorizzati
-            </h1>
-            <ApartmentCard v-for="singleApartment in sponsoredApartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card-sponsored" />
+            
+            <ApartmentSponsoredSwiper/>
             <hr>
+             
             <h1>
                 tutti appartamenti
             </h1>
+            <!-- tutti gli appartamenti -->
             <ApartmentCard v-for="singleApartment in apartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
 
             <nav class="d-flex justify-content-center mt-3">
@@ -132,4 +131,6 @@ import { RouterView } from 'vue-router';
             }
         }
     }
+
+   
 </style>
