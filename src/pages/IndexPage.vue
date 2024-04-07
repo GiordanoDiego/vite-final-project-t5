@@ -142,6 +142,7 @@ import { RouterView } from 'vue-router';
                     </div>
                 </div>
             </div>
+            <!-- filtro per n stanze e per n posti letti -->
             <div class="row">
                 <div class="col-2">
                     <!-- filtro per numero minimo di stanze -->
@@ -173,6 +174,7 @@ import { RouterView } from 'vue-router';
                     <button @click="filterByAddress" class="btn btn-primary">Cerca</button>
                 </div>
             </div>
+            
             <!-- tutti gli appartamenti -->
             <ApartmentCard v-for="singleApartment in filteredApartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
 
