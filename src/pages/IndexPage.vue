@@ -15,7 +15,9 @@ import { RouterView } from 'vue-router';
                 minRooms: '',
                 minBeds: '', 
                 roomOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'],
-                bedOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'], 
+                bedOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'],
+                searchRadius: '20', 
+                radiusOptions: ['20', '30', '40', '50+'], 
             };
         }, 
         components: {
@@ -43,6 +45,42 @@ import { RouterView } from 'vue-router';
                 }
              },
         methods: {
+            async filterByAddress() {
+                try {
+                    const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
+                    const filteredApartments = this.apartments.filter(apartment => {
+                        const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
+                        return distance <= parseInt(this.searchRadius); // Utilizza il raggio selezionato
+                    });
+                    this.apartments = filteredApartments;
+                } catch (error) {
+                    console.error('Errore durante il filtro degli appartamenti:', error);
+                }
+            },
+            // Funzione per ottenere le coordinate dall'indirizzo utilizzando l'API di TomTom
+            async getCoordinatesFromAddress(address) {
+                const apiKey = 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq';
+                const response = await axios.get(`https://api.tomtom.com/search/2/geocode/${encodeURIComponent(address)}.json?key=${apiKey}`);
+                const { lat, lon } = response.data.results[0].position;
+                return { lat, lon };
+            },
+            // Funzione per calcolare la distanza in km tra due coppie di coordinate
+            calculateDistance(lat1, lon1, lat2, lon2) {
+                const R = 6371; // Raggio medio della Terra in chilometri
+                const dLat = this.degreesToRadians(lat2 - lat1);
+                const dLon = this.degreesToRadians(lon2 - lon1);
+                const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(this.degreesToRadians(lat1)) * Math.cos(this.degreesToRadians(lat2)) *
+                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+                const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                const distance = R * c; // Distanza in chilometri
+                return distance;
+             },
+
+            degreesToRadians(degrees) {
+                return degrees * (Math.PI / 180);
+            },
+            
             getApartments(page) {
                 axios.get('http://127.0.0.1:8000/api/apartments/', {
                         params: {
@@ -120,7 +158,21 @@ import { RouterView } from 'vue-router';
                     </select>
                 </div>
             </div>
-     
+            
+            <!-- Filtro per indirizzo raggio 20km-->
+            <div class="mb-2 mt-2">
+                <div class="col-4 col-lg-6">
+                    <input v-model="searchAddress" type="text" class="form-control" placeholder="Inserisci l'indirizzo...">
+                </div>
+                <div class="col-4 col-lg-4 mt-2">
+                    <select v-model="searchRadius" class="form-select" aria-label="Seleziona il raggio di ricerca">
+                        <option v-for="radius in radiusOptions" :value="radius">{{ radius }} km</option>
+                    </select>
+                </div>
+                <div class="col-12 col-lg-2 mt-2">
+                    <button @click="filterByAddress" class="btn btn-primary">Cerca</button>
+                </div>
+            </div>
             <!-- tutti gli appartamenti -->
             <ApartmentCard v-for="singleApartment in filteredApartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
 
