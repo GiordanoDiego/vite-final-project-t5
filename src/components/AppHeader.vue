@@ -39,40 +39,39 @@ export default {
             </div>
             <div class="align-items-center justify-content-between">
                 <nav>
-                    <div class="d-none d-md-block mx-4">
+                    <div class="d-md-block mx-4">
                         <ul>
                             <li v-for="link in links">
                                 <router-link :to="{ name: link.url }" class="text-decoration-none">
-                                    <span>
+                                    <span class="d-none d-md-block">
                                         {{ link.name }}
+                                    </span>
+                                    <span class="d-block d-md-none">
+                                        <i class="fa-solid fa-house"></i>
                                     </span>
                                 </router-link>
                             </li>
-                            <li>
-                                <a href="http://127.0.0.1:8000/login" class="text-decoration-none">
-                                    <span>
-                                        Login
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="http://127.0.0.1:8000/register" class="text-decoration-none">
-                                    <span>
-                                        Register
-                                    </span>
-                                </a>
-                            </li>         
-                        </ul>
-                    </div>
-                    <div class="dropdown">
-                        <a class="btn btn-secondary dropdown-toggle d-block d-md-none mx-4 header_icon" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fa-solid fa-bars"></i>
-                        </a>
-
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            <div class="dropdown">
+                                <button class="btn-secondary dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                                <ul class="dropdown-menu" style="margin:0;">
+                                    <li>
+                                        <a href="http://127.0.0.1:8000/login" class="text-decoration-none dropdown-item">
+                                            <span>
+                                                Login
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="http://127.0.0.1:8000/register" class="text-decoration-none dropdown-item">
+                                            <span>
+                                                Register
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>         
                         </ul>
                     </div>
                 </nav>              

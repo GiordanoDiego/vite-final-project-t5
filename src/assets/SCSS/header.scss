@@ -23,7 +23,6 @@ header {
     }
 
     nav {
-
         ul {
             display: flex;
             list-style: none;
@@ -37,10 +36,18 @@ header {
                 }
             }
         }
-
-        .header_icon{
+        .dropdown_button{
+            background-color: $primary_background_color;
+            border: none;
             color: $secondary_text_color;
-            font-size: 25px;
+
+        }
+        .dropdown-item{
+            &:hover{
+                span{
+                    color: $secondary_background_color;
+                }
+            }
         }
 
     }
