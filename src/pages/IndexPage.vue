@@ -35,7 +35,9 @@ import { RouterView } from 'vue-router';
                 // Definisco un array vuoto che verrà popolato con i servizi disponibili
                 services:[],
                 // Definisco un array vuoto che verrà popolato con i servizi sscelti dall'utente
-                selectedServices: []
+                selectedServices: [],
+                // Definisco una variabile che utilizzerò per filtrare gli appartamenti per titolo
+                filterTitle: ''
             };
         }, 
         components: {
@@ -134,9 +136,11 @@ import { RouterView } from 'vue-router';
                         radius: this.searchRadius,
                         minRooms: this.minRooms,
                         minBeds: this.minBeds,
-                        services: this.selectedServices
+                        services: this.selectedServices,
+                        filterTitle: this.filterTitle
                     });
                     // Assegno i risultati del filtraggio agli appartamenti
+                    console.log(this.filterTitle);
                     this.apartments = response.data.results;
                 } catch (error) {
                     console.error('Errore durante la ricerca avanzata degli appartamenti:', error);
@@ -186,15 +190,6 @@ import { RouterView } from 'vue-router';
                 I nostri appartamenti
             </h1>
 
-            <!-- Filtro appartamenti per title -->
-            <!-- <div class="mb-2 mt-2 " >
-                <div class="col-12 col-lg-6">
-                    <div class="">
-                        <input v-model="filterTitle" type="text" name="filter" id="filter" class="form-control" placeholder="cerca per nome...">
-                    </div>
-                </div>
-            </div> -->
-
             <!-- Filtro per indirizzo -->
             <div class="row g-0 justify-content-center mb-2 mt-2">
                 <div class="col-6">
@@ -212,6 +207,13 @@ import { RouterView } from 'vue-router';
 
             <!-- Filtaggio avanzato -->
             <div v-if="showFilters" class="row justify-content-center g-0">
+                <!-- Filtro appartamenti per title -->
+                <div class="col-12">
+                    <div class="">
+                        <input v-model="filterTitle" type="text" name="filter" id="filter" class="form-control" placeholder="cerca per nome...">
+                    </div>
+                </div>
+
                 <!-- filtro per numero minimo di stanze -->
                 <div class="col-4">
                     <label for="numRooms">Scegli il numero di stanze:</label>
