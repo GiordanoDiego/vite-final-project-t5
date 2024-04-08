@@ -14,8 +14,8 @@ import { RouterView } from 'vue-router';
                 suggestions: [],
                 minRooms: '',
                 minBeds: '', 
-                roomOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'],
-                bedOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'],
+                roomOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '10'],
+                bedOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '10'],
                 searchRadius: '20', 
                 radiusOptions: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50'], 
                 // Creo una flag per la visibilità dello swiper
@@ -31,38 +31,11 @@ import { RouterView } from 'vue-router';
             RouterView,
         },
         computed: {
-            filteredApartments() {
-                let filtered = this.apartments;
-                if (this.filterTitle.trim()) {
-                    filtered = filtered.filter(apartment => apartment.title.toLowerCase().includes(this.filterTitle.toLowerCase()));
-                }
-                if (this.minRooms) {
-                    filtered = filtered.filter(apartment => apartment.n_rooms >= parseInt(this.minRooms));
-                }
-                if (this.minBeds) {
-                    filtered = filtered.filter(apartment => apartment.n_beds >= parseInt(this.minBeds));
-                }
-                return filtered;
-            },
             sponsoredApartments() {
                 return this.apartments.filter(apartment => apartment.sponsors.length > 0);
                 }
              },
         methods: {
-            // async filterByDistance() {
-            //     try {
-            //         const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
-            //         const filteredApartments = this.apartments.filter(apartment => {
-            //             const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
-            //             return distance <= parseInt(this.searchRadius); // Utilizza il raggio selezionato
-            //         });
-            //         this.apartments = filteredApartments;
-            //         // Cambio il valore della flag per lo swiper
-            //         this.showSwiper = false;
-            //     } catch (error) {
-            //         console.error('Errore durante il filtro degli appartamenti:', error);
-            //     }
-            // },
             // Creo una funzione che filtri i risultati in base all'indirizzo scelta dall'utente
             async filterByAddress() {
                 try {
@@ -134,9 +107,13 @@ import { RouterView } from 'vue-router';
                 try {
                     const response = await axios.post('http://localhost:8000/api/advanced-search', {
                         address: this.searchAddress,
-                        radius: this.searchRadius
+                        radius: this.searchRadius,
+                        minRooms: this.minRooms,
+                        minBeds: this.minBeds
                     });
                     console.log('Risultato ricerca avanzata:', response.data.results);
+                    console.log(this.minRooms);
+                    console.log(this.minBeds);
                     this.apartments = response.data.results;
                 } catch (error) {
                     console.error('Errore durante la ricerca avanzata degli appartamenti:', error);
@@ -183,7 +160,7 @@ import { RouterView } from 'vue-router';
                     </datalist>
                 </div>
                 <div class="col-2">
-                    <button @click="filterByAddress()">
+                    <button @click="filterByAddress()" class="w-100">
                         Vai
                     </button>
                 </div>
@@ -207,22 +184,17 @@ import { RouterView } from 'vue-router';
                         <option v-for="numBeds in bedOptions" :value="numBeds">{{ numBeds }}</option>
                     </select>
                 </div>
-                <!-- Filtro per raggio km -->
-                <!-- <div class="col-4">
-                    <select v-model="searchRadius" class="form-select" aria-label="Seleziona il raggio di ricerca">
-                        <option v-for="radius in radiusOptions" :value="radius">{{ radius }} km</option>
-                    </select>
-                    <button @click="filterByDistance" class="btn btn-primary">Cerca</button>
-                </div> -->
                 <div class="col-4">
                     <label for="searchRadius">Seleziona il raggio di ricerca ({{ searchRadius }} km):</label>
                     <input type="range" id="searchRadius" v-model="searchRadius" min="5" max="50" step="5" class="form-range">
-                    <button @click="advancedSearch" class="btn btn-primary mt-2">Cerca</button>
+                </div>
+                <div class="col-6">
+                    <button @click="advancedSearch" class="btn btn-primary mt-2 w-100">Cerca</button>
                 </div>
             </div>
 
             <!-- tutti gli appartamenti -->
-            <ApartmentCard v-for="singleApartment in filteredApartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
+            <ApartmentCard v-for="singleApartment in apartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
 
         </div>
     </div>
