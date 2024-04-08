@@ -19,38 +19,37 @@
 </script>
 
 <template>
-    <!-- nuove cards -->
-    
+    <!-- nuove cards sponsor-->
     <div class="col-12 col-md-6 col-lg-3 p-2">
         <div class="card h-100">
-            <div class="img_container">
-                <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
-            </div>
-            <div class="card-body">
-                <div class="card-text row">
-                    <div class="col-12">
-                        <strong>
-                            {{ apartment.title }}
-                        </strong>
-                    </div>
-                    <div class="col-12 address_container">
-                        {{ apartment.address }} <!-- Modifica questa riga -->
-                    </div>
-                    <div class="col-12 d-flex justify-content-center mt-1">
-                        <span v-for="service in apartment.services" :key="service.id" class="badge rounded-pill single_service">
-                            <i :class="service.icon"></i>
-                            <span class="tooltip-text">{{ service.title }}</span>
-                        </span>
-                    </div>
-                    <div class="link-container">
-                        <router-link :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn show_single_apartment_button">
-                            <span>Vai all'appartamento</span>            
-                        </router-link>
+            <router-link :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn">
+            
+                <div class="img_container">
+                    <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
+                </div>
+                <div class="card-body text-start">
+                    <div class="card-text row">
+                        <div class="col-12">
+                            <strong>
+                                {{ apartment.title }}
+                            </strong>
+                        </div>
+                        <div class="col-12 address_container">
+                            {{ apartment.address }} <!-- Modifica questa riga -->
+                        </div>
+                        <div>
+                            <strong>
+                                {{ apartment.price }} €
+                            </strong>
+                            <span>
+                                a notte
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </router-link>
         </div>                  
-    </div> 
+    </div>
          
 
     

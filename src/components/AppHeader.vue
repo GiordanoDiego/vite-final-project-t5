@@ -40,7 +40,7 @@ export default {
             <div class="align-items-center justify-content-between">
                 <nav>
                     <div class="d-md-block mx-4">
-                        <ul>
+                        <ul style="margin:0; padding: 0;">
                             <li v-for="link in links">
                                 <router-link :to="{ name: link.url }" class="text-decoration-none">
                                     <span class="d-none d-md-block">
