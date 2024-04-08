@@ -8,21 +8,33 @@ import { RouterView } from 'vue-router';
     export default {
         data() {
             return {
+                // Definisco un array vuoto dove andrò ad inserire gli Appartamenti
                 apartments: [],
+                // Definisco una variabile che utilizzerò per filtrare per nome dell'appartamento
                 filterTitle: '',
+                // Definisco una variabile che utilizzerò per filtrare per indirizzo
                 searchAddress: '',
+                // Definisco un array vuoto per i suggerimenti degli indirizzi
                 suggestions: [],
+                // Definisco una variabile per il numero di stanze 
                 minRooms: '',
+                // Definisco una variabile per il numero dei letti
                 minBeds: '', 
+                // Definisco le opzioni per il numero di stanze da filtrare
                 roomOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '10'],
+                // Definisco le opzioni per il numero di letti da filtrare
                 bedOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '10'],
+                // Definisco il raggio di default il filtraggio egli appartamenti
                 searchRadius: '20', 
+                // Definisco le opzioni per il filtraggio per km
                 radiusOptions: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50'], 
                 // Creo una flag per la visibilità dello swiper
                 showSwiper: true,
                 // Creo una flag per la visibilità dei filtri
                 showFilters: false,
+                // Definisco un array vuoto che verrà popolato con i servizi disponibili
                 services:[],
+                // Definisco un array vuoto che verrà popolato con i servizi sscelti dall'utente
                 selectedServices: []
             };
         }, 
@@ -33,6 +45,7 @@ import { RouterView } from 'vue-router';
             RouterView,
         },
         computed: {
+            // Definisco una funzione per gli appartamenti sponsorizzati
             sponsoredApartments() {
                 return this.apartments.filter(apartment => apartment.sponsors.length > 0);
                 }
@@ -41,12 +54,15 @@ import { RouterView } from 'vue-router';
             // Creo una funzione che filtri i risultati in base all'indirizzo scelta dall'utente
             async filterByAddress() {
                 try {
+                    // Definisco le variabili di lat e lon che recupererò dall'indirizzo inserito
                     const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
+                    // Definisco gli appartamenti filtrati 
                     const filteredApartments = this.apartments.filter(apartment => {
                         const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
                         // Filtra solo gli appartamenti entro 20 km dall'indirizzo scelto
                         return distance <= 20; 
                     });
+                    // Assegno il risultato del filtraggio agli appartamenti
                     this.apartments = filteredApartments;
                     // Cambia il valore della flag per lo swiper
                     this.showSwiper = false;
@@ -56,7 +72,7 @@ import { RouterView } from 'vue-router';
                     console.error('Errore durante il filtro degli appartamenti:', error);
                 }
             },
-            // Funzione per ottenere i suggerimenti di indirizzo dall'API di TomTom
+            // Definisco una funzione per ottenere i suggerimenti di indirizzo dall'API di TomTom
             async getSuggestionsFromAddress(address) {
                 try {
                     const apiKey = 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq';
@@ -67,7 +83,7 @@ import { RouterView } from 'vue-router';
                     console.error('Si è verificato un errore durante il recupero dei suggerimenti:', error);
                 }
             },
-            // Aggiungi questo metodo per gestire l'evento input e ottenere i suggerimenti
+            // Definisco una funzione per selezionare un suggerimento  
             handleInput() {
                 if (this.searchAddress.trim() !== '') {
                     this.getSuggestionsFromAddress(this.searchAddress);
@@ -75,28 +91,32 @@ import { RouterView } from 'vue-router';
                     this.suggestions = [];
                 }
             },
-            // Funzione per ottenere le coordinate dall'indirizzo utilizzando l'API di TomTom
+            // Definico una funzione per ottenere le coordinate dall'indirizzo utilizzando l'API di TomTom
             async getCoordinatesFromAddress(address) {
                 const apiKey = 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq';
                 const response = await axios.get(`https://api.tomtom.com/search/2/geocode/${encodeURIComponent(address)}.json?key=${apiKey}`);
                 const { lat, lon } = response.data.results[0].position;
                 return { lat, lon };
             },
-            // Funzione per calcolare la distanza in km tra due coppie di coordinate
+            // Definisco una funzione per calcolare la distanza in km tra due coppie di coordinate
             calculateDistance(lat1, lon1, lat2, lon2) {
-                const R = 6371; // Raggio medio della Terra in chilometri
+                // Raggio medio della Terra in chilometri
+                const R = 6371;
                 const dLat = this.degreesToRadians(lat2 - lat1);
                 const dLon = this.degreesToRadians(lon2 - lon1);
                 const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
                         Math.cos(this.degreesToRadians(lat1)) * Math.cos(this.degreesToRadians(lat2)) *
                         Math.sin(dLon / 2) * Math.sin(dLon / 2);
                 const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                const distance = R * c; // Distanza in chilometri
+                // Distanza in chilometri
+                const distance = R * c; 
                 return distance;
              },
+            // Definisco una funzione per convertire un angolo in un radiante
             degreesToRadians(degrees) {
                 return degrees * (Math.PI / 180);
             },
+            // Definisco una funzione per recuperare tutti gli appartamenti dal DB
             getApartments() {
                 axios.get('http://127.0.0.1:8000/api/apartments/')
                     .then(res => {
@@ -105,42 +125,46 @@ import { RouterView } from 'vue-router';
                         this.apartments = res.data.results;
                     })
             },
+            // Definisco una funzione per il filtraggio avanzato tra gli appartamenti 
             async advancedSearch() {
                 try {
                     const response = await axios.post('http://localhost:8000/api/advanced-search', {
+                        // Utilizzo i parametri
                         address: this.searchAddress,
                         radius: this.searchRadius,
                         minRooms: this.minRooms,
                         minBeds: this.minBeds,
                         services: this.selectedServices
                     });
-                    console.log('Risultato ricerca avanzata:', response.data.results);
-                    console.log(this.minRooms);
-                    console.log(this.minBeds);
-                    console.log(this.selectedServices);
+                    // Assegno i risultati del filtraggio agli appartamenti
                     this.apartments = response.data.results;
                 } catch (error) {
                     console.error('Errore durante la ricerca avanzata degli appartamenti:', error);
                 }
             },
+            // Definisco una funzione per recuperare i servizi
             getServices() {
                 axios.get('http://127.0.0.1:8000/api/services')
                     .then(res => {
-                        console.log(res.data);
+                        // Assegno il risultato della chiamata all'array dei servizi
                         this.services = res.data.results;
-                        console.log(this.services);
                     });
             },
+            // Definisco una funzione per selezionare i servizi tramite le checkbox
             toggleService(service) {
                 if (this.selectedServices.includes(service)) {
+                    // Se il servizio è già presente, viene rimosso dall'array
                     this.selectedServices = this.selectedServices.filter(s => s !== service);
                 } else {
+                    // Altrimenti viene pushato
                     this.selectedServices.push(service);
                 }
             },
         },
         created() {
+            // Alla creazione della pagina richiamo tutti gli appartamenti
             this.getApartments();
+            // Alla creazione della pagina richiamo tutti i servizi
             this.getServices();
         }
     }
