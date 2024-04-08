@@ -67,9 +67,9 @@ import { RouterView } from 'vue-router';
     </h1>
 
     <div class="container">
-        <div class="row">
+        <div class="row justify-content-center ">
         
-        <ApartmentCard v-for="singleApartment in apartments" :key="singleApartment.id" :apartment="singleApartment"/>
+            <ApartmentCard v-for="singleApartment in apartments" :key="singleApartment.id" :apartment="singleApartment"/>
 
         <nav class="d-flex justify-content-center mt-3">
             <ul class="my-pagination list-unstyled d-flex">

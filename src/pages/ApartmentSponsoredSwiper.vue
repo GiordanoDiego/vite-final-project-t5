@@ -39,12 +39,27 @@ export default {
     </h1>
     <div class="my_bg">
     <swiper
-        :slides-per-view="4"
+        :slides-per-view="1"
         :space-between="30"
         class="mySwiper"
         :observer="true"
-        :pagination="{ clickable: true }" 
+        :pagination="{ clickable: true }"
+        :breakpoints = "{
+            576: {
+              slidesPerView: 2,
+              spaceBetween: 5
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 20
+            },
+            998: {
+              slidesPerView: 4,
+              spaceBetween: 30
+            }
+        }"
     >
+
     <swiper-slide v-for="apartment in apartments" :key="apartment.id" class="personalize">
       
         <div class="card h-100">
