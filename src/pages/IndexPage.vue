@@ -22,6 +22,8 @@ import { RouterView } from 'vue-router';
                 showSwiper: true,
                 // Creo una flag per la visibilità dei filtri
                 showFilters: false,
+                services:[],
+                selectedServices: []
             };
         }, 
         components: {
@@ -109,19 +111,37 @@ import { RouterView } from 'vue-router';
                         address: this.searchAddress,
                         radius: this.searchRadius,
                         minRooms: this.minRooms,
-                        minBeds: this.minBeds
+                        minBeds: this.minBeds,
+                        services: this.selectedServices
                     });
                     console.log('Risultato ricerca avanzata:', response.data.results);
                     console.log(this.minRooms);
                     console.log(this.minBeds);
+                    console.log(this.selectedServices);
                     this.apartments = response.data.results;
                 } catch (error) {
                     console.error('Errore durante la ricerca avanzata degli appartamenti:', error);
                 }
             },
+            getServices() {
+                axios.get('http://127.0.0.1:8000/api/services')
+                    .then(res => {
+                        console.log(res.data);
+                        this.services = res.data.results;
+                        console.log(this.services);
+                    });
+            },
+            toggleService(service) {
+                if (this.selectedServices.includes(service)) {
+                    this.selectedServices = this.selectedServices.filter(s => s !== service);
+                } else {
+                    this.selectedServices.push(service);
+                }
+            },
         },
         created() {
             this.getApartments();
+            this.getServices();
         }
     }
 </script>
@@ -187,6 +207,14 @@ import { RouterView } from 'vue-router';
                 <div class="col-4">
                     <label for="searchRadius">Seleziona il raggio di ricerca ({{ searchRadius }} km):</label>
                     <input type="range" id="searchRadius" v-model="searchRadius" min="5" max="50" step="5" class="form-range">
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div v-for="(singleService, index) in services" :key="index" class="col-3">
+                            <input v-model="selectedServices" :value="singleService" class="form-check-input" type="checkbox" :id="'service_' + index">
+                            <label :for="'service_' + index">{{ singleService.title }}</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="col-6">
                     <button @click="advancedSearch" class="btn btn-primary mt-2 w-100">Cerca</button>
