@@ -49,20 +49,20 @@ import { RouterView } from 'vue-router';
                 }
              },
         methods: {
-            async filterByDistance() {
-                try {
-                    const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
-                    const filteredApartments = this.apartments.filter(apartment => {
-                        const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
-                        return distance <= parseInt(this.searchRadius); // Utilizza il raggio selezionato
-                    });
-                    this.apartments = filteredApartments;
-                    // Cambio il valore della flag per lo swiper
-                    this.showSwiper = false;
-                } catch (error) {
-                    console.error('Errore durante il filtro degli appartamenti:', error);
-                }
-            },
+            // async filterByDistance() {
+            //     try {
+            //         const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
+            //         const filteredApartments = this.apartments.filter(apartment => {
+            //             const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
+            //             return distance <= parseInt(this.searchRadius); // Utilizza il raggio selezionato
+            //         });
+            //         this.apartments = filteredApartments;
+            //         // Cambio il valore della flag per lo swiper
+            //         this.showSwiper = false;
+            //     } catch (error) {
+            //         console.error('Errore durante il filtro degli appartamenti:', error);
+            //     }
+            // },
             // Creo una funzione che filtri i risultati in base all'indirizzo scelta dall'utente
             async filterByAddress() {
                 try {
@@ -119,11 +119,9 @@ import { RouterView } from 'vue-router';
                 const distance = R * c; // Distanza in chilometri
                 return distance;
              },
-
             degreesToRadians(degrees) {
                 return degrees * (Math.PI / 180);
             },
-            
             getApartments() {
                 axios.get('http://127.0.0.1:8000/api/apartments/')
                     .then(res => {
@@ -132,9 +130,21 @@ import { RouterView } from 'vue-router';
                         this.apartments = res.data.results;
                     })
             },
+            async advancedSearch() {
+                try {
+                    const response = await axios.post('http://localhost:8000/api/advanced-search', {
+                        address: this.searchAddress,
+                        radius: this.searchRadius
+                    });
+                    console.log('Risultato ricerca avanzata:', response.data.results);
+                    this.apartments = response.data.results;
+                } catch (error) {
+                    console.error('Errore durante la ricerca avanzata degli appartamenti:', error);
+                }
+            },
         },
         created() {
-            this.getApartments(this.currentPage);
+            this.getApartments();
         }
     }
 </script>
@@ -179,7 +189,7 @@ import { RouterView } from 'vue-router';
                 </div>
             </div>
 
-            <!-- filtro per n stanze e per n posti letti -->
+            <!-- Filtaggio avanzato -->
             <div v-if="showFilters" class="row justify-content-center g-0">
                 <!-- filtro per numero minimo di stanze -->
                 <div class="col-4">
@@ -198,11 +208,16 @@ import { RouterView } from 'vue-router';
                     </select>
                 </div>
                 <!-- Filtro per raggio km -->
-                <div class="col-4">
+                <!-- <div class="col-4">
                     <select v-model="searchRadius" class="form-select" aria-label="Seleziona il raggio di ricerca">
                         <option v-for="radius in radiusOptions" :value="radius">{{ radius }} km</option>
                     </select>
                     <button @click="filterByDistance" class="btn btn-primary">Cerca</button>
+                </div> -->
+                <div class="col-4">
+                    <label for="searchRadius">Seleziona il raggio di ricerca ({{ searchRadius }} km):</label>
+                    <input type="range" id="searchRadius" v-model="searchRadius" min="5" max="50" step="5" class="form-range">
+                    <button @click="advancedSearch" class="btn btn-primary mt-2">Cerca</button>
                 </div>
             </div>
 
