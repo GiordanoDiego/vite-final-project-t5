@@ -39,12 +39,15 @@ export default {
             </div>
             <div class="align-items-center justify-content-between">
                 <nav>
-                    <div class="d-none d-md-block mx-4">
+                    <div class="d-md-block mx-4">
                         <ul>
                             <li v-for="link in links">
                                 <router-link :to="{ name: link.url }" class="text-decoration-none">
-                                    <span>
+                                    <span class="d-none d-md-block">
                                         {{ link.name }}
+                                    </span>
+                                    <span class="d-block d-md-none">
+                                        <i class="fa-solid fa-house"></i>
                                     </span>
                                 </router-link>
                             </li>
