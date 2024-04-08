@@ -9,8 +9,6 @@ import { RouterView } from 'vue-router';
         data() {
             return {
                 apartments: [],
-                // currentPage: 1,
-                // lastPage: 2,
                 filterTitle: '',
                 searchAddress: '',
                 suggestions: [],
@@ -132,32 +130,10 @@ import { RouterView } from 'vue-router';
                         console.log(res.data);
 
                         this.apartments = res.data.results;
-                        // this.currentPage = res.data.results.current_page;
-                        // this.lastPage = res.data.results.last_page;
                     })
             },
-            // nextPage() {
-            //     if (this.currentPage < this.lastPage) {
-
-            //         this.currentPage++;
-
-            //         console.log('currentPage: ', this.currentPage);
-
-            //         this.getApartments(this.currentPage);
-            //     }
-            // },
-            // prevPage() {
-            //     if (this.currentPage > 1) {
-            //          this.goToPage(--this.currentPage);
-            //     }
-            // },
-            // goToPage(pageNumber) {
-            //     this.getApartments(pageNumber);
-            // }
         },
         created() {
-            // this.goToPage(this.currentPage);
-            // this.getApartments(this.currentPage);
             this.getApartments(this.currentPage);
         }
     }
@@ -180,13 +156,10 @@ import { RouterView } from 'vue-router';
             </h1>
 
             <!-- Filtro appartamenti per title -->
-            <!-- <div class="mb-2 mt-2">
+            <!-- <div class="mb-2 mt-2 " >
                 <div class="col-12 col-lg-6">
                     <div class="">
                         <input v-model="filterTitle" type="text" name="filter" id="filter" class="form-control" placeholder="cerca per nome...">
-                        <datalist id="suggestions">
-                            <option v-for="suggestion in suggestions" :value="suggestion">{{ suggestion }}</option>
-                        </datalist>
                     </div>
                 </div>
             </div> -->
@@ -224,6 +197,7 @@ import { RouterView } from 'vue-router';
                         <option v-for="numBeds in bedOptions" :value="numBeds">{{ numBeds }}</option>
                     </select>
                 </div>
+                <!-- Filtro per raggio km -->
                 <div class="col-4">
                     <select v-model="searchRadius" class="form-select" aria-label="Seleziona il raggio di ricerca">
                         <option v-for="radius in radiusOptions" :value="radius">{{ radius }} km</option>
@@ -232,65 +206,9 @@ import { RouterView } from 'vue-router';
                 </div>
             </div>
 
-            <!-- <div class="g-0 row">
-                <div class="col-2"> -->
-                    <!-- <select v-model="minRooms" class="form-select" aria-label="Seleziona il numero minimo di stanze">
-                        <option value="">Filtra per stanze...</option>
-                        <option v-for="numRooms in roomOptions" :value="numRooms">{{ numRooms }}</option>
-                    </select>
-                </div>
-                <div class="col-2"> -->
-                    <!-- <select v-model="minBeds" class="form-select" aria-label="Seleziona il numero minimo di posti letto">
-                        <option value="">Filtra per posti letto...</option>
-                        <option v-for="numBeds in bedOptions" :value="numBeds">{{ numBeds }}</option>
-                    </select>
-                </div>
-            </div> -->
-            
-            <!-- Filtro per indirizzo raggio 20km-->
-            <!-- <div class="mb-2 mt-2">
-                <div class="col-4 col-lg-6">
-                    <input v-model="searchAddress" @input="handleInput" list="suggestions" type="text" class="form-control" placeholder="Inserisci l'indirizzo...">
-                    <datalist id="suggestions">
-                        <option v-for="suggestion in suggestions" :value="suggestion">{{ suggestion }}</option>
-                    </datalist>
-                </div>
-                <div class="col-4 col-lg-4 mt-2">
-                    <select v-model="searchRadius" class="form-select" aria-label="Seleziona il raggio di ricerca">
-                        <option v-for="radius in radiusOptions" :value="radius">{{ radius }} km</option>
-                    </select> -->
-                    <!-- <input v-model="searchRadius" type="range" min="20" :step="20">
-                    <span>{{ searchRadius }}</span>          -->
-                <!-- </div>
-                <div class="col-12 col-lg-2 mt-2">
-                    <button @click="filterByAddress" class="btn btn-primary">Cerca</button>
-                </div>
-            </div> -->
-            
             <!-- tutti gli appartamenti -->
             <ApartmentCard v-for="singleApartment in filteredApartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
 
-
-            <!-- <nav class="d-flex justify-content-center mt-3">
-                <ul class="my-pagination list-unstyled d-flex">
-                    <li class="my-page-item me-3">
-                        <button class="my-page-link" @click="prevPage()" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </button>
-                    </li>
-                    <li class="my-page-item">
-                        <button v-for="pageNumber in lastPage" @click="goToPage(pageNumber)" class="my-page-link d-inline-block"
-                        :class="(pageNumber == currentPage) ? 'active' : ''">
-                            <span aria-hidden="true">{{ pageNumber }}</span>
-                        </button>
-                    </li>
-                    <li class="my-page-item ms-3">
-                        <button class="my-page-link" @click="nextPage()" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </button>
-                    </li>
-                </ul>
-            </nav> -->
         </div>
     </div>
 
