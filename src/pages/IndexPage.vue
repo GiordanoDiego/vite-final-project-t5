@@ -9,8 +9,6 @@ import { RouterView } from 'vue-router';
         data() {
             return {
                 apartments: [],
-                // currentPage: 1,
-                // lastPage: 2,
                 filterTitle: '',
                 searchAddress: '',
                 suggestions: [],
@@ -19,9 +17,11 @@ import { RouterView } from 'vue-router';
                 roomOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'],
                 bedOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'],
                 searchRadius: '20', 
-                radiusOptions: ['20', '30', '40', '50+'], 
+                radiusOptions: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50'], 
                 // Creo una flag per la visibilità dello swiper
-                searchingApt: true
+                showSwiper: true,
+                // Creo una flag per la visibilità dei filtri
+                showFilters: false,
             };
         }, 
         components: {
@@ -49,7 +49,7 @@ import { RouterView } from 'vue-router';
                 }
              },
         methods: {
-            async filterByAddress() {
+            async filterByDistance() {
                 try {
                     const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
                     const filteredApartments = this.apartments.filter(apartment => {
@@ -58,7 +58,25 @@ import { RouterView } from 'vue-router';
                     });
                     this.apartments = filteredApartments;
                     // Cambio il valore della flag per lo swiper
-                    this.searchingApt = false;
+                    this.showSwiper = false;
+                } catch (error) {
+                    console.error('Errore durante il filtro degli appartamenti:', error);
+                }
+            },
+            // Creo una funzione che filtri i risultati in base all'indirizzo scelta dall'utente
+            async filterByAddress() {
+                try {
+                    const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
+                    const filteredApartments = this.apartments.filter(apartment => {
+                        const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
+                        // Filtra solo gli appartamenti entro 20 km dall'indirizzo scelto
+                        return distance <= 20; 
+                    });
+                    this.apartments = filteredApartments;
+                    // Cambia il valore della flag per lo swiper
+                    this.showSwiper = false;
+                    // Cambia il valore della flag per i filtri
+                    this.showFilters = true;
                 } catch (error) {
                     console.error('Errore durante il filtro degli appartamenti:', error);
                 }
@@ -112,32 +130,10 @@ import { RouterView } from 'vue-router';
                         console.log(res.data);
 
                         this.apartments = res.data.results;
-                        // this.currentPage = res.data.results.current_page;
-                        // this.lastPage = res.data.results.last_page;
                     })
             },
-            // nextPage() {
-            //     if (this.currentPage < this.lastPage) {
-
-            //         this.currentPage++;
-
-            //         console.log('currentPage: ', this.currentPage);
-
-            //         this.getApartments(this.currentPage);
-            //     }
-            // },
-            // prevPage() {
-            //     if (this.currentPage > 1) {
-            //          this.goToPage(--this.currentPage);
-            //     }
-            // },
-            // goToPage(pageNumber) {
-            //     this.getApartments(pageNumber);
-            // }
         },
         created() {
-            // this.goToPage(this.currentPage);
-            // this.getApartments(this.currentPage);
             this.getApartments(this.currentPage);
         }
     }
@@ -150,84 +146,69 @@ import { RouterView } from 'vue-router';
         
         <div class="row g-0">
             
-            <div v-if="searchingApt">
+            <div v-if="showSwiper">
                 <ApartmentSponsoredSwiper/>
                 <hr>
             </div>
              
             <h1>
-                Tutti appartamenti
+                I nostri appartamenti
             </h1>
-             <!-- Filtro appartamenti per title -->
-            <div class="mb-2 mt-2 " >
+
+            <!-- Filtro appartamenti per title -->
+            <!-- <div class="mb-2 mt-2 " >
                 <div class="col-12 col-lg-6">
                     <div class="">
                         <input v-model="filterTitle" type="text" name="filter" id="filter" class="form-control" placeholder="cerca per nome...">
                     </div>
                 </div>
-            </div>
-            <!-- filtro per n stanze e per n posti letti -->
-            <div class="row">
-                <div class="col-2">
-                    <!-- filtro per numero minimo di stanze -->
-                    <select v-model="minRooms" class="form-select" aria-label="Seleziona il numero minimo di stanze">
-                        <option value="">Filtra per stanze...</option>
-                        <option v-for="numRooms in roomOptions" :value="numRooms">{{ numRooms }}</option>
-                    </select>
-                </div>
-                <div class="col-2">
-                    <!-- filtro per numero minimo di posti letto -->
-                    <select v-model="minBeds" class="form-select" aria-label="Seleziona il numero minimo di posti letto">
-                        <option value="">Filtra per posti letto...</option>
-                        <option v-for="numBeds in bedOptions" :value="numBeds">{{ numBeds }}</option>
-                    </select>
-                </div>
-            </div>
-            
-            <!-- Filtro per indirizzo raggio 20km-->
-            <div class="mb-2 mt-2">
-                <div class="col-4 col-lg-6">
-                    <input v-model="searchAddress" @input="handleInput" list="suggestions" type="text" class="form-control" placeholder="Inserisci l'indirizzo...">
+            </div> -->
+
+            <!-- Filtro per indirizzo -->
+            <div class="row g-0 justify-content-center mb-2 mt-2">
+                <div class="col-6">
+                    <input v-model="searchAddress" @input="handleInput" list="suggestions" type="text" class="rounded-2 w-100 border-light-subtle" placeholder="Inserisci un indirizzo...">
                     <datalist id="suggestions">
                         <option v-for="suggestion in suggestions" :value="suggestion">{{ suggestion }}</option>
                     </datalist>
                 </div>
-                <div class="col-4 col-lg-4 mt-2">
+                <div class="col-2">
+                    <button @click="filterByAddress()">
+                        Vai
+                    </button>
+                </div>
+            </div>
+
+            <!-- filtro per n stanze e per n posti letti -->
+            <div v-if="showFilters" class="row justify-content-center g-0">
+                <!-- filtro per numero minimo di stanze -->
+                <div class="col-4">
+                    <label for="numRooms">Scegli il numero di stanze:</label>
+                    <select id="numRooms" v-model="minRooms" aria-label="Seleziona il numero minimo di stanze">
+                        <option value="">Filtra per stanze...</option>
+                        <option v-for="numRooms in roomOptions" :value="numRooms">{{ numRooms }}</option>
+                    </select>
+                </div>
+                <!-- filtro per numero minimo di posti letto -->
+                <div class="col-4">
+                    <label for="numBeds">Scegli il numero di letti:</label>
+                    <select id="numBeds" v-model="minBeds" aria-label="Seleziona il numero minimo di posti letto">
+                        <option value="">Filtra per posti letto...</option>
+                        <option v-for="numBeds in bedOptions" :value="numBeds">{{ numBeds }}</option>
+                    </select>
+                </div>
+                <!-- Filtro per raggio km -->
+                <div class="col-4">
                     <select v-model="searchRadius" class="form-select" aria-label="Seleziona il raggio di ricerca">
                         <option v-for="radius in radiusOptions" :value="radius">{{ radius }} km</option>
                     </select>
-                    <!-- <input v-model="searchRadius" type="range" min="20" :step="20">
-                    <span>{{ searchRadius }}</span>          -->
-                </div>
-                <div class="col-12 col-lg-2 mt-2">
-                    <button @click="filterByAddress" class="btn btn-primary">Cerca</button>
+                    <button @click="filterByDistance" class="btn btn-primary">Cerca</button>
                 </div>
             </div>
-            
+
             <!-- tutti gli appartamenti -->
             <ApartmentCard v-for="singleApartment in filteredApartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
 
-
-            <!-- <nav class="d-flex justify-content-center mt-3">
-                <ul class="my-pagination list-unstyled d-flex">
-                    <li class="my-page-item me-3">
-                        <button class="my-page-link" @click="prevPage()" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </button>
-                    </li>
-                    <li class="my-page-item">
-                        <button v-for="pageNumber in lastPage" @click="goToPage(pageNumber)" class="my-page-link d-inline-block"
-                        :class="(pageNumber == currentPage) ? 'active' : ''">
-                            <span aria-hidden="true">{{ pageNumber }}</span>
-                        </button>
-                    </li>
-                    <li class="my-page-item ms-3">
-                        <button class="my-page-link" @click="nextPage()" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </button>
-                    </li>
-                </ul>
-            </nav> -->
         </div>
     </div>
 
