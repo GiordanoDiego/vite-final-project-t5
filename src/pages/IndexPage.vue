@@ -9,15 +9,19 @@ import { RouterView } from 'vue-router';
         data() {
             return {
                 apartments: [],
-                currentPage: 1,
-                lastPage: 2,
+                // currentPage: 1,
+                // lastPage: 2,
                 filterTitle: '',
+                searchAddress: '',
+                suggestions: [],
                 minRooms: '',
                 minBeds: '', 
                 roomOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'],
                 bedOptions: ['1', '2', '3', '4', '5', '6', '7', '8', '9+'],
                 searchRadius: '20', 
                 radiusOptions: ['20', '30', '40', '50+'], 
+                // Creo una flag per la visibilità dello swiper
+                searchingApt: true
             };
         }, 
         components: {
@@ -53,8 +57,29 @@ import { RouterView } from 'vue-router';
                         return distance <= parseInt(this.searchRadius); // Utilizza il raggio selezionato
                     });
                     this.apartments = filteredApartments;
+                    // Cambio il valore della flag per lo swiper
+                    this.searchingApt = false;
                 } catch (error) {
                     console.error('Errore durante il filtro degli appartamenti:', error);
+                }
+            },
+            // Funzione per ottenere i suggerimenti di indirizzo dall'API di TomTom
+            async getSuggestionsFromAddress(address) {
+                try {
+                    const apiKey = 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq';
+                    const response = await axios.get(`https://api.tomtom.com/search/2/search/${encodeURIComponent(address)}.json?key=${apiKey}`);
+                    const suggestions = response.data.results.map(result => result.address.freeformAddress);
+                    this.suggestions = suggestions;
+                } catch (error) {
+                    console.error('Si è verificato un errore durante il recupero dei suggerimenti:', error);
+                }
+            },
+            // Aggiungi questo metodo per gestire l'evento input e ottenere i suggerimenti
+            handleInput() {
+                if (this.searchAddress.trim() !== '') {
+                    this.getSuggestionsFromAddress(this.searchAddress);
+                } else {
+                    this.suggestions = [];
                 }
             },
             // Funzione per ottenere le coordinate dall'indirizzo utilizzando l'API di TomTom
@@ -81,41 +106,38 @@ import { RouterView } from 'vue-router';
                 return degrees * (Math.PI / 180);
             },
             
-            getApartments(page) {
-                axios.get('http://127.0.0.1:8000/api/apartments/', {
-                        params: {
-                            page
-                        }
-                    })
+            getApartments() {
+                axios.get('http://127.0.0.1:8000/api/apartments/')
                     .then(res => {
                         console.log(res.data);
 
-                        this.apartments = res.data.results.data;
-                        this.currentPage = res.data.results.current_page;
-                        this.lastPage = res.data.results.last_page;
+                        this.apartments = res.data.results;
+                        // this.currentPage = res.data.results.current_page;
+                        // this.lastPage = res.data.results.last_page;
                     })
             },
-            nextPage() {
-                if (this.currentPage < this.lastPage) {
+            // nextPage() {
+            //     if (this.currentPage < this.lastPage) {
 
-                    this.currentPage++;
+            //         this.currentPage++;
 
-                    console.log('currentPage: ', this.currentPage);
+            //         console.log('currentPage: ', this.currentPage);
 
-                    this.getApartments(this.currentPage);
-                }
-            },
-            prevPage() {
-                if (this.currentPage > 1) {
-                     this.goToPage(--this.currentPage);
-                }
-            },
-            goToPage(pageNumber) {
-                this.getApartments(pageNumber);
-            }
+            //         this.getApartments(this.currentPage);
+            //     }
+            // },
+            // prevPage() {
+            //     if (this.currentPage > 1) {
+            //          this.goToPage(--this.currentPage);
+            //     }
+            // },
+            // goToPage(pageNumber) {
+            //     this.getApartments(pageNumber);
+            // }
         },
         created() {
             // this.goToPage(this.currentPage);
+            // this.getApartments(this.currentPage);
             this.getApartments(this.currentPage);
         }
     }
@@ -128,8 +150,10 @@ import { RouterView } from 'vue-router';
         
         <div class="row g-0">
             
-            <ApartmentSponsoredSwiper/>
-            <hr>
+            <div v-if="searchingApt">
+                <ApartmentSponsoredSwiper/>
+                <hr>
+            </div>
              
             <h1>
                 Tutti appartamenti
@@ -163,12 +187,17 @@ import { RouterView } from 'vue-router';
             <!-- Filtro per indirizzo raggio 20km-->
             <div class="mb-2 mt-2">
                 <div class="col-4 col-lg-6">
-                    <input v-model="searchAddress" type="text" class="form-control" placeholder="Inserisci l'indirizzo...">
+                    <input v-model="searchAddress" @input="handleInput" list="suggestions" type="text" class="form-control" placeholder="Inserisci l'indirizzo...">
+                    <datalist id="suggestions">
+                        <option v-for="suggestion in suggestions" :value="suggestion">{{ suggestion }}</option>
+                    </datalist>
                 </div>
                 <div class="col-4 col-lg-4 mt-2">
                     <select v-model="searchRadius" class="form-select" aria-label="Seleziona il raggio di ricerca">
                         <option v-for="radius in radiusOptions" :value="radius">{{ radius }} km</option>
                     </select>
+                    <!-- <input v-model="searchRadius" type="range" min="20" :step="20">
+                    <span>{{ searchRadius }}</span>          -->
                 </div>
                 <div class="col-12 col-lg-2 mt-2">
                     <button @click="filterByAddress" class="btn btn-primary">Cerca</button>
@@ -179,7 +208,7 @@ import { RouterView } from 'vue-router';
             <ApartmentCard v-for="singleApartment in filteredApartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
 
 
-            <nav class="d-flex justify-content-center mt-3">
+            <!-- <nav class="d-flex justify-content-center mt-3">
                 <ul class="my-pagination list-unstyled d-flex">
                     <li class="my-page-item me-3">
                         <button class="my-page-link" @click="prevPage()" aria-label="Previous">
@@ -198,7 +227,7 @@ import { RouterView } from 'vue-router';
                         </button>
                     </li>
                 </ul>
-            </nav>
+            </nav> -->
         </div>
     </div>
 
