@@ -103,33 +103,48 @@ import axios from 'axios';
 </script>
 
 <template>
-        <div class="d-flex col-12 ">
+        <div class="d-flex col-12 justify-content-between ">
             <div v-if="apartment != null" class="col-3 single-apartment ">
 
                 <h2 class="text-center">
                     {{ apartment.title }}
                 </h2>
 
+                <div>
+                    <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
+                </div>
+
+                <div class="mt-3">
+                    <h4>
+                        {{ apartment.address }}
+                    </h4>
+                    <p>
+                        <span>{{ apartment.n_rooms }} Stanze</span> <span> {{ apartment.n_baths }} Bagni</span>  <span>{{ apartment.mq }} m²</span>  
+                    </p>
+                </div>
+                <hr>
+                
                 <div v-for="sponsor in apartment.sponsors" :key="sponsor.id">
                     <h5 class="my-3 text-success">
                         Sponsor: {{ sponsor?.title ?? 'NULL' }}
                         <!-- Sponsor: {{ sponsor ? sponsor.title : 'NULL' }} -->
                     </h5>
                 </div>
-
-                <div>
-                    <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
-                </div>
-
+                <hr>
                 <div class="row">
                     <div class="col-12">
                         Servizi: 
+                    <span v-if="apartment.services.length > 0">
                         <span v-for="service in apartment.services" :key="service.id" class="badge rounded-pill text-bg-primary">
-                            {{ service.title }}
+                            <i :class="service.icon + ' pe-2'"></i> {{ service.title }}
                         </span>
+                    </span>
+                    <span v-else>Nessun servizio incluso</span>
                     </div>
                 </div>
-            </div>
+                <hr>
+            </div>     
+        
             <section class="col-4 justify-content-end">
             <div v-if="!alert && !messageSent"  id="form-container" >
                 <h3>
@@ -174,8 +189,10 @@ import axios from 'axios';
                     Messaggio inviato correttamente
                 </div>
             </div>
-        </section>
+            </section>
         </div>
+
+        
 
         
     
@@ -185,18 +202,13 @@ import axios from 'axios';
 @use '../assets/SCSS/partials/variables.scss' as *;
 
 .single-apartment {
-    border: 2px solid black;
-    border-radius: 5px;
-    padding: 15px;
-    margin: 20px auto;
-    height: 400px;
-
-    h2{
-        color: $secondary_text_color;
-    }
+   width: 500px;
     
     img {
         width: 100%;
+        box-sizing: border-box;
+        border-radius: 10%;
+        overflow: hidden;
     }
 }
 
@@ -208,7 +220,15 @@ section {
         margin: 20px 0;
     }
 
+    #form-container{
+        border: 1px solid coral;
+        padding: 10px;
+        border-radius: 5%;
+    }
+    
+
     form{
+        
         label{
             color: $primary_text_color;
             &:last-child{
@@ -219,13 +239,14 @@ section {
             background-color: $primary_background_color;
             color: $secondary_text_color;
         }
+        
     }
 
     .reset_button{
         position: absolute;
         right: 0;
         bottom: 0;
-        
+        margin: 10px;
     }
     
 }
