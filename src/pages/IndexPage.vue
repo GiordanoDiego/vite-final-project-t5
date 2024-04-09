@@ -50,18 +50,10 @@ import { RouterView } from 'vue-router';
             RouterView,
         },
         computed: {
-       
+            // Definisco una funzione per gli appartamenti sponsorizzati
             sponsoredApartments() {
-                const currentDate = new Date(); //data attuale
-                return this.apartments.filter(apartment => {
-                    
-                    if (apartment.sponsors.length > 0) {
-                        const latestEndDate = Math.max(...apartment.sponsors.map(sponsor => new Date(sponsor.date_end)));
-                        return latestEndDate < currentDate;
-                    }
-                    return false;
-                });
-            }
+                return this.apartments.filter(apartment => apartment.sponsors.length > 0);
+                }
              },
         methods: {
             // Creo una funzione che filtri i risultati in base all'indirizzo scelta dall'utente
