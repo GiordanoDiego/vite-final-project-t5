@@ -15,6 +15,7 @@ import axios from 'axios';
             };
         },
         methods: {
+            
             getApartment() {
                 axios.get('http://127.0.0.1:8000/api/apartments/' + this.$route.params.slug)
                     .then(res => {
@@ -94,7 +95,8 @@ import axios from 'axios';
                 this.alert = false;
                 this.messageSent = false;
                 this.apartmentId = null;
-            }
+            },
+            
         },
         created() {
             this.getApartment();
@@ -135,7 +137,7 @@ import axios from 'axios';
                     <div class="col-12">
                         Servizi: 
                     <span v-if="apartment.services.length > 0">
-                        <span v-for="service in apartment.services" :key="service.id" class="badge rounded-pill text-bg-primary">
+                        <span v-for="service in apartment.services" :key="service.id" class=" color badge rounded-pill ">
                             <i :class="service.icon + ' pe-2'"></i> {{ service.title }}
                         </span>
                     </span>
@@ -143,6 +145,11 @@ import axios from 'axios';
                     </div>
                 </div>
                 <hr>
+                <div>
+                   <h4>Prezzo per notte {{ apartment.price }}</h4> 
+                </div>
+                
+
             </div>     
         
             <section class="col-4 justify-content-end">
@@ -170,14 +177,15 @@ import axios from 'axios';
                             Accetto i <a href="#nogo">Termini e le Condizioni</a>
                         </label>                
                     </div>
-
+                    
                     <button type="submit" class="btn submit_button">
                         Invia
                     </button>
+                    <button @click="resetForm()" class="btn ms-3 reset_button btn-secondary" >
+                         Resetta
+                    </button>
                 </form>
-                <button @click="resetForm()" class="btn ms-3 reset_button btn-secondary" >
-                    Resetta
-                </button>
+               
             </div>
             <div v-if="alert" class="card">
                 <div class="card-body">
@@ -201,6 +209,11 @@ import axios from 'axios';
 <style lang="scss" scoped>
 @use '../assets/SCSS/partials/variables.scss' as *;
 
+#map {
+        width: 100vw;
+        height: 100vh;
+      }
+
 .single-apartment {
    width: 500px;
     
@@ -210,6 +223,11 @@ import axios from 'axios';
         border-radius: 10%;
         overflow: hidden;
     }
+}
+
+.color{
+    color: white;
+    background-color: $button_background_color;
 }
 
 section {
@@ -243,7 +261,7 @@ section {
     }
 
     .reset_button{
-        position: absolute;
+        
         right: 0;
         bottom: 0;
         margin: 10px;
