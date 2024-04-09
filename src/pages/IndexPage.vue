@@ -278,7 +278,7 @@ import { RouterView } from 'vue-router';
                                     <div v-for="(singleService, index) in services" :key="index" class="col-lg-3 col-sm-6 col-3">
                                         <input v-model="selectedServices" :value="singleService" class="form-check-input" type="checkbox" :id="'service_' + index">
                                         <label :for="'service_' + index">
-                                                <i :class="singleService.icon" class="px-2"></i>
+                                                <i :class="singleService.icon" class="px-sm-2"></i>
                                                 <span class="d-none d-sm-inline-block">  
                                                     {{ singleService.title }} 
                                                 </span>
@@ -286,7 +286,7 @@ import { RouterView } from 'vue-router';
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-2 mt-2">
+                            <div class="col-4 col-sm-2 mt-2">
                                 <button @click="advancedSearch" class="w-100 border-0">Cerca</button>
                             </div>
                         </div>
