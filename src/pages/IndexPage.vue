@@ -227,7 +227,8 @@ import { RouterView } from 'vue-router';
             </div>
 
             <!-- Filtaggio avanzato -->
-            <div v-if="showFilters" class="advanced-search-container my-2">
+            <!-- v-if="showFilters" -->
+            <div class="advanced-search-container my-2">
                 <div class="row justify-content-center g-0 my-2">
                 
                     <div class="col-12 ">
@@ -249,20 +250,20 @@ import { RouterView } from 'vue-router';
                             <!-- Filtro per il numero di stanze -->
                             <div class="col-12">
                                 <p class="text-light-emphasis">Camere da letto</p>
-                                <div class="row g-0 flex-nowrap flex-shrink-0 overflow-auto">
-                                    <div v-for="(option, index) in roomOptions" :key="index" class="col-1 mx-1 d-flex align-items-center justify-content-center">
+                                <div class="row g-0 flex-nowrap overflow-auto">
+                                    <div v-for="(option, index) in roomOptions" :key="index" class="col-1 mx-1">
                                         <input class="filter-checkbox" type="checkbox" :value="option" :id="'numRooms_' + index" v-model="selectedRoom" @change="handleRoomSelection(option)">
-                                        <label :for="'numRooms_' + index" class="ms-2" :class="{ 'checked': selectedRoom === option }">{{ option }}</label>
+                                        <label :for="'numRooms_' + index" :class="{ 'checked': selectedRoom === option }">{{ option }}</label>
                                     </div>
                                 </div>
                             </div>
                             <!-- Filtro per il numero di letti -->
                             <div class="col-12 mt-2">
                                 <p class="text-light-emphasis">Numero Letti</p>
-                                <div class="row g-0 flex-nowrap flex-shrink-0 overflow-auto">
-                                    <div v-for="(option, index) in bedOptions" :key="index" class="col-1 mx-1 d-flex align-items-center justify-content-center">
+                                <div class="row g-0 flex-nowrap overflow-auto">
+                                    <div v-for="(option, index) in bedOptions" :key="index" class="col-1 mx-1">
                                         <input class="filter-checkbox" type="checkbox" :value="option" :id="'numBeds_' + index" v-model="selectedBed" @change="handleBedSelection(option)">
-                                        <label :for="'numBeds_' + index" class="ms-2" :class="{ 'checked': selectedBed === option }">{{ option }}</label>
+                                        <label :for="'numBeds_' + index" :class="{ 'checked': selectedBed === option }">{{ option }}</label>
                                     </div>
                                 </div>
                             </div>
@@ -333,6 +334,10 @@ import { RouterView } from 'vue-router';
     .advanced-search-container {
         box-shadow: 0px 0px 5px 1px #000000;
         padding: 16px;
+
+        .form-range {
+            color: $form-range-thumb-bg;
+        }
 
         .filter-checkbox {
             display: none;
