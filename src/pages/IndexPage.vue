@@ -249,8 +249,8 @@ import { RouterView } from 'vue-router';
                             <!-- Filtro per il numero di stanze -->
                             <div class="col-12">
                                 <p class="text-light-emphasis">Camere da letto</p>
-                                <div class="row g-0 flex-nowrap overflow-auto justify-content-around">
-                                    <div v-for="(option, index) in roomOptions" :key="index" class="col-1 mx-1">
+                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between">
+                                    <div v-for="(option, index) in roomOptions" :key="index" class="col-auto mx-1">
                                         <input class="filter-checkbox" type="checkbox" :value="option" :id="'numRooms_' + index" v-model="selectedRoom" @change="handleRoomSelection(option)">
                                         <label :for="'numRooms_' + index" :class="{ 'checked': selectedRoom === option }">{{ option }}</label>
                                     </div>
@@ -259,8 +259,8 @@ import { RouterView } from 'vue-router';
                             <!-- Filtro per il numero di letti -->
                             <div class="col-12 mt-2">
                                 <p class="text-light-emphasis">Numero Letti</p>
-                                <div class="row g-0 flex-nowrap overflow-auto justify-content-around">
-                                    <div v-for="(option, index) in bedOptions" :key="index" class="col-1 mx-1">
+                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between">
+                                    <div v-for="(option, index) in bedOptions" :key="index" class="col-auto mx-1">
                                         <input class="filter-checkbox" type="checkbox" :value="option" :id="'numBeds_' + index" v-model="selectedBed" @change="handleBedSelection(option)">
                                         <label :for="'numBeds_' + index" :class="{ 'checked': selectedBed === option }">{{ option }}</label>
                                     </div>
@@ -326,7 +326,7 @@ import { RouterView } from 'vue-router';
             background-color: $button_background_color;
             border-bottom-right-radius: 5px;
             border-top-right-radius: 5px;
-
+            color: white;
         }
     }
 
@@ -367,6 +367,7 @@ import { RouterView } from 'vue-router';
             border-radius: 5px;
             padding: 4px 0;
             margin-top: 5px;
+            color: white;
         }
     }
 </style>
