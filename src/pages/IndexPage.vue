@@ -250,7 +250,7 @@ import { RouterView } from 'vue-router';
                             <!-- Filtro per il numero di stanze -->
                             <div class="col-12">
                                 <p class="text-light-emphasis">Camere da letto</p>
-                                <div class="row g-0 flex-nowrap overflow-auto">
+                                <div class="row g-0 flex-nowrap overflow-auto justify-content-around">
                                     <div v-for="(option, index) in roomOptions" :key="index" class="col-1 mx-1">
                                         <input class="filter-checkbox" type="checkbox" :value="option" :id="'numRooms_' + index" v-model="selectedRoom" @change="handleRoomSelection(option)">
                                         <label :for="'numRooms_' + index" :class="{ 'checked': selectedRoom === option }">{{ option }}</label>
@@ -260,7 +260,7 @@ import { RouterView } from 'vue-router';
                             <!-- Filtro per il numero di letti -->
                             <div class="col-12 mt-2">
                                 <p class="text-light-emphasis">Numero Letti</p>
-                                <div class="row g-0 flex-nowrap overflow-auto">
+                                <div class="row g-0 flex-nowrap overflow-auto justify-content-around">
                                     <div v-for="(option, index) in bedOptions" :key="index" class="col-1 mx-1">
                                         <input class="filter-checkbox" type="checkbox" :value="option" :id="'numBeds_' + index" v-model="selectedBed" @change="handleBedSelection(option)">
                                         <label :for="'numBeds_' + index" :class="{ 'checked': selectedBed === option }">{{ option }}</label>
@@ -275,11 +275,11 @@ import { RouterView } from 'vue-router';
                             <!-- Filtro per i servizi -->
                             <div class="col-12 mt-2">
                                 <div class="row justify-content-around">
-                                    <div v-for="(singleService, index) in services" :key="index" class="col-lg-3 col-6">
+                                    <div v-for="(singleService, index) in services" :key="index" class="col-lg-3 col-sm-6 col-3">
                                         <input v-model="selectedServices" :value="singleService" class="form-check-input" type="checkbox" :id="'service_' + index">
                                         <label :for="'service_' + index">
                                                 <i :class="singleService.icon" class="px-2"></i>
-                                                <span>  
+                                                <span class="d-none d-sm-inline-block">  
                                                     {{ singleService.title }} 
                                                 </span>
                                            </label>
