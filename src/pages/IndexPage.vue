@@ -50,31 +50,43 @@ import { RouterView } from 'vue-router';
             RouterView,
         },
         computed: {
-            // Definisco una funzione per gli appartamenti sponsorizzati
+       
             sponsoredApartments() {
-                return this.apartments.filter(apartment => apartment.sponsors.length > 0);
-                }
+                const currentDate = new Date(); //data attuale
+                return this.apartments.filter(apartment => {
+                    
+                    if (apartment.sponsors.length > 0) {
+                        const latestEndDate = Math.max(...apartment.sponsors.map(sponsor => new Date(sponsor.date_end)));
+                        return latestEndDate < currentDate;
+                    }
+                    return false;
+                });
+            }
              },
         methods: {
             // Creo una funzione che filtri i risultati in base all'indirizzo scelta dall'utente
             async filterByAddress() {
-                try {
-                    // Definisco le variabili di lat e lon che recupererò dall'indirizzo inserito
-                    const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
-                    // Definisco gli appartamenti filtrati 
-                    const filteredApartments = this.apartments.filter(apartment => {
-                        const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
-                        // Filtra solo gli appartamenti entro 20 km dall'indirizzo scelto
-                        return distance <= 20; 
-                    });
-                    // Assegno il risultato del filtraggio agli appartamenti
-                    this.apartments = filteredApartments;
-                    // Cambia il valore della flag per lo swiper
-                    this.showSwiper = false;
-                    // Cambia il valore della flag per i filtri
-                    this.showFilters = true;
-                } catch (error) {
-                    console.error('Errore durante il filtro degli appartamenti:', error);
+                if  (this.searchAddress == '') {
+                    location.reload()
+                } else {
+                    try {
+                        // Definisco le variabili di lat e lon che recupererò dall'indirizzo inserito
+                        const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
+                        // Definisco gli appartamenti filtrati 
+                        const filteredApartments = this.apartments.filter(apartment => {
+                            const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
+                            // Filtra solo gli appartamenti entro 20 km dall'indirizzo scelto
+                            return distance <= 20; 
+                        });
+                        // Assegno il risultato del filtraggio agli appartamenti
+                        this.apartments = filteredApartments;
+                        // Cambia il valore della flag per lo swiper
+                        this.showSwiper = false;
+                        // Cambia il valore della flag per i filtri
+                        this.showFilters = true;
+                    } catch (error) {
+                        console.error('Errore durante il filtro degli appartamenti:', error);
+                    }
                 }
             },
             // Definisco una funzione per ottenere i suggerimenti di indirizzo dall'API di TomTom
@@ -185,6 +197,12 @@ import { RouterView } from 'vue-router';
                     this.selectedBed = selectedOption;
                 }
             },
+            resetForm() {
+                this.searchRadius = '';
+                this.selectedBed = null; 
+                this.selectedRoom = null;
+                this.selectedServices = [];
+            },
         },
         created() {
             // Alla creazione della pagina richiamo tutti gli appartamenti
@@ -207,10 +225,6 @@ import { RouterView } from 'vue-router';
                 <hr>
             </div>
              
-            <h1>
-                I nostri appartamenti
-            </h1>
-
             <!-- Filtro per indirizzo -->
             <div class="row g-0 justify-content-center align-items-center mb-2 mt-2">
                 <div class="col-4 my-container">
@@ -220,73 +234,92 @@ import { RouterView } from 'vue-router';
                     </datalist>
                 </div>
                 <div class="col-1 my-container">
-                    <button @click="filterByAddress()" class="w-100 border-0">
+                    <button @click="filterByAddress()" class="w-100 border-0 go-button">
                         Vai
+                    </button>
+                </div>
+                <div class="col-auto ps-2">
+                    <button v-if="showFilters" type="button" class="filter-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        <i class="fa-solid fa-sliders"></i>
                     </button>
                 </div>
             </div>
 
-            <!-- Filtaggio avanzato -->
-            <div v-if="showFilters" class="advanced-search-container my-2">
-                <div class="row justify-content-center g-0 my-2">
-                
-                    <div class="col-12 ">
-
-                        <!-- Filtro appartamenti per title -->
-                        <div class="row g-0 justify-content-center">
-                            <div class="col-12 col-lg-6">
-                                <div>
-                                    <input v-model="filterTitle" type="text" name="filter" id="filter" class="form-control" placeholder="cerca per nome...">
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Filtri</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Filtaggio avanzato -->
+                            <div class="advanced-search-container my-2">
+                                <div class="row justify-content-center g-0 my-2">
+                                    <div class="col-12 ">
+                                        <!-- Filtro appartamenti per title -->
+                                        <div class="row g-0 justify-content-center">
+                                            <div class="col-12 col-lg-6">
+                                                <div>
+                                                    <input v-model="filterTitle" type="text" name="filter" id="filter" class="form-control" placeholder="cerca per nome...">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- filtro per numero minimo di stanze -->
+                                        <div class="row g-0 justify-content-center">
+                                            <h5 class="mt-2">
+                                                Stanze e letti
+                                            </h5>
+                                            <!-- Filtro per il numero di stanze -->
+                                            <div class="col-12">
+                                                <p class="text-light-emphasis">Camere da letto</p>
+                                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between">
+                                                    <div v-for="(option, index) in roomOptions" :key="index" class="col-auto mx-1">
+                                                        <input class="filter-checkbox" type="checkbox" :value="option" :id="'numRooms_' + index" v-model="selectedRoom" @change="handleRoomSelection(option)">
+                                                        <label :for="'numRooms_' + index" :class="{ 'checked': selectedRoom === option }">{{ option }}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Filtro per il numero di letti -->
+                                            <div class="col-12 mt-2">
+                                                <p class="text-light-emphasis">Numero Letti</p>
+                                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between">
+                                                    <div v-for="(option, index) in bedOptions" :key="index" class="col-auto mx-1">
+                                                        <input class="filter-checkbox" type="checkbox" :value="option" :id="'numBeds_' + index" v-model="selectedBed" @change="handleBedSelection(option)">
+                                                        <label :for="'numBeds_' + index" :class="{ 'checked': selectedBed === option }">{{ option }}</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Filtro per il raggio di km -->
+                                            <div class="col-10 col-sm-6 mt-2">
+                                                <label for="searchRadius">Nelle vicinanze ({{ searchRadius }} km):</label>
+                                                <input type="range" id="searchRadius" v-model="searchRadius" min="5" max="50" step="5" class="form-range">
+                                            </div>
+                                            <!-- Filtro per i servizi -->
+                                            <div class="col-12 mt-2">
+                                                <div class="row justify-content-around">
+                                                    <div v-for="(singleService, index) in services" :key="index" class="col-sm-6 col-3">
+                                                        <input v-model="selectedServices" :value="singleService" class="form-check-input" type="checkbox" :id="'service_' + index">
+                                                        <label :for="'service_' + index">
+                                                                <i :class="singleService.icon" class="ps-1 px-sm-1"></i>
+                                                                <span class="d-none d-sm-inline-block">  
+                                                                    {{ singleService.title }} 
+                                                                </span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- filtro per numero minimo di stanze -->
-                        <div class="row g-0 justify-content-center">
-                            <h5 class="mt-2">
-                                Stanze e letti
-                            </h5>
-                            <!-- Filtro per il numero di stanze -->
-                            <div class="col-12">
-                                <p class="text-light-emphasis">Camere da letto</p>
-                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between">
-                                    <div v-for="(option, index) in roomOptions" :key="index" class="col-auto mx-1">
-                                        <input class="filter-checkbox" type="checkbox" :value="option" :id="'numRooms_' + index" v-model="selectedRoom" @change="handleRoomSelection(option)">
-                                        <label :for="'numRooms_' + index" :class="{ 'checked': selectedRoom === option }">{{ option }}</label>
-                                    </div>
-                                </div>
+                        <div class="modal-footer justify-content-center align-items-center">
+                            <div class="col-4 col-sm-2">
+                                <button @click="resetForm()" type="button" class="w-100 clear-button border-0">Pulisci</button>
                             </div>
-                            <!-- Filtro per il numero di letti -->
-                            <div class="col-12 mt-2">
-                                <p class="text-light-emphasis">Numero Letti</p>
-                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between">
-                                    <div v-for="(option, index) in bedOptions" :key="index" class="col-auto mx-1">
-                                        <input class="filter-checkbox" type="checkbox" :value="option" :id="'numBeds_' + index" v-model="selectedBed" @change="handleBedSelection(option)">
-                                        <label :for="'numBeds_' + index" :class="{ 'checked': selectedBed === option }">{{ option }}</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Filtro per il raggio di km -->
-                            <div class="col-10 col-sm-6 col-md-4 mt-2">
-                                <label for="searchRadius">Nelle vicinanze ({{ searchRadius }} km):</label>
-                                <input type="range" id="searchRadius" v-model="searchRadius" min="5" max="50" step="5" class="form-range">
-                            </div>
-                            <!-- Filtro per i servizi -->
-                            <div class="col-12 mt-2">
-                                <div class="row justify-content-around">
-                                    <div v-for="(singleService, index) in services" :key="index" class="col-lg-3 col-sm-6 col-3">
-                                        <input v-model="selectedServices" :value="singleService" class="form-check-input" type="checkbox" :id="'service_' + index">
-                                        <label :for="'service_' + index">
-                                                <i :class="singleService.icon" class="px-sm-2"></i>
-                                                <span class="d-none d-sm-inline-block">  
-                                                    {{ singleService.title }} 
-                                                </span>
-                                           </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 col-sm-2 mt-2">
-                                <button @click="advancedSearch" class="w-100 border-0">Cerca</button>
+                            <div class="col-4 col-sm-2">
+                                <button type="button" @click="advancedSearch" class="my-button w-100 border-0" data-bs-dismiss="modal">Cerca</button>
                             </div>
                         </div>
                     </div>
@@ -309,8 +342,8 @@ import { RouterView } from 'vue-router';
     }
 
     .my-container {
-        // box-shadow: 0px 0px 4px 4px #AAB2FF;
-        box-shadow: 0px 0px 5px 1px #000000;
+        border: 0.5px solid;
+        border-color: black;
         border-radius: 5px;
 
         input, button {
@@ -321,13 +354,24 @@ import { RouterView } from 'vue-router';
             border-bottom-left-radius: 5px;
             border-top-left-radius: 5px;
         }
-
-        button {
+        .go-button {
             background-color: $button_background_color;
             border-bottom-right-radius: 5px;
             border-top-right-radius: 5px;
             color: white;
         }
+    }
+
+    .filter-button {
+        background-color: #cbcbcb;
+        border: 0;
+        border-radius: 5px;
+        color: white;
+        padding: 4px 8px;
+    }
+
+    .my-container:hover, .filter-button:hover {
+        box-shadow: 0px 0px 5px 1px #000000;
     }
 
     .advanced-search-container {
@@ -362,12 +406,24 @@ import { RouterView } from 'vue-router';
             background-color: $primary_text_color;
         }
 
-        button {
-            background-color: $button_background_color;
+    }
+
+    .modal-footer {
+
+        .clear-button, .my-button {
             border-radius: 5px;
-            padding: 4px 0;
-            margin-top: 5px;
+            padding: 6px 12px;
             color: white;
+        }
+        .my-button {
+            background-color: $button_background_color;
+        }
+
+        .clear-button {
+            background-color: #cbcbcb;
+        }
+        .clear-button:hover, .my-button:hover {
+        box-shadow: 0px 0px 5px 1px #000000;
         }
     }
 </style>
