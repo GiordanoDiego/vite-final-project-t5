@@ -58,23 +58,27 @@ import { RouterView } from 'vue-router';
         methods: {
             // Creo una funzione che filtri i risultati in base all'indirizzo scelta dall'utente
             async filterByAddress() {
-                try {
-                    // Definisco le variabili di lat e lon che recupererò dall'indirizzo inserito
-                    const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
-                    // Definisco gli appartamenti filtrati 
-                    const filteredApartments = this.apartments.filter(apartment => {
-                        const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
-                        // Filtra solo gli appartamenti entro 20 km dall'indirizzo scelto
-                        return distance <= 20; 
-                    });
-                    // Assegno il risultato del filtraggio agli appartamenti
-                    this.apartments = filteredApartments;
-                    // Cambia il valore della flag per lo swiper
-                    this.showSwiper = false;
-                    // Cambia il valore della flag per i filtri
-                    this.showFilters = true;
-                } catch (error) {
-                    console.error('Errore durante il filtro degli appartamenti:', error);
+                if  (this.searchAddress == '') {
+                    location.reload()
+                } else {
+                    try {
+                        // Definisco le variabili di lat e lon che recupererò dall'indirizzo inserito
+                        const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
+                        // Definisco gli appartamenti filtrati 
+                        const filteredApartments = this.apartments.filter(apartment => {
+                            const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
+                            // Filtra solo gli appartamenti entro 20 km dall'indirizzo scelto
+                            return distance <= 20; 
+                        });
+                        // Assegno il risultato del filtraggio agli appartamenti
+                        this.apartments = filteredApartments;
+                        // Cambia il valore della flag per lo swiper
+                        this.showSwiper = false;
+                        // Cambia il valore della flag per i filtri
+                        this.showFilters = true;
+                    } catch (error) {
+                        console.error('Errore durante il filtro degli appartamenti:', error);
+                    }
                 }
             },
             // Definisco una funzione per ottenere i suggerimenti di indirizzo dall'API di TomTom
