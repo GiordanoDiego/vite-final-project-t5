@@ -110,42 +110,42 @@ import { computed } from 'vue';
         }
     }
 
-    .show_single_apartment_button{
-        background-color: $button_background_color;
-        color: white;
-        padding: 2px 5px;
-        margin-top: 8px;
-        display: flex;
-        justify-content: center;
-    }
-
     .address_container{
         font-size: 0.8em;
     }
-    .single_service {
-        position: relative;
-        margin-right: 3px;
-        color: white;
-        background-color: $button_background_color;
-    }
+    // .show_single_apartment_button{
+    //     background-color: $button_background_color;
+    //     color: white;
+    //     padding: 2px 5px;
+    //     margin-top: 8px;
+    //     display: flex;
+    //     justify-content: center;
+    // }
 
-    .tooltip-text {
-        visibility: hidden;
-        background-color: $button_background_color;
-        color: white;
-        text-align: center;
-        border-radius: 6px;
-        padding: 5px;
-        position: absolute;
-        z-index: 1;
-        bottom: 100%;
+    // .single_service {
+    //     position: relative;
+    //     margin-right: 3px;
+    //     color: white;
+    //     background-color: $button_background_color;
+    // }
 
-        transform: translateX(-20%);
-    }
+    // .tooltip-text {
+    //     visibility: hidden;
+    //     background-color: $button_background_color;
+    //     color: white;
+    //     text-align: center;
+    //     border-radius: 6px;
+    //     padding: 5px;
+    //     position: absolute;
+    //     z-index: 1;
+    //     bottom: 100%;
 
-    .single_service:hover .tooltip-text {
-        visibility: visible;
-    }
+    //     transform: translateX(-20%);
+    // }
+
+    // .single_service:hover .tooltip-text {
+    //     visibility: visible;
+    // }
 
 
 }

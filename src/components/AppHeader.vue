@@ -15,10 +15,10 @@ export default {
                     name: 'Home',
                     url: 'home'
                 },     
-                {
-                    name: 'Appartamenti',
-                    url: 'apartments.index'
-                },                       
+                // {
+                //     name: 'Appartamenti',
+                //     url: 'apartments.index'
+                // },                       
             ]
         }
         
@@ -37,6 +37,11 @@ export default {
             <div class="logo_container">
                 <img src="/img/logo_vv.svg" alt="">
             </div>
+            <div class="name_container d-none d-md-flex">
+                <a href="http://localhost:5174">
+                    <img src="/img/vvilla_header.svg" alt="">
+                </a>
+            </div>
             <div class="align-items-center justify-content-between">
                 <nav>
                     <div class="d-md-block mx-4">
@@ -51,27 +56,31 @@ export default {
                                     </span>
                                 </router-link>
                             </li>
-                            <div class="dropdown">
-                                <button class="btn-secondary dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-user"></i>
+                            <div class="btn-group my-button" role="group">
+                                <button type="button" class="btn d-flex align-items-center justify-content-between" data-bs-toggle="dropdown" aria-expanded="false">        
+                                    <div class="dropdown">
+                                        <button class="btn-secondary dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-user"></i>
+                                        </button>
+                                        <ul class="dropdown-menu" style="margin:0;">
+                                            <li>
+                                                <a href="http://127.0.0.1:8000/login" class="text-decoration-none dropdown-item">
+                                                    <span>
+                                                        Login
+                                                    </span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="http://127.0.0.1:8000/register" class="text-decoration-none dropdown-item">
+                                                    <span>
+                                                        Register
+                                                    </span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </button>
-                                <ul class="dropdown-menu" style="margin:0;">
-                                    <li>
-                                        <a href="http://127.0.0.1:8000/login" class="text-decoration-none dropdown-item">
-                                            <span>
-                                                Login
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="http://127.0.0.1:8000/register" class="text-decoration-none dropdown-item">
-                                            <span>
-                                                Register
-                                            </span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>         
+                            </div>
                         </ul>
                     </div>
                 </nav>              
