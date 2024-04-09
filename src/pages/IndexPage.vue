@@ -227,8 +227,7 @@ import { RouterView } from 'vue-router';
             </div>
 
             <!-- Filtaggio avanzato -->
-            <!-- v-if="showFilters" -->
-            <div class="advanced-search-container my-2">
+            <div v-if="showFilters" class="advanced-search-container my-2">
                 <div class="row justify-content-center g-0 my-2">
                 
                     <div class="col-12 ">
