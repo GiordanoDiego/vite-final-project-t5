@@ -46,21 +46,17 @@ export default {
             </div>
             <div class="align-items-center justify-content-between">
                 <nav>
-                    <div class="d-md-block mx-4">
-                        <ul style="margin:0; padding: 0;">
-                            <li v-for="link in links">
-                                <router-link :to="{ name: link.url }" class="text-decoration-none">
-                                    <span class="d-none d-md-block">
-                                        {{ link.name }}
-                                    </span>
-                                    <span class="d-block d-md-none">
-                                        <i class="fa-solid fa-house"></i>
-                                    </span>
-                                </router-link>
-                            </li>
-                            <div class="btn-group my-button" role="group">
-                                <button type="button" class="btn d-flex align-items-center justify-content-between" data-bs-toggle="dropdown" aria-expanded="false">        
-                                    <div class="dropdown">
+                    <div class="d-flex justify-content-end align-content-center ">
+                        <div class="d-flex justify-content-center align-items-center me-3  ">
+                            <a href="http://localhost:5174" class="link_home_container">
+                                <!-- <i class="fa-solid fa-house"></i> -->
+                                <span>Home</span>
+                                <span><i class="fa-solid fa-house"></i></span>
+                            </a>
+                        </div>
+                        <div class="d-flex justify-content-center btn-group my-button" role="group">
+                            <button type="button" class="btn d-flex align-items-center justify-content-between p-0" data-bs-toggle="dropdown" aria-expanded="false">        
+                                <div class="dropdown">
                                         <button class="btn-secondary dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa-solid fa-user"></i>
                                         </button>
@@ -80,10 +76,9 @@ export default {
                                                 </a>
                                             </li>
                                         </ul>
-                                    </div>
-                                </button>
-                            </div>
-                        </ul>
+                                </div>
+                            </button>                                
+                        </div>
                     </div>
                 </nav>              
             </div>
