@@ -11,6 +11,8 @@ import { RouterView } from 'vue-router';
             return {
                 // Definisco un array vuoto dove andrò ad inserire gli Appartamenti
                 apartments: [],
+                // Definisco un altro array vuoto dove inserirò una copia degli Appartamenti
+                originalApartments: [],
                 // Definisco una variabile che utilizzerò per filtrare per nome dell'appartamento
                 filterTitle: '',
                 // Definisco una variabile che utilizzerò per filtrare per indirizzo
@@ -62,10 +64,12 @@ import { RouterView } from 'vue-router';
                     location.reload()
                 } else {
                     try {
+
                         // Definisco le variabili di lat e lon che recupererò dall'indirizzo inserito
                         const { lat, lon } = await this.getCoordinatesFromAddress(this.searchAddress);
+
                         // Definisco gli appartamenti filtrati 
-                        const filteredApartments = this.apartments.filter(apartment => {
+                        const filteredApartments = this.originalApartments.filter(apartment => {
                             const distance = this.calculateDistance(lat, lon, apartment.lat, apartment.lon);
                             // Filtra solo gli appartamenti entro 20 km dall'indirizzo scelto
                             return distance <= 20; 
@@ -100,6 +104,10 @@ import { RouterView } from 'vue-router';
                     this.suggestions = [];
                 }
             },
+            selectAddress(address) {
+                this.searchAddress = address;
+                this.suggestions = []; // Nascondi la lista dei suggerimenti una volta selezionato un indirizzo
+            },  
             // Definico una funzione per ottenere le coordinate dall'indirizzo utilizzando l'API di TomTom
             async getCoordinatesFromAddress(address) {
                 const apiKey = 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq';
@@ -132,6 +140,7 @@ import { RouterView } from 'vue-router';
                         console.log(res.data);
 
                         this.apartments = res.data.results;
+                        this.originalApartments = [...this.apartments];
                     })
             },
             // Definisco una funzione per il filtraggio avanzato tra gli appartamenti 
@@ -219,16 +228,27 @@ import { RouterView } from 'vue-router';
              
             <!-- Filtro per indirizzo -->
             <div class="row g-0 justify-content-center align-items-center mb-2 mt-2">
-                <div class="col-4 my-container">
+                <!-- <div class="col-4 my-container">
                     <input v-model="searchAddress" @input="handleInput" list="suggestions" type="text" class="w-100 border-light-subtle border-0" placeholder="Inserisci un indirizzo...">
-                    <datalist id="suggestions">
-                        <option v-for="suggestion in suggestions" :value="suggestion">{{ suggestion }}</option>
-                    </datalist>
+                    <ul v-if="suggestions.length > 0" class="list-group search-suggestions">
+                        <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item" @click="selectAddress(suggestion)">{{ suggestion }}</li>
+                    </ul>
                 </div>
-                <div class="col-1 my-container">
+                <div class="col-auto my-container">
                     <button @click="filterByAddress()" class="w-100 border-0 go-button">
-                        Vai
+                        <i class="fa-solid fa-magnifying-glass"></i>
                     </button>
+                </div> -->
+                <div class="col-4 my-container">
+                    <span class="input-with-button">
+                        <input v-model="searchAddress" @input="handleInput" list="suggestions" type="text" class="w-100 border-0" placeholder="Inserisci un indirizzo...">
+                        <button @click="filterByAddress()" class="go-button">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </span>
+                    <ul v-if="suggestions.length > 0" class="list-group search-suggestions">
+                        <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item" @click="selectAddress(suggestion)">{{ suggestion }}</li>
+                    </ul>
                 </div>
                 <div class="col-auto ps-2">
                     <button v-if="showFilters" type="button" class="filter-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -236,7 +256,7 @@ import { RouterView } from 'vue-router';
                     </button>
                 </div>
             </div>
-
+            <!-- Modale per filtraggio avanzato -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -334,35 +354,63 @@ import { RouterView } from 'vue-router';
     }
 
     .my-container {
-        border: 0.5px solid;
-        border-color: black;
-        border-radius: 5px;
+        cursor: pointer;
+        border: 0.5px solid rgba(0, 0, 0, 0.521);
+        border-radius: 50px;
+        .input-with-button {
+            display: flex;
+            align-items: center;
 
-        input, button {
-            padding: 4px;
+            input:focus {
+                outline: none; 
+                border-color: #ced4da; 
+            }
+
+            input {
+                padding: 4px;
+                border-radius: 50px;
+            }
+
+            .go-button {
+                border: 0;
+                padding: 4px 8px;
+                border-radius: 50px;
+                background-color: #ea4c89f8;
+                color: white;
+            }
+
         }
 
-        input {
-            border-bottom-left-radius: 5px;
-            border-top-left-radius: 5px;
+
+        .search-suggestions {
+            position: absolute;
+            background-color: #ffffff;
+            border-radius: 5px;
+            z-index: 1000;
+            max-height: 200px;
+            overflow-y: auto;
+            }
+
+            .search-suggestions li {
+            padding: 5px;
+            cursor: pointer;
+            }
+
+            .search-suggestions li:hover {
+            background-color: #f0f0f0;
         }
-        .go-button {
-            background-color: $button_background_color;
-            border-bottom-right-radius: 5px;
-            border-top-right-radius: 5px;
-            color: white;
-        }
+
     }
 
     .filter-button {
         background-color: #cbcbcb;
-        border: 0;
-        border-radius: 5px;
+        border: 0.5px solid rgba(0, 0, 0, 0.521);
+        border-radius: 50px;
         color: white;
         padding: 4px 8px;
     }
 
-    .my-container:hover, .filter-button:hover {
+    .go-button:hover, .filter-button:hover, .my-container:hover{
         box-shadow: 0px 0px 5px 1px #000000;
     }
 
@@ -401,7 +449,6 @@ import { RouterView } from 'vue-router';
     }
 
     .modal-footer {
-
         .clear-button, .my-button {
             border-radius: 5px;
             padding: 6px 12px;
@@ -415,7 +462,7 @@ import { RouterView } from 'vue-router';
             background-color: #cbcbcb;
         }
         .clear-button:hover, .my-button:hover {
-        box-shadow: 0px 0px 5px 1px #000000;
+            box-shadow: 0px 0px 5px 1px #000000;
         }
     }
 </style>
