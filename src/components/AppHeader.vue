@@ -32,19 +32,19 @@ export default {
 </script>
 
 <template>
-     <header>
-        <div class="header_container d-flex justify-content-between align-items-center">
-            <div class="logo_container">
+    <header>
+        <div class="row">
+            <div class="col-3 logo_container">
                 <a href="http://localhost:5174">
                     <img src="/img/logo_VV_ridimensionato.svg" alt="">
                 </a>
             </div>
-            <div class="name_container d-none d-md-flex">
+            <div class="col-6 d-flex  justify-content-center  name_container d-none d-md-flex">
                 <a href="http://localhost:5174">
                     <img src="/img/vvilla_header.svg" alt="">
                 </a>
             </div>
-            <div class="align-items-center justify-content-between">
+            <div class="col-3 align-items-center justify-content-between">
                 <nav>
                     <div class="d-flex justify-content-end align-content-center ">
                         <div class="d-flex justify-content-center align-items-center me-3  ">
@@ -84,6 +84,7 @@ export default {
             </div>
         </div>
      </header>
+    
 </template>
 
 <style lang="scss" scoped>

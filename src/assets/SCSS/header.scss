@@ -27,26 +27,8 @@ header {
         }
     }
 
-    .header_container{
-        .logo_container{
-            padding-left: 5px;
-            padding-top: 5px;
-            img{
-                height: 100%;
-            }
-        }
-        .name_container{
-            display: flex;
-            align-items: center;
-            img{
-                height: 30%;
-            }
-        }    
-    }
-
+  
     nav {
-        
-       
         .dropdown_button{
             background-color: white;
             border: none;
