@@ -1,0 +1,23 @@
+<!--<html>
+    <head>
+        <link rel="stylesheet" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.15.0/naps/naps.css" type="text/css">
+        <script type="text/javascript" src="https://api.tomtom.com/maps-sdk-far-web/cdn/6.x/6.15.0/maps-web.min.js"></script>
+    </head>
+    <body>
+        <div id="ma" style="width: 40vw;height: 350px;">
+
+        </div>
+    </body>
+    <script type="text/javascript">
+        let center= [4,44,4]
+        const map = tt.map({
+            key: "x5vTIPGVXKGawffLrAoysmnVC9V0S8cq",
+            container:"map",
+            center: center,
+            zoom: 10
+        })
+        map.on('load', () => {
+            new tt.Marker().setLngLat(center).addTo(map)
+        })
+    </script>
+</html>
