@@ -1,5 +1,7 @@
 <script >
 import axios from 'axios';
+import tt from '@tomtom-international/web-sdk-maps';
+import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
     export default {
         data() 
@@ -28,13 +30,10 @@ import axios from 'axios';
     
         
         methods: {
-            
-        
-            
             getApartment() {
-                axios.get('http://127.0.0.1:8000/api/apartments/' + this.$route.params.slug)
-                    .then(res => {
-                        console.log(res.data);
+            axios.get('http://127.0.0.1:8000/api/apartments/' + this.$route.params.slug)
+                .then(res => {
+                    console.log(res.data);
 
                     // Se la chiamata ha buon fine
                     if (res.data.success == true) {
@@ -43,15 +42,16 @@ import axios from 'axios';
                         console.log(this.apartment);
                         // Assegna l'ID dell'appartamento
                         this.apartmentId = this.apartment.id; 
+                        
+                        // Inizializza la mappa con le coordinate dell'appartamento
+                        this.initTomTomMap(this.apartment.lat, this.apartment.lon);
 
                     } else {
                         // Altrimenti restituiamo la pagina d'errore
                         this.$router.push({ name: 'not-found' });
                     }
-
                 })
-
-            },
+        },
             sendMessage() {
                     if (this.name != null
                         && 
@@ -112,21 +112,21 @@ import axios from 'axios';
                 this.messageSent = false;
                 this.apartmentId = null;
             },
-           /* initTomTomMap() {
-                // Inizializza la mappa TomTom
-                let center =  [4,44.4]
-                const map = tt.map({
-                    key: '3lvx7A4Usgik9PGmpGZi4Q9yZlaw47Oi',
-                    container: 'mapId',
-                    center: center,
-                    zoom: 10
-                });
-
-             // Aggiungi un marker al centro della mappa
-             map.on('load', () => {
-                 new tt.Marker().setLngLat(center).addTo(map);
+            initTomTomMap(lat, lon) {
+            const map = tt.map({
+                key: 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq',
+                container: 'mapId',
+                center: [lon, lat], // Inverti l'ordine di lon e lat
+                zoom: 10
             });
-        }*/
+
+            // Aggiungi un marker al centro della mappa
+            map.on('load', () => {
+                new tt.Marker().setLngLat([lon, lat]).addTo(map);
+            });
+        }
+
+            
         },
         computed: {
             // Calcolo della parte intera del prezzo
@@ -248,7 +248,10 @@ import axios from 'axios';
             </div>
             </section>
         </div>
-
+        <!-- Mappa -->
+        <div class="col-sm-12 mt-3">
+            <div id="mapId" style="height: 400px;"></div>
+        </div>
         
 
         
@@ -259,9 +262,9 @@ import axios from 'axios';
 @use '../assets/SCSS/partials/variables.scss' as *;
 
 #map {
-        width: 100vw;
-        height: 100vh;
-      }
+    width: 100%;
+    height: 100%;
+}
 
 .single-apartment {
    width: 500px;

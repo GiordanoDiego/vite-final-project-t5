@@ -42,4 +42,6 @@ export default {
 
 <style lang="scss"> //tolgo scoped per applicare il reset al body
       @use "./assets/SCSS/main.scss" as *;
+    
+
 </style>
