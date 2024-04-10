@@ -1,29 +1,4 @@
-<!--Assistenza
-Centro Assistenza
-AirCover
-Antidiscriminazione
-Supporto alla disabilità
-Opzioni di cancellazione
-Segnala problema nel quartiere
 
-Ospitare
-Apri un Airbnb
-AirCover per gli host
-Risorse per gli host
-Forum della community
-Ospitare responsabilmente
-Partecipa a una lezione gratuita sull'ospitalità
-
-
-
-Boolbnb
-Newsroom
-Nuove funzionalità
-Opportunità di lavoro
-Investitori
-Gift card
-Soggiorni con Airbnb.org
--->
 
 <script>
 export default {
@@ -95,8 +70,6 @@ export default {
                 },
                 
             ],
-            
-
         };
     },
     methods: {
@@ -106,8 +79,42 @@ export default {
 </script>
 
 <template>
-    
-    <footer  class="container-fluid">
+   <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-6">
+                    <ul>
+                        <li>
+                            © 2024 VacationVilla
+                        </li>
+                        <li>
+                            -
+                        </li>
+                        <li>
+                            <a href="">Privay</a>
+                        </li>
+                        <li>
+                            <a href="">Termini</a>
+                        </li>
+                        <li>
+                            <a href="">Dettagli azienda</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-6">
+                    <div class="d-flex justify-content-end ">
+                        <div class="me-2">
+                            <i class="fa-solid fa-globe"></i> Italiano
+                        </div>
+                        <div>
+                            €
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </footer> 
+    <!-- <footer  class="container-fluid">
        <hr> 
         <div class="container-md">
             <div class="row">
@@ -153,7 +160,7 @@ export default {
 
         
        
-    </footer>
+    </footer> -->
 </template>
 
 <style lang="scss" scoped>

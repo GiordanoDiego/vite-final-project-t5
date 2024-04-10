@@ -1,35 +1,65 @@
 @use './partials/variables.scss' as *;
 @use './partials/mixins.scss' as *;
 
-.container-fluid{
+footer{
+    border-top: 1px solid grey;
+    padding: 2px 0;
+    height: 30px;
     
-    background-color: #F7F7F7;
-    color:black; 
-    
-    
-    
-}
-.row{
-    align-items: center;
-    justify-content: center;
-}
 
+    ul{
+        text-decoration: none;
+        display: flex;
+        list-style: none;
+        color: grey;
 
-footer .row h5{
-    margin-left: 34px;
-    
-    color: black;
-}
-
-ul {
-    list-style: none;
-    
-    li:hover{
-        color:#F2870C ;
-        
+        li{
+            margin-right: 5px;
+            font-size: 0.9em;
+            a{
+                text-decoration: none;
+                color: grey;
+            }
+        }
     }
-  
 }
+@media screen and (max-width: 998px) {
+    li:not(:first-child) {
+        display: none;
+    }
+}
+
+
+
+// .container-fluid{
+    
+//     background-color: #F7F7F7;
+//     color:black; 
+    
+    
+    
+// }
+// .row{
+//     align-items: center;
+//     justify-content: center;
+// }
+
+
+// footer .row h5{
+//     margin-left: 34px;
+    
+//     color: black;
+// }
+
+// ul {
+//     list-style: none;
+    
+//     li:hover{
+//         color:#F2870C ;
+        
+//     }
+  
+// }
 
 
 

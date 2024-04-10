@@ -4,16 +4,16 @@
 
 header {
     position: sticky;
-    height: 150px;
+    height: 50px;
     top: 0;
     z-index: 1000;
+    padding-left: 10px;
     
 
     .header_container{
-        background-color: $primary_background_color;
+    
     
         .logo_container{
-            height: 100px;
             padding-left: 5px;
             padding-top: 5px;
             img{
@@ -21,7 +21,6 @@ header {
             }
         }
         .name_container{
-            height: 100px;
             display: flex;
             align-items: center;
             img{

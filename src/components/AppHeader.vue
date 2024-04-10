@@ -35,7 +35,9 @@ export default {
      <header>
         <div class="header_container d-flex justify-content-between align-items-center">
             <div class="logo_container">
-                <img src="/img/logo_vv.svg" alt="">
+                <a href="http://localhost:5174">
+                    <img src="/img/logo_VV_ridimensionato.svg" alt="">
+                </a>
             </div>
             <div class="name_container d-none d-md-flex">
                 <a href="http://localhost:5174">
