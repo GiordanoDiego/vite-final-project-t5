@@ -385,18 +385,17 @@ import { RouterView } from 'vue-router';
 
 
         .search-suggestions {
-            // position: absolute;
             background-color: #ffffff;
             border-radius: 5px;
             z-index: 1000;
             max-height: 200px;
             overflow-y: auto;
+            position: absolute;
+            top: 100%;
         } 
 
             .search-suggestions li {
             padding: 5px;
-            position: absolute;
-            top: 0;
             cursor: pointer;
             }
 
