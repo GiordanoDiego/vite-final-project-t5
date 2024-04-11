@@ -162,15 +162,16 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
             <div v-if="apartment != null" class="col-sm-6 col-md-6 col-12 single-apartment ">
                 
 
-                <h2 class="text-center">
-                    {{ apartment.title }}
-                </h2>
+               
 
                 <div>
                     <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
                 </div>
 
                 <div class="mt-3">
+                    <h2 >
+                        {{ apartment.title }}
+                    </h2>
                     <h4>
                         {{ apartment.address }}
                     </h4>
