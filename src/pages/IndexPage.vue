@@ -245,10 +245,10 @@ import { RouterView } from 'vue-router';
                         <button @click="filterByAddress()" class="go-button">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
+                        <ul v-if="suggestions.length > 0" class="list-group search-suggestions">
+                            <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item" @click="selectAddress(suggestion)">{{ suggestion }}</li>
+                        </ul>
                     </span>
-                    <ul v-if="suggestions.length > 0" class="list-group search-suggestions">
-                        <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item" @click="selectAddress(suggestion)">{{ suggestion }}</li>
-                    </ul>
                 </div>
                 <div class="col-auto ps-2">
                     <button v-if="showFilters" type="button" class="filter-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -256,6 +256,7 @@ import { RouterView } from 'vue-router';
                     </button>
                 </div>
             </div>
+
             <!-- Modale per filtraggio avanzato -->
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -357,6 +358,7 @@ import { RouterView } from 'vue-router';
         cursor: pointer;
         border: 0.5px solid rgba(0, 0, 0, 0.521);
         border-radius: 50px;
+        position: relative;
         .input-with-button {
             display: flex;
             align-items: center;
@@ -383,16 +385,18 @@ import { RouterView } from 'vue-router';
 
 
         .search-suggestions {
-            position: absolute;
+            // position: absolute;
             background-color: #ffffff;
             border-radius: 5px;
             z-index: 1000;
             max-height: 200px;
             overflow-y: auto;
-            }
+        }
 
             .search-suggestions li {
             padding: 5px;
+            position: absolute;
+            top: 0;
             cursor: pointer;
             }
 
