@@ -23,12 +23,11 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
         created(){
         this.getApartment();
     },
-    /*mounted() {
+    mounted() {
     //this.loadTomTomMapsScript();
-    this.initTomTomMap();
-  },*/
-    
-        
+    //this.initTomTomMap();
+    this.getViews();
+  },
         methods: {
             getApartment() {
             axios.get('http://127.0.0.1:8000/api/apartments/' + this.$route.params.slug)
@@ -124,9 +123,17 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
             map.on('load', () => {
                 new tt.Marker().setLngLat([lon, lat]).addTo(map);
             });
-        }
-
-            
+        },
+        getViews() {
+            axios.post(`http://127.0.0.1:8000/api/get-views/${this.$route.params.slug}`)
+                .then(response => {
+                    console.log('Visualizzazione registrata con successo');
+                    // Puoi aggiornare il tuo frontend con le visualizzazioni registrate
+                })
+                .catch(error => {
+                    console.error('Errore durante la registrazione della visualizzazione:', error);
+                });
+        }            
         },
         computed: {
             // Calcolo della parte intera del prezzo
