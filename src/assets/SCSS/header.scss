@@ -37,12 +37,13 @@ header {
             border: 1px solid lightgrey;
             border-radius: 10px;
             padding: 0px 15px;
+
+            
         }
         .dropdown-item{
             &:hover{
-                span{
-                    color: $secondary_background_color;
-                }
+                color: $secondary_background_color;
+            
             }
         }
 

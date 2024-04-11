@@ -36,15 +36,15 @@ export default {
 
 <template>
     <header>
-        <div class="row">
-            <div class="col-3 logo_container">
+        <div class="row justify-content-between ">
+            <div class="col-3 d-md-none logo_container">
                 <!-- <a href="http://localhost:5174"> -->
                 <router-link :to="{ name: 'home' }">
                     <img src="/img/logo_VV_ridimensionato.svg" alt="">
                 </router-link>
                 <!-- </a> -->
             </div>
-            <div class="col-6 d-flex  justify-content-center  name_container d-none d-md-flex">
+            <div class="col-6 d-flex name_container d-none d-md-flex">
                 <!-- <a href="http://localhost:5174"> -->
                 <router-link :to="{ name: 'home' }">
                     <img src="/img/vvilla_header.svg" alt="">
@@ -63,8 +63,25 @@ export default {
                             </router-link>
                             <!-- </a> -->
                         </div>
-                        <div class="d-flex justify-content-center btn-group my-button" role="group">
-                            <button type="button" class="btn d-flex align-items-center justify-content-between p-0" data-bs-toggle="dropdown" aria-expanded="false">        
+                        <div class="d-flex justify-content-center align-items-center me-3 " role="group">
+                            <div class="dropdown">
+                                <button class="btn dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-user"></i>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="http://127.0.0.1:8000/login">
+                                            Login
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="http://127.0.0.1:8000/register">
+                                            Register
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- <button type="button" class="btn d-flex align-items-center justify-content-between p-0" data-bs-toggle="dropdown" aria-expanded="false">        
                                 <div class="dropdown">
                                         <button class="btn-secondary dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa-solid fa-user"></i>
@@ -86,7 +103,7 @@ export default {
                                             </li>
                                         </ul>
                                 </div>
-                            </button>                                
+                            </button>                                 -->
                         </div>
                     </div>
                 </nav>              
