@@ -153,112 +153,106 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 <template>
     
-       <!-- <div id="mapId" style="width: 40vw; height: 350px;"></div>-->
-
-        <div class="row  justify-content-between ">
-
-           
-
-            <div v-if="apartment != null" class="col-sm-6 col-md-6 col-12 single-apartment ">
+        <div class="container p-5 single_apartment_container">
+            <div class="row  justify-content-between ">
                 
-
-               
-
-                <div>
-                    <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
-                </div>
-
-                <div class="mt-3">
-                    <h2 >
-                        {{ apartment.title }}
-                    </h2>
-                    <h4>
-                        {{ apartment.address }}
-                    </h4>
-                    <p>
-                        <span>{{ apartment.n_rooms }} Stanze</span> <span> {{ apartment.n_baths }} Bagni</span>  <span>{{ apartment.mq }} m²</span>  
-                    </p>
-                </div>
-                <hr>
-                
-              
-                <div class="row">
-                    <div>Servizi:</div>
-                    <div class="col-12">
-                         
-                    <span v-if="apartment.services.length > 0">
-                        <span v-for="service in apartment.services" :key="service.id" class=" color badge rounded-pill m-2 ">
-                            <i :class="service.icon + ' pe-2'"></i> {{ service.title }}
-                        </span>
-                    </span>
-                    <span v-else>Nessun servizio incluso</span>
-                    </div>
-                </div>
-                <hr>
-                <div>
-                   <p class="">
-                         
-                        <b> 
-                        <span  class="price-integer">{{ priceInteger }}</span>
-                        <span class="price-decimal ">{{ priceDecimal }}</span>
-                        </b>€/notte
-                    </p>  
-                </div>
-                
-                
-
-            </div>     
-        
-            <section class="col-sm-6 col-md-6 col-12 justify-content-end">
-            <div v-if="!alert && !messageSent"  id="form-container" >
-                <h3>
-                    Vuoi contattare il propretario dell'immobile?
-                </h3>
-                <form method="POST" @submit.prevent="sendMessage()">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Nome</label>
-                        <input v-model="name" type="text" class="form-control" id="name" name="name" placeholder="Inserisci il tuo nome.." required maxlength="64">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                        <input v-model="email" type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="name@example.com" required maxlength="255">
-                    </div>
-                    <div class="mb-3">
-                        <label for="exampleFormControlTextarea1" class="form-label">Scrivi un messaggio</label>
-                        <textarea v-model="message" class="form-control" id="exampleFormControlTextarea1" name="message" rows="3" required maxlength="2048"></textarea>
+                <!-- dati appartamento -->
+                <div v-if="apartment != null" class="col-12 col-sm-12 col-md-12 col-lg-6  single-apartment pe-lg-5">
+                    <div>
+                        <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
                     </div>
 
-                    <div class="mb-3">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" v-model="accepted">
-                        <label class="form-check-label ms-1" for="flexCheckChecked" required>
-                            Accetto i <a href="#nogo">Termini e le Condizioni</a>
-                        </label>                
+                    <div class="mt-3">
+                        <h2 >
+                            {{ apartment.title }}
+                        </h2>
+                        <h4>
+                            {{ apartment.address }}
+                        </h4>
+                        <p>
+                            <span>{{ apartment.n_rooms }} Stanze</span> <span> {{ apartment.n_baths }} Bagni</span>  <span>{{ apartment.mq }} m²</span>  
+                        </p>
                     </div>
+                    <hr>
                     
-                    <button type="submit" class="btn submit_button">
-                        Invia
-                    </button>
-                    <button @click="resetForm()" class="btn ms-3 reset_button btn-secondary" >
-                         Resetta
-                    </button>
-                </form>
-               
-            </div>
-            <div v-if="alert" class="card">
-                <div class="card-body">
-                    Dati inseriti non correttamente
+                
+                    <div class="row">
+                        <div class="">Servizi inclusi:</div>
+                        <div class="col-12">
+                            
+                        <span v-if="apartment.services.length > 0">
+                            <span v-for="service in apartment.services" :key="service.id" class="m-2 service-item">
+                                <i :class="service.icon + ' pe-2'"></i> {{ service.title }}
+                            </span>
+                        </span>
+                        <span v-else>Nessun servizio incluso</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div>
+                    <p class="">
+                            
+                            <b> 
+                            <span  class="price-integer">{{ priceInteger }}</span>
+                            <span class="price-decimal ">{{ priceDecimal }}</span>
+                            </b>€/notte
+                        </p>  
+                    </div>
+                </div>     
+
+                <!-- form -->
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-4 mt-lg-0 justify-content-end form_container ps-lg-5 ">
+                    <div v-if="!alert && !messageSent"  id="form-container" >
+                        <h3>
+                            Vuoi contattare il propretario dell'immobile?
+                        </h3>
+                        <form method="POST" @submit.prevent="sendMessage()">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nome</label>
+                                <input v-model="name" type="text" class="form-control" id="name" name="name" placeholder="Inserisci il tuo nome.." required maxlength="64">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                                <input v-model="email" type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="name@example.com" required maxlength="255">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Scrivi un messaggio</label>
+                                <textarea v-model="message" class="form-control" id="exampleFormControlTextarea1" name="message" rows="3" required maxlength="2048"></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" v-model="accepted">
+                                <label class="form-check-label ms-1" for="flexCheckChecked" required>
+                                    Accetto i <a href="#nogo">Termini e le Condizioni</a>
+                                </label>                
+                            </div>
+                            
+                            <button type="submit" class="btn submit_button">
+                                Invia
+                            </button>
+                            <button @click="resetForm()" class="btn ms-3 reset_button btn-secondary border-0 " >
+                                Resetta
+                            </button>
+                        </form>
+                    
+                    </div>
+                    <div v-if="alert" class="card">
+                        <div class="card-body">
+                            Dati inseriti non correttamente
+                        </div>
+                    </div>
+                    <div v-if="messageSent" class="card mt-5">
+                        <div class="card-body text-success">
+                            Messaggio inviato correttamente
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div v-if="messageSent" class="card mt-5">
-                <div class="card-body text-success">
-                    Messaggio inviato correttamente
+
+                <!-- Mappa -->
+                <div class="col-sm-12 mt-3">
+                    <div id="mapId" style="height: 400px;"></div>
                 </div>
-            </div>
-            </section>
-        </div>
-        <!-- Mappa -->
-        <div class="col-sm-12 mt-3">
-            <div id="mapId" style="height: 400px;"></div>
         </div>
         
 
@@ -268,19 +262,29 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 <style lang="scss" scoped>
 @use '../assets/SCSS/partials/variables.scss' as *;
+.service-item {
+    white-space: nowrap; 
+}
 
+.service-item i {
+    vertical-align: middle; 
+}
+
+.service-item span {
+    word-wrap: break-word; 
+}
 #map {
     width: 100%;
     height: 100%;
 }
 
 .single-apartment {
-   width: 500px;
+
     
     img {
         width: 100%;
         box-sizing: border-box;
-        border-radius: 10%;
+        border-radius: 20px;
         overflow: hidden;
     }
 }
@@ -291,8 +295,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
     
 }
 
-section {
-    
+.form_container {
 
     h3{
         color: black;
