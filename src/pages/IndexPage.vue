@@ -391,7 +391,7 @@ import { RouterView } from 'vue-router';
             z-index: 1000;
             max-height: 200px;
             overflow-y: auto;
-        }
+        } 
 
             .search-suggestions li {
             padding: 5px;
