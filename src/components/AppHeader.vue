@@ -5,7 +5,7 @@
         2) Dichiarazione del componente all'interno dell'oggetto
         3) Utilizzo del componente    
 */
-
+import { RouterView } from 'vue-router';
 
 export default {
     data(){
@@ -26,6 +26,9 @@ export default {
    
     methods: {
 
+    },
+    components: {
+        RouterView
     }
 }
 
@@ -35,24 +38,30 @@ export default {
     <header>
         <div class="row">
             <div class="col-3 logo_container">
-                <a href="http://localhost:5174">
+                <!-- <a href="http://localhost:5174"> -->
+                <router-link :to="{ name: 'home' }">
                     <img src="/img/logo_VV_ridimensionato.svg" alt="">
-                </a>
+                </router-link>
+                <!-- </a> -->
             </div>
             <div class="col-6 d-flex  justify-content-center  name_container d-none d-md-flex">
-                <a href="http://localhost:5174">
+                <!-- <a href="http://localhost:5174"> -->
+                <router-link :to="{ name: 'home' }">
                     <img src="/img/vvilla_header.svg" alt="">
-                </a>
+                </router-link>
+                <!-- </a> -->
             </div>
             <div class="col-3 align-items-center justify-content-between">
                 <nav>
                     <div class="d-flex justify-content-end align-content-center ">
                         <div class="d-flex justify-content-center align-items-center me-3  ">
-                            <a href="http://localhost:5174" class="link_home_container">
+                            <!-- <a href="http://localhost:5174" class="link_home_container"> -->
+                            <router-link :to="{ name: 'home' }" class="link_home_container">
                                 <!-- <i class="fa-solid fa-house"></i> -->
                                 <span>Home</span>
                                 <span><i class="fa-solid fa-house"></i></span>
-                            </a>
+                            </router-link>
+                            <!-- </a> -->
                         </div>
                         <div class="d-flex justify-content-center btn-group my-button" role="group">
                             <button type="button" class="btn d-flex align-items-center justify-content-between p-0" data-bs-toggle="dropdown" aria-expanded="false">        
