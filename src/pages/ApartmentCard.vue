@@ -61,7 +61,7 @@ import { computed } from 'vue';
                                 {{ apartment.price }} €
                             </strong>
                             <span>
-                                a notte
+                                / Notte
                             </span>
                         </div>
                     </div>
