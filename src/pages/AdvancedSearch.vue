@@ -151,16 +151,16 @@ import { store } from '../store';
                          
             <!-- Filtro per indirizzo -->
             <div class="row g-0 justify-content-center align-items-center mb-2 mt-2">
-                <div class="col-4 my-container">
+                <div class="col-12 col-sm-8 col-md-6 my-container">
                     <span class="input-with-button">
                         <input v-model="store.searchAddress" @input="handleInput" list="suggestions" type="text" class="w-100 border-0" placeholder="Inserisci un indirizzo...">
                         <button @click="advancedSearch()" class="go-button">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
+                        <ul v-if="suggestions.length > 0" class="list-group search-suggestions">
+                            <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item" @click="selectAddress(suggestion)">{{ suggestion }}</li>
+                        </ul>
                     </span>
-                    <ul v-if="suggestions.length > 0" class="list-group search-suggestions">
-                        <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item" @click="selectAddress(suggestion)">{{ suggestion }}</li>
-                    </ul>
                 </div>
                 <div class="col-auto ps-2">
                     <button type="button" class="filter-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -250,9 +250,23 @@ import { store } from '../store';
                 </div>
             </div>
 
+            
+            <div class="row" v-if="store.apartments.length === 0">
+                <div class="col-12 mt-5">
+                    <h2 class="text-center">
+                        Oops.. non abbiamo trovato appartamenti per questo indirizzo!
+                    </h2>
+                </div>
+                <div class="col-12 mt-4">
+                    <div class="row justify-content-center">
+                        <div class="col-6">
+                            <img src="/img/not-found.png" alt="Nessun appartamento trovato">
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- tutti gli appartamenti -->
-            <ApartmentCard v-for="singleApartment in store.apartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
-
+            <ApartmentCard v-else v-for="singleApartment in store.apartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
         </div>
     </div>
 
@@ -268,6 +282,7 @@ import { store } from '../store';
         .input-with-button {
             display: flex;
             align-items: center;
+            position: relative;
 
             input:focus {
                 outline: none; 
@@ -287,25 +302,31 @@ import { store } from '../store';
                 color: white;
             }
 
-        }
+            .search-suggestions {
+                position: absolute;
+                background-color: #ffffff;
+                border-bottom-left-radius: 25px;
+                border-bottom-right-radius: 25px;
+                border: 0.5px solid rgba(0, 0, 0, 0.521);
+                z-index: 1000;
+                max-height: 200px;
+                overflow-y: auto;
+                top: 100%;
+                width: 100%;
+                }
+                .search-suggestions::-webkit-scrollbar {
+                    display: none;
+                }
 
+                .search-suggestions li {
+                padding: 5px;
+                cursor: pointer;
+                }
 
-        .search-suggestions {
-            position: absolute;
-            background-color: #ffffff;
-            border-radius: 5px;
-            z-index: 1000;
-            max-height: 200px;
-            overflow-y: auto;
+                .search-suggestions li:hover {
+                background-color: #f0f0f0;
             }
 
-            .search-suggestions li {
-            padding: 5px;
-            cursor: pointer;
-            }
-
-            .search-suggestions li:hover {
-            background-color: #f0f0f0;
         }
 
     }
@@ -372,5 +393,9 @@ import { store } from '../store';
         .clear-button:hover, .my-button:hover {
             box-shadow: 0px 0px 5px 1px #000000;
         }
+    }
+
+    img {
+        width: 100%;
     }
 </style>

@@ -11,10 +11,6 @@ import { store } from '../store';
         data() {
             return {
                 store,
-                // Definisco una variabile che utilizzerò per filtrare per nome dell'appartamento
-                filterTitle: '',
-                // Definisco una variabile che utilizzerò per filtrare per indirizzo
-                // searchAddress: '',
                 // Definisco un array vuoto per i suggerimenti degli indirizzi
                 suggestions: [],
             };
@@ -55,31 +51,6 @@ import { store } from '../store';
                 this.store.searchAddress = address;
                 this.suggestions = []; // Nascondi la lista dei suggerimenti una volta selezionato un indirizzo
             },  
-            // Definico una funzione per ottenere le coordinate dall'indirizzo utilizzando l'API di TomTom
-            // async getCoordinatesFromAddress(address) {
-            //     const apiKey = 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq';
-            //     const response = await axios.get(`https://api.tomtom.com/search/2/geocode/${encodeURIComponent(address)}.json?key=${apiKey}`);
-            //     const { lat, lon } = response.data.results[0].position;
-            //     return { lat, lon };
-            // },
-            // Definisco una funzione per calcolare la distanza in km tra due coppie di coordinate
-            // calculateDistance(lat1, lon1, lat2, lon2) {
-            //     // Raggio medio della Terra in chilometri
-            //     const R = 6371;
-            //     const dLat = this.degreesToRadians(lat2 - lat1);
-            //     const dLon = this.degreesToRadians(lon2 - lon1);
-            //     const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            //             Math.cos(this.degreesToRadians(lat1)) * Math.cos(this.degreesToRadians(lat2)) *
-            //             Math.sin(dLon / 2) * Math.sin(dLon / 2);
-            //     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            //     // Distanza in chilometri
-            //     const distance = R * c; 
-            //     return distance;
-            //  },
-            // Definisco una funzione per convertire un angolo in un radiante
-            // degreesToRadians(degrees) {
-            //     return degrees * (Math.PI / 180);
-            // },
             // Definisco una funzione per recuperare tutti gli appartamenti dal DB
             getApartments() {
                 axios.get('http://127.0.0.1:8000/api/apartments/')
@@ -94,10 +65,14 @@ import { store } from '../store';
                     console.error('Errore durante il recupero degli appartamenti:', error);
                 });
             },
+            cleanSearchAddress() {
+                this.store.searchAddress = '';
+            }
         },
         mounted() {
             // Alla creazione della pagina richiamo tutti gli appartamenti
             this.getApartments();
+            this.cleanSearchAddress();
         }
     }
 </script>
