@@ -159,7 +159,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
            
 
-            <div v-if="apartment != null" class="col-sm-6  single-apartment ">
+            <div v-if="apartment != null" class="col-sm-6 col-md-6 col-12 single-apartment ">
                 
 
                 <h2 class="text-center">
@@ -182,7 +182,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                 
               
                 <div class="row">
-                    <div>Servizzi:</div>
+                    <div>Servizi:</div>
                     <div class="col-12">
                          
                     <span v-if="apartment.services.length > 0">
@@ -208,7 +208,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
             </div>     
         
-            <section class="col-sm-6  justify-content-end">
+            <section class="col-sm-6 col-md-6 col-12 justify-content-end">
             <div v-if="!alert && !messageSent"  id="form-container" >
                 <h3>
                     Vuoi contattare il propretario dell'immobile?
