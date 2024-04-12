@@ -26,7 +26,7 @@ export default {
 
 <template>
     <main>
-        <div class="container main-container">
+        <div class="container main-container pt-3 ">
             <!-- Importo la componente del routerview -->
             <router-view></router-view> 
         </div>

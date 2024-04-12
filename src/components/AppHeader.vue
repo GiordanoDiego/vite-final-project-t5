@@ -35,34 +35,38 @@ export default {
 </script>
 
 <template>
-    <header>
+    <header class="shadow">
         <div class="row justify-content-between ">
-            <div class="col-3 d-md-none logo_container">
+            <div class="col-3">
+                <div class="d-flex justify-content-center align-items-center me-3  ">
+                    <!-- <a href="http://localhost:5174" class="link_home_container"> -->
+                    <router-link :to="{ name: 'home' }" class="link_home_container">
+                        <!-- <i class="fa-solid fa-house"></i> -->
+                        <span><i class="fa-solid fa-house"></i></span>
+                        <span class="d-none  d-md-inline-block ms-1 "> home</span>
+                    </router-link>
+                    <!-- </a> -->
+                </div>
+            </div>
+            <div class="col-6 d-md-none logo_container d-flex justify-content-center ">
                 <!-- <a href="http://localhost:5174"> -->
                 <router-link :to="{ name: 'home' }">
                     <img src="/img/logo_VV_ridimensionato.svg" alt="">
                 </router-link>
                 <!-- </a> -->
             </div>
-            <div class="col-6 d-flex name_container d-none d-md-flex">
+            <div class="col-6 d-flex name_container d-none d-md-flex justify-content-center ">
                 <!-- <a href="http://localhost:5174"> -->
                 <router-link :to="{ name: 'home' }">
                     <img src="/img/vvilla_header.svg" alt="">
                 </router-link>
                 <!-- </a> -->
             </div>
+
             <div class="col-3 align-items-center justify-content-between">
                 <nav>
                     <div class="d-flex justify-content-end align-content-center ">
-                        <div class="d-flex justify-content-center align-items-center me-3  ">
-                            <!-- <a href="http://localhost:5174" class="link_home_container"> -->
-                            <router-link :to="{ name: 'home' }" class="link_home_container">
-                                <!-- <i class="fa-solid fa-house"></i> -->
-                                <span>Home</span>
-                                <span><i class="fa-solid fa-house"></i></span>
-                            </router-link>
-                            <!-- </a> -->
-                        </div>
+                        
                         <div class="d-flex justify-content-center align-items-center me-3 " role="group">
                             <div class="dropdown">
                                 <button class="btn dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
