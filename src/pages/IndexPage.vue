@@ -151,13 +151,16 @@ import { store } from '../store';
         }
 
         .search-suggestions {
+            position: absolute;
             background-color: #ffffff;
-            border-radius: 5px;
+            border-bottom-left-radius: 25px;
+            border-bottom-right-radius: 25px;
+            border: 0.5px solid rgba(0, 0, 0, 0.521);
             z-index: 1000;
             max-height: 200px;
             overflow-y: auto;
-            position: absolute;
             top: 100%;
+            width: 100%;
         } 
 
             .search-suggestions li {
