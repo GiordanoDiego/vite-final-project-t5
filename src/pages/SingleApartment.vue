@@ -17,6 +17,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                 messageSent: false,
                 apartmentId: null,
                 showError: false,
+                latestSponsorship: null
                 
             };
         },
@@ -41,6 +42,14 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                         console.log(this.apartment);
                         // Assegna l'ID dell'appartamento
                         this.apartmentId = this.apartment.id; 
+
+                        if (res.data.latestSponsorship != null) {
+                            this.latestSponsorship = res.data.latestSponsorship
+
+                            console.log('Questa è l\' ultima sponsorizzazione: ',this.latestSponsorship);
+                        }
+
+                        // console.log(this.apartments.latestSponsorship)
                         
                         // Inizializza la mappa con le coordinate dell'appartamento
                         this.initTomTomMap(this.apartment.lat, this.apartment.lon);
@@ -162,40 +171,67 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                         <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
                     </div>
 
-                    <div class="mt-3">
-                        <h2 >
-                            {{ apartment.title }}
-                        </h2>
-                        <h4>
-                            {{ apartment.address }}
-                        </h4>
-                        <p>
-                            <span>{{ apartment.n_rooms }} Stanze</span> <span> {{ apartment.n_baths }} Bagni</span>  <span>{{ apartment.mq }} m²</span>  
-                        </p>
-                    </div>
-                    <hr>
-                    
-                
                     <div class="row">
-                        <div class="">Servizi inclusi:</div>
                         <div class="col-12">
-                            
-                        <span v-if="apartment.services.length > 0">
-                            <span v-for="service in apartment.services" :key="service.id" class="m-2 service-item">
-                                <i :class="service.icon + ' pe-2'"></i> {{ service.title }}
-                            </span>
-                        </span>
-                        <span v-else>Nessun servizio incluso</span>
+                            <div class="mt-3">
+                                <h2 >
+                                    {{ apartment.title }}
+                                </h2>
+                                <p class="fw-medium">
+                                    {{ apartment.address }}
+                                </p>
+                                <p>
+                                    <span>{{ apartment.n_rooms }} Stanze</span> <span> {{ apartment.n_baths }} Bagni</span>  <span>{{ apartment.mq }} m²</span>  
+                                </p>
+                            </div>
                         </div>
                     </div>
+
+                    <div v-if="latestSponsorship" class="row g-0">
+
+                        <div class="is-sponsored col-12">
+                            <div class="row g-0 justify-content-around align-items-center">
+                                <div class="col-sm-auto d-none d-sm-block">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div class="col-12 col-sm-6 fw-bold">
+                                    Uno degli alloggi più amati dai nostri ospiti
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
                     <hr>
+
+                    <div class="row g-0">
+                        <div class="col-12">
+                            <div v-if="apartment.services.length > 0">Servizi inclusi:
+                                <div class="row g-0">
+                                    <div v-for="service in apartment.services" :key="service.id" class="m-2 service-item col-auto">
+                                        <i :class="service.icon + ' pe-2'"></i> {{ service.title }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else>
+                                Nessun servizio incluso
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
                     <div>
-                    <p class="">
-                            
+                        <p>
                             <b> 
-                            <span  class="price-integer">{{ priceInteger }}</span>
-                            <span class="price-decimal ">{{ priceDecimal }}</span>
-                            </b>€/notte
+                                <span  class="price-integer">
+                                    {{ priceInteger }}
+                                </span>
+                                <span class="price-decimal ">
+                                    {{ priceDecimal }}
+                                </span>
+                            </b>
+                            €/notte
                         </p>  
                     </div>
                 </div>     
@@ -280,6 +316,15 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 .single-apartment {
 
+    .is-sponsored{
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 16px;
+
+        i {
+            font-size: 36px;
+        }
+    }
     
     img {
         width: 100%;
