@@ -172,8 +172,10 @@ import { store } from '../store';
             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header text-center">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Filtri</h1>
+                        <div class="modal-header border-0 text-center">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                Filtri
+                            </h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -197,7 +199,7 @@ import { store } from '../store';
                                             <!-- Filtro per il numero di stanze -->
                                             <div class="col-12">
                                                 <p class="text-light-emphasis">Camere da letto</p>
-                                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between">
+                                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between filter-container">
                                                     <div v-for="(option, index) in roomOptions" :key="index" class="col-auto mx-1">
                                                         <input class="filter-checkbox" type="checkbox" :value="option" :id="'numRooms_' + index" v-model="selectedRoom" @change="handleRoomSelection(option)">
                                                         <label :for="'numRooms_' + index" :class="{ 'checked': selectedRoom === option }">{{ option }}</label>
@@ -207,7 +209,7 @@ import { store } from '../store';
                                             <!-- Filtro per il numero di letti -->
                                             <div class="col-12 mt-2">
                                                 <p class="text-light-emphasis">Numero Letti</p>
-                                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between">
+                                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between filter-container">
                                                     <div v-for="(option, index) in bedOptions" :key="index" class="col-auto mx-1">
                                                         <input class="filter-checkbox" type="checkbox" :value="option" :id="'numBeds_' + index" v-model="selectedBed" @change="handleBedSelection(option)">
                                                         <label :for="'numBeds_' + index" :class="{ 'checked': selectedBed === option }">{{ option }}</label>
@@ -238,7 +240,7 @@ import { store } from '../store';
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer justify-content-center align-items-center">
+                        <div class="modal-footer border-0 justify-content-center align-items-center">
                             <div class="col-4 col-sm-2">
                                 <button @click="resetForm()" type="button" class="w-100 clear-button border-0">Pulisci</button>
                             </div>
@@ -343,8 +345,11 @@ import { store } from '../store';
         box-shadow: 0px 0px 5px 1px #000000;
     }
 
-    .advanced-search-container {
+    .modal {
         box-shadow: 0px 0px 5px 1px #000000;
+    }
+    .advanced-search-container {
+        
         padding: 16px;
 
         .form-range {
@@ -353,6 +358,10 @@ import { store } from '../store';
 
         .filter-checkbox {
             display: none;
+        }
+
+        .filter-container::-webkit-scrollbar {
+            background-color: transparent;
         }
 
         .filter-checkbox + label {
