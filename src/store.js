@@ -14,5 +14,13 @@ export const store = reactive({
     // ApiKey TomTom
     apiKey: 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq',
     // Creo una flag per la distanza in advSearch
-    distance: false
+    distance: false,
+    // Dichiaro una funzione per spezzare i nomi degli apt e gli indirizzi quando sono troppo lunghi
+    truncateString(text, maxLength) {
+        if (text.length <= maxLength) {
+            return text;
+        }
+        return text.substring(0, maxLength) + '\u2026'
+    }
+
 });

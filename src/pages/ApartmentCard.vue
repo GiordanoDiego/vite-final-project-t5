@@ -12,7 +12,6 @@ import { store } from '../store';
             };
         },
         methods: {
-
         },
         computed: {
             priceInteger() {
@@ -22,18 +21,7 @@ import { store } from '../store';
             priceDecimal() {
             return (this.apartment.price % 1).toFixed(2).substring(1);
             },
-            // formattedPrice() {
-            //     if (this.price % 1 !== 0) {
-            //         //mi mostra i decimali solo se il prezzo non è intero
-            //         console.log(this.price); 
-            //         return this.price.toFixed(2);
-            //     } else {
-            //         //mi mostra solo il numero intero nel caso in cui i decimali = 0
-            //         console.log(this.price); 
-            //         return this.price.toFixed(0); 
-
-            //     }
-            // }
+            
         },
         props: {   
             apartment: Object,
@@ -61,11 +49,11 @@ import { store } from '../store';
                     <div class="card-text row">
                         <div class="col-12">
                             <strong>
-                                {{ apartment.title }}
+                                {{ store.truncateString(apartment.title, 25) }}
                             </strong>
                         </div>
                         <div class="col-12 address_container">
-                            {{ apartment.address }} <!-- Modifica questa riga -->
+                            {{ store.truncateString(apartment.address, 30) }} <!-- Modifica questa riga -->
                         </div>
                         <div class="mt-2 mb-2 carateristic">
                             <span>
