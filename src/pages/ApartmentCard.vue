@@ -93,20 +93,21 @@ import { store } from '../store';
                                 {{ apartment.mq }} mq
                             </span>  
                         </div>
-                        <div>
+                        <div  class="d-flex justify-content-between align-items-center">
                             
-                            <b> 
-                                <span  class="price-integer">{{ priceInteger }}</span>
-                            </b> 
-                            <span class="price-decimal ">{{ priceDecimal }}</span>
-                            
-                            
-                            <span>
-                                / Notte €
-                            </span>
-                        </div>
-                        <div v-if="store.distance" class="fw-light">
-                            {{ Math.round(apartment.distance * 100) / 100 }} km
+                            <div>
+                                <span  class="price-integer fw-bold">{{ priceInteger }}</span>
+                                <span class="price-decimal ">{{ priceDecimal }} </span>
+                                
+                                <span>
+                                    € / Notte
+                                </span>
+                            </div>
+
+                            <div v-if="store.distance" class="fw-light distance text-end">
+                                    {{ Math.round(apartment.distance * 100) / 100 }} km
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -143,6 +144,11 @@ import { store } from '../store';
     .carateristic {
         font-size: smaller;
         color: gray;
+    }
+
+    .distance {
+        font-size: 16px;
+        line-height: 14px;
     }
     .img_container {
         position: relative;

@@ -62,6 +62,7 @@ import { store } from '../store';
                         this.store.apartments = res.data.results;
                         this.store.originalApartments = [...this.store.apartments];
                         console.log(this.store.apartments);
+                        this.store.distance = false;
                     })
                     .catch(error => {
                     console.error('Errore durante il recupero degli appartamenti:', error);
