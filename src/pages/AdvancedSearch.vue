@@ -127,9 +127,9 @@ import { store } from '../store';
                 }
             },
             resetForm() {
-                this.searchRadius = '';
-                this.selectedBed = null; 
-                this.selectedRoom = null;
+                this.searchRadius = 20;
+                this.selectedBed = 1; 
+                this.selectedRoom = 1;
                 this.selectedServices = [];
             },
         },
