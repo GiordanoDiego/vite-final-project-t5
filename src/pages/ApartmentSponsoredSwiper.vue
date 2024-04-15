@@ -222,7 +222,7 @@ export default {
         cursor: pointer;
         background-color: white;
         // box-shadow: 0px 0px 10px 3px #252525;
-        transform: scale(1.02);
+        transform: scale(1.03);
 
         .latest-sponsorship {
             transition: transform 0.5s;
