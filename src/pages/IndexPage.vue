@@ -27,6 +27,8 @@ import { store } from '../store';
                 return this.store.apartments.filter(apartment => apartment.sponsors.length > 0);
                 }
              },
+              // Calcolo della parte intera del prezzo
+            
         methods: {
             // Definisco una funzione per ottenere i suggerimenti di indirizzo dall'API di TomTom
             async getSuggestionsFromAddress(address) {

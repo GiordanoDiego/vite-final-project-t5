@@ -13,6 +13,13 @@ import { computed } from 'vue';
 
         },
         computed: {
+            priceInteger() {
+            return Math.floor(this.apartment.price);
+            },
+            // Calcolo della parte decimale del prezzo
+            priceDecimal() {
+            return (this.apartment.price % 1).toFixed(2).substring(1);
+            },
             // formattedPrice() {
             //     if (this.price % 1 !== 0) {
             //         //mi mostra i decimali solo se il prezzo non è intero
@@ -57,11 +64,15 @@ import { computed } from 'vue';
                             {{ apartment.address }} <!-- Modifica questa riga -->
                         </div>
                         <div>
-                            <strong>
-                                {{ apartment.price }} €
-                            </strong>
+                            
+                            <b> 
+                                <span  class="price-integer">{{ priceInteger }}</span>
+                            </b> 
+                            <span class="price-decimal ">{{ priceDecimal }}</span>
+                            
+                            
                             <span>
-                                / Notte
+                                / Notte €
                             </span>
                         </div>
                     </div>
@@ -112,6 +123,13 @@ import { computed } from 'vue';
 
     .address_container{
         font-size: 0.8em;
+    }
+    .price-integer {
+        font-size: 20px; 
+    }
+
+    .price-decimal {
+       font-size: 12px; 
     }
     // .show_single_apartment_button{
     //     background-color: $button_background_color;

@@ -166,11 +166,11 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                         <h2 >
                             {{ apartment.title }}
                         </h2>
-                        <h4>
+                        <div class="color-1">
                             {{ apartment.address }}
-                        </h4>
+                        </div>
                         <p>
-                            <span>{{ apartment.n_rooms }} Stanze</span> <span> {{ apartment.n_baths }} Bagni</span>  <span>{{ apartment.mq }} m²</span>  
+                            <span>{{ apartment.n_rooms }} Stanze</span> <span>{{ apartment.n_beds }}<abbr title="letti"><i class="fa-solid fa-bed px-1"></i></abbr></span> <span> {{ apartment.n_baths }}  <abbr title="bagno"><i class="fa-solid fa-bath px-1 "></i></abbr></span>  <span>{{ apartment.mq }} m²</span>  
                         </p>
                     </div>
                     <hr>
@@ -294,11 +294,14 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
     color: black;
     
 }
+.color-1{
+    color: rgb(122, 119, 119);
+}
 
 .form_container {
 
     h3{
-        color: black;
+        color: rgb(59, 57, 57);
         margin: 20px 0;
     }
 
