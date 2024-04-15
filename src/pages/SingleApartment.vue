@@ -184,9 +184,10 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                             <span>{{ apartment.mq }} mq</span>  
                         </p>
                     </div>
-                    <hr>
 
                     <div v-if="latestSponsorship" class="row g-0">
+
+                        <hr>
 
                         <div class="is-sponsored col-12">
                             <div class="row g-0 justify-content-around align-items-center">
