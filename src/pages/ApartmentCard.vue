@@ -65,6 +65,32 @@ import { computed } from 'vue';
                         <div class="col-12 address_container">
                             {{ apartment.address }} <!-- Modifica questa riga -->
                         </div>
+                        <div class="mt-2 mb-2 carateristic">
+                            <span>
+                                {{ apartment.n_rooms }} 
+                                <abbr title="camere">
+                                    <i class="fa-solid fa-person-shelter"></i>
+                                </abbr>
+                                 - 
+                            </span> 
+                            <span>
+                                {{ apartment.n_beds }}
+                                <abbr title="letti">
+                                    <i class="fa-solid fa-bed px-1"></i>
+                                </abbr>
+                                 - 
+                            </span> 
+                            <span> 
+                                {{ apartment.n_baths }}  
+                                <abbr title="bagni">
+                                    <i class="fa-solid fa-bath px-1 "></i>
+                                </abbr>
+                                 - 
+                            </span>
+                            <span>
+                                {{ apartment.mq }} mq
+                            </span>  
+                        </div>
                         <div>
                             
                             <b> 
@@ -109,6 +135,10 @@ import { computed } from 'vue';
     border: none;
     border-radius: 20px;
 
+    .carateristic {
+        font-size: smaller;
+        color: gray;
+    }
     .img_container {
         position: relative;
 
