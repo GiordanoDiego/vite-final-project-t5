@@ -368,7 +368,11 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                 border-radius: 50px;
                 background-color: #ea4c89f8;
                 color: white;
-            
+                padding: 5px 12px;
+            &:hover{
+                background-color: #880437f8;
+                transition: 0.5s;
+            }
         }
         
     }
@@ -379,7 +383,11 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
         border: 0.5px solid rgba(0, 0, 0, 0.521);
         border-radius: 50px;
         color: white;
-        padding: 7px 10px;
+        padding: 5px 12px;
+
+        &:hover{
+                background-color: #474646;
+            }
     }
 
     
