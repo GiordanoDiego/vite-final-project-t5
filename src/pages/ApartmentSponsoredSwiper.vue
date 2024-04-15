@@ -64,7 +64,7 @@ export default {
         
             <div class="card h-100">
                 <router-link
-                    :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn">
+                    :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn p-0">
                     <div class="img_container">
                         <img
                             :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img"

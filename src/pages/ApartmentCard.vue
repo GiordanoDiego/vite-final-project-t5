@@ -43,17 +43,17 @@ import { computed } from 'vue';
 
     
 </script>
-
+ 
 <template>
     <!-- nuove cards -->
     <div class="col-12 col-md-6 col-lg-3 p-2">
         <div class="card h-100">
-            <router-link :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn">
+            <router-link :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn p-0">
                 <div class="img_container">
                     <div v-if="apartment.latestSponsorship" class="latest-sponsorship rounded-pill">
                         Amato dagli ospiti
                     </div>
-                    <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title" class="card-img-top img-fluid" style="height: 200px; object-fit: cover;">
+                    <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title" class="card-img-top">
                 </div>
                 <div class="card-body text-start">
                     <div class="card-text row">
@@ -64,6 +64,32 @@ import { computed } from 'vue';
                         </div>
                         <div class="col-12 address_container">
                             {{ apartment.address }} <!-- Modifica questa riga -->
+                        </div>
+                        <div class="mt-2 mb-2 carateristic">
+                            <span>
+                                {{ apartment.n_rooms }} 
+                                <abbr title="camere">
+                                    <i class="fa-solid fa-person-shelter"></i>
+                                </abbr>
+                                 - 
+                            </span> 
+                            <span>
+                                {{ apartment.n_beds }}
+                                <abbr title="letti">
+                                    <i class="fa-solid fa-bed px-1"></i>
+                                </abbr>
+                                 - 
+                            </span> 
+                            <span> 
+                                {{ apartment.n_baths }}  
+                                <abbr title="bagni">
+                                    <i class="fa-solid fa-bath px-1 "></i>
+                                </abbr>
+                                 - 
+                            </span>
+                            <span>
+                                {{ apartment.mq }} mq
+                            </span>  
                         </div>
                         <div>
                             
@@ -109,6 +135,10 @@ import { computed } from 'vue';
     border: none;
     border-radius: 20px;
 
+    .carateristic {
+        font-size: smaller;
+        color: gray;
+    }
     .img_container {
         position: relative;
 
@@ -124,6 +154,8 @@ import { computed } from 'vue';
         }
         img{
             border-radius: 20px;
+            height: 200px;
+            object-fit: cover;
         }
 
 
