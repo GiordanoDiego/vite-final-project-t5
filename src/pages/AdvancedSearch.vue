@@ -256,7 +256,7 @@ import { store } from '../store';
             </div>
 
             
-            <div class="row" v-if="store.apartments.length === 0">
+            <div class="row" v-if="store.apartments === undefined">
                 <div class="col-12 mt-5">
                     <h2 class="text-center">
                         Oops.. non abbiamo trovato appartamenti per questo indirizzo!
