@@ -177,10 +177,10 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                         <div class="color-1">
                             {{ apartment.address }}
                         </div>
-                        <p>
-                            <span>{{ apartment.n_rooms }} <abbr title="camere"><i class="fa-solid fa-person-shelter"></i></abbr> - </span> 
-                            <span>{{ apartment.n_beds }}<abbr title="letti"><i class="fa-solid fa-bed px-1"></i></abbr> - </span> 
-                            <span> {{ apartment.n_baths }}  <abbr title="bagno"><i class="fa-solid fa-bath px-1 "></i></abbr> - </span>
+                        <p class="info-apt">
+                            <span>{{ apartment.n_rooms }} <abbr title="camere"><i class="fa-solid fa-person-shelter"></i></abbr> • </span> 
+                            <span>{{ apartment.n_beds }}<abbr title="letti"><i class="fa-solid fa-bed px-1"></i></abbr> • </span> 
+                            <span> {{ apartment.n_baths }}  <abbr title="bagni"><i class="fa-solid fa-bath px-1 "></i></abbr> • </span>
                             <span>{{ apartment.mq }} mq</span>  
                         </p>
                     </div>
@@ -189,7 +189,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
                         <hr>
 
-                        <div class="is-sponsored col-12">
+                        <div class="is-sponsored col-12 rounded-4">
                             <div class="row g-0 justify-content-around align-items-center">
                                 <div class="col-sm-auto d-none d-sm-block">
                                     <i class="fa-solid fa-award"></i>
@@ -277,9 +277,12 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                             Dati inseriti non correttamente
                         </div>
                     </div>
-                    <div v-if="messageSent" class="card mt-5">
-                        <div class="card-body text-success">
+                    <div v-if="messageSent" class="card border-0 mt-5">
+                        <div class="card-body message">
                             Messaggio inviato correttamente
+                            <span>
+                                <i class="fa-solid fa-paper-plane"></i>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -287,7 +290,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
                 <!-- Mappa -->
                 <div class="col-sm-12 mt-3">
-                    <div id="mapId" style="height: 400px;"></div>
+                    <div id="mapId" style="height: 400px; border-radius: 25px;"></div>
                 </div>
         </div>
         
@@ -298,16 +301,20 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 <style lang="scss" scoped>
 @use '../assets/SCSS/partials/variables.scss' as *;
+
+.info-apt i {
+    color: rgb(122, 119, 119);
+}
 .service-item {
     white-space: nowrap; 
-}
 
-.service-item i {
-    vertical-align: middle; 
-}
+    i {
+        vertical-align: middle; 
+    }
 
-.service-item span {
-    word-wrap: break-word; 
+    span {
+        word-wrap: break-word; 
+    }
 }
 #map {
     width: 100%;
@@ -351,7 +358,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
     }
 
     #form-container{
-        border: 1px solid grey;
+        background-color: #FFF;
         padding: 10px;
         border-radius: 5%;
     }
@@ -364,6 +371,10 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
             &:last-child{
                 color: black;
             }
+        }
+
+        input, textarea {
+            background-color: #FAFAFA;
         }
         .submit_button{
             
@@ -399,10 +410,14 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 }
 .price-integer {
         font-size: 20px; 
-    }
+}
 
-    .price-decimal {
-       font-size: 12px; 
-    }
+.price-decimal {
+    font-size: 12px; 
+}
+
+.message {
+    color: #ea4c89f8;
+}
 
 </style>

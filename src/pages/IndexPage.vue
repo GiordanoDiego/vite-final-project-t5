@@ -178,7 +178,8 @@ import { store } from '../store';
 
     }
     .go-button:hover, .my-container:hover{
-        box-shadow: 0px 0px 5px 1px #000000;
+        transition: box-shadow 0.5s;
+        box-shadow: 0px 0px 2px 0.3px #000000;
     }
 
 </style>
