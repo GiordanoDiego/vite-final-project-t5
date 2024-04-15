@@ -76,36 +76,47 @@ export default {
                     <div class="card-body text-start">
                         <div class="card-text row">
                             <div class="col-12">
-                            <strong>
-                                {{ apartment.title }}
-                            </strong>
+                                <strong>
+                                    {{ apartment.title }}
+                                </strong>
                             </div>
                             <div class="col-12 address_container">
-                            {{ apartment.address }}
+                                {{ apartment.address }}
+                            </div>
+                            <div class="mt-2 mb-2 carateristic">
+                                <span>
+                                    {{ apartment.n_rooms }} 
+                                    <abbr title="camere">
+                                        <i class="fa-solid fa-person-shelter"></i>
+                                    </abbr>
+                                    - 
+                                </span> 
+                                <span>
+                                    {{ apartment.n_beds }}
+                                    <abbr title="letti">
+                                        <i class="fa-solid fa-bed px-1"></i>
+                                    </abbr>
+                                    - 
+                                </span> 
+                                <span> 
+                                    {{ apartment.n_baths }}  
+                                    <abbr title="bagni">
+                                        <i class="fa-solid fa-bath px-1 "></i>
+                                    </abbr>
+                                    - 
+                                </span>
+                                <span>
+                                    {{ apartment.mq }} mq
+                                </span>  
                             </div>
                             <div>
-                            <strong>
-                                {{ apartment.price }} €
-                            </strong>
-                            <span>
-                                / Notte
-                            </span>
+                                <strong>
+                                    {{ apartment.price }} €
+                                </strong>
+                                <span>
+                                    / Notte
+                                </span>
                             </div>
-                            <!-- <div class="col-12 d-flex justify-content-center mt-1">
-                            <span
-                                v-for="service in apartment.services"
-                                :key="service.id"
-                                class="badge rounded-pill single_service"
-                            >
-                                <i :class="service.icon"></i>
-                                <span class="tooltip-text">{{ service.title }}</span>
-                            </span>
-                            </div> -->
-                            <!-- <div class="link-container">
-                            
-                                <span>Vai all'appartamento</span>
-                            </router-link>
-                            </div> -->
                         </div>
                     </div>
                 </router-link>
@@ -150,7 +161,10 @@ export default {
     overflow: hidden;
     border: none;
     border-radius: 20px;
-
+    .carateristic {
+        font-size: smaller;
+        color: gray;
+    }
     img{
         border-radius: 20px;
     }
