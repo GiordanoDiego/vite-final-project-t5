@@ -170,8 +170,6 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                     <div>
                         <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
                     </div>
-
-<<<<<<< HEAD
                     <div class="mt-3">
                         <h2 >
                             {{ apartment.title }}
@@ -184,25 +182,6 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                         </p>
                     </div>
                     <hr>
-                    
-                
-=======
->>>>>>> origin/HEAD
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="mt-3">
-                                <h2 >
-                                    {{ apartment.title }}
-                                </h2>
-                                <p class="fw-medium">
-                                    {{ apartment.address }}
-                                </p>
-                                <p>
-                                    <span>{{ apartment.n_rooms }} Stanze</span> <span> {{ apartment.n_baths }} Bagni</span>  <span>{{ apartment.mq }} m²</span>  
-                                </p>
-                            </div>
-                        </div>
-                    </div>
 
                     <div v-if="latestSponsorship" class="row g-0">
 
