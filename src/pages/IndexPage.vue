@@ -127,7 +127,7 @@ import { store } from '../store';
     .my-container {
         cursor: pointer;
         &:hover {
-            border: 0.5px solid rgba(0, 0, 0, 0.521);
+            // border: 0.5px solid rgba(0, 0, 0, 0.521);
             border-radius: 40px;
         }
         position: relative;
@@ -137,7 +137,7 @@ import { store } from '../store';
 
             input:focus {
                 outline: none; 
-                border-color: #ced4da; 
+                border-color: #ced4da;
             }
 
             input {
@@ -178,9 +178,9 @@ import { store } from '../store';
         }
 
     }
-    .go-button:hover, .my-container:hover{
-        transition: box-shadow 0.5s;
-        box-shadow: 0px 0px 2px 0.3px #000000;
+    .go-button:hover{
+        transition: transform 0.5s;
+        transform: scale(1.1);
     }
 
 </style>
