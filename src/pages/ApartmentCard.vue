@@ -1,12 +1,14 @@
 
 <script >
 import { computed } from 'vue';
+import { store } from '../store';
 
 
     export default {
         data() {
             return {
                 //price : apartment.price
+                store
             };
         },
         methods: {
@@ -102,6 +104,9 @@ import { computed } from 'vue';
                             <span>
                                 / Notte €
                             </span>
+                        </div>
+                        <div v-if="store.distance" class="fw-light">
+                            {{ Math.round(apartment.distance * 100) / 100 }} km
                         </div>
                     </div>
                 </div>

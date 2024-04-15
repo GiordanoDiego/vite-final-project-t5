@@ -83,9 +83,12 @@ import { store } from '../store';
                         services: this.selectedServices,
                         filterTitle: this.filterTitle
                     });
+
+                    console.log(response);
                     // Assegno i risultati del filtraggio agli appartamenti
                     console.log(this.filterTitle);
                     this.store.apartments = response.data.results;
+                    this.store.distance = true;
                 } catch (error) {
                     console.error('Errore durante la ricerca avanzata degli appartamenti:', error);
                 }

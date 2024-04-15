@@ -12,5 +12,7 @@ export const store = reactive({
     // Definisco un array vuoto per gli appartamenti filtrati
     filteredApartments: [],
     // ApiKey TomTom
-    apiKey: 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq'
+    apiKey: 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq',
+    // Creo una flag per la distanza in advSearch
+    distance: false
 });
