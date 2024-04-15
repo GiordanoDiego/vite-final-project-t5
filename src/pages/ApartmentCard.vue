@@ -129,7 +129,7 @@ import { computed } from 'vue';
    
 .card {
 
-    background-color: #FEFFFA;
+    background-color: #FFFFFF;
     transition: all 0.5s;
     overflow: hidden;
     border: none;
@@ -141,6 +141,7 @@ import { computed } from 'vue';
     }
     .img_container {
         position: relative;
+        overflow: hidden;
 
         .latest-sponsorship {
             position: absolute;
@@ -153,9 +154,11 @@ import { computed } from 'vue';
             z-index: 999;
         }
         img{
-            border-radius: 20px;
+            // border-radius: 20px;
             height: 200px;
             object-fit: cover;
+
+            transition: transform 0.5s;
         }
 
 
@@ -166,11 +169,12 @@ import { computed } from 'vue';
     &:hover{
         cursor: pointer;
         background-color: white;
-        box-shadow: 0px 0px 10px 3px #252525;
+        // box-shadow: 0px 0px 10px 3px #252525;
+        transform: scale(1.05);
 
          .latest-sponsorship {
             transition: transform 0.5s;
-            transform: scaleX(1.2) scaleY(1.2);
+            transform: scaleX(1.05) scaleY(1.05);
          }
 
         img {

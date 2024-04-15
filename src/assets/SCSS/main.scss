@@ -5,6 +5,10 @@
 
 @import "bootstrap/scss/bootstrap";
 
+body {
+    background-color: #FAFAFA;
+}
+
 main{
     height: calc(100vh - 90px);
     overflow: auto;

@@ -146,6 +146,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #FAFAFA;
+
 }
 .swiper-slide img {
     display: block;
@@ -156,7 +158,7 @@ export default {
 
 .card {
 
-    background-color: #FEFFFA;
+    background-color: #FFFFFF;
     transition: all 0.5s;
     overflow: hidden;
     border: none;
@@ -165,14 +167,40 @@ export default {
         font-size: smaller;
         color: gray;
     }
-    img{
-        border-radius: 20px;
+    // img{
+    //     border-radius: 20px;
+    // }
+
+    .img_container {
+        position: relative;
+        overflow: hidden;
+        .latest-sponsorship {
+            position: absolute;
+            top: 10px;
+            background-color: white;
+            border-radius: 5px;
+            padding: 2px 4px;
+            left: 10px;
+            font-size: 12px; /* Modifica la dimensione del testo secondo le tue preferenze */
+            z-index: 999;
+        }
+        img{
+            // border-radius: 20px;
+            height: 200px;
+            object-fit: cover;
+
+            transition: transform 0.5s;
+        }
+
+
     }
 
     &:hover{
         cursor: pointer;
         background-color: white;
-        box-shadow: 0px 0px 10px 3px #252525;
+        // box-shadow: 0px 0px 10px 3px #252525;
+        transform: scale(1.05);
+
 
         img {
             transition: transform 0.5s;

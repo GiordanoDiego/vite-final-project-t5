@@ -35,9 +35,11 @@ export default {
 </script>
 
 <template>
-    <AppHeader/>
-    <AppMain/>
-    <AppFooter/>
+    <body>
+        <AppHeader/>
+        <AppMain/>
+        <AppFooter/>
+    </body>
 </template>
 
 <style lang="scss"> //tolgo scoped per applicare il reset al body
