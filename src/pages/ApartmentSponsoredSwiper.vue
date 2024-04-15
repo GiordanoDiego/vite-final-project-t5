@@ -4,13 +4,11 @@ import axios from 'axios';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import { store } from '../store';
 
 export default {
   data() {
     return {
       apartments: [],
-      store
     };
   },
   components: {
@@ -82,11 +80,11 @@ export default {
                         <div class="card-text row">
                             <div class="col-12">
                                 <strong>
-                                    {{ store.truncateString(apartment.title, 25) }}
+                                    {{ apartment.title }}
                                 </strong>
                             </div>
                             <div class="col-12 address_container">
-                                {{ store.truncateString(apartment.address, 30) }}
+                                {{ apartment.address }}
                             </div>
                             <div class="mt-2 mb-2 carateristic">
                                 <span>
