@@ -153,7 +153,7 @@ import { store } from '../store';
             <div class="row g-0 justify-content-center align-items-center mb-2 mt-2">
                 <div class="col-12 col-sm-8 col-md-6 my-container">
                     <span class="input-with-button">
-                        <input v-model="store.searchAddress" @input="handleInput" list="suggestions" type="text" class="w-100 border-0" placeholder="Inserisci un indirizzo...">
+                        <input v-model="store.searchAddress" @input="handleInput" list="suggestions" type="text" class="w-100 border-0 ps-3" placeholder="Inserisci un indirizzo...">
                         <button @click="advancedSearch()" class="go-button">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
