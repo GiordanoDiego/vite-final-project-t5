@@ -34,6 +34,8 @@ import { store } from '../store';
                 radiusOptions: ['5', '10', '15', '20', '25', '30', '35', '40', '45', '50'], 
                 // Definisco un array vuoto che verrà popolato con i servizi sscelti dall'utente
                 selectedServices: [],
+                showActiveFilters: false,
+
             };
         }, 
         components: {
@@ -89,6 +91,7 @@ import { store } from '../store';
                     console.log(this.filterTitle);
                     this.store.apartments = response.data.results;
                     this.store.distance = true;
+                    this.showActiveFilters = true;
                 } catch (error) {
                     console.error('Errore durante la ricerca avanzata degli appartamenti:', error);
                 }
@@ -135,6 +138,20 @@ import { store } from '../store';
                 this.selectedRoom = 1;
                 this.selectedServices = [];
             },
+            resetFilter(){
+                this.searchRadius = 20;
+                this.selectedBed = 1; 
+                this.selectedRoom = 1;
+                this.selectedServices = [];
+                this.showActiveFilters = false;
+                this.store.services.forEach(service => {
+                this.toggleService(service);
+            });
+            },
+            formatSelectedServices() {
+                return this.selectedServices.map(service => service.title).join(', ');
+            },
+
         },
         created() {
             // Alla creazione della pagina richiamo tutti i servizi
@@ -254,7 +271,17 @@ import { store } from '../store';
                     </div>
                 </div>
             </div>
-
+<!-- filtri attivi -->
+            <div v-if="showActiveFilters" class="row g-0 justify-content-center align-items-center mt-2 mb-5">
+                <div class="col-12 col-sm-8 col-md-6">
+                    <span v-if="selectedRoom !== null || selectedBed !== null || selectedServices.length > 0 || searchRadius !== '20'" class="text-muted">Filtri attivi:</span>
+                    <span v-if="selectedRoom !== null" class="badge bg-secondary mx-1">{{ selectedRoom }} stanze</span>
+                    <span v-if="selectedBed !== null" class="badge bg-secondary mx-1">{{ selectedBed }} letti</span>
+                    <span v-if="selectedServices.length > 0" class="badge bg-secondary mx-1">{{ formatSelectedServices() }}</span>
+                    <span v-if="searchRadius !== '20'" class="badge bg-secondary mx-1">Raggio: {{ searchRadius }} km</span>
+                    <button @click="resetFilter()" class="btn btn-sm btn-outline-danger mx-2" v-if="selectedRoom !== null || selectedBed !== null || selectedServices.length > 0 || searchRadius !== '20'">Rimuovi tutti i filtri</button>
+                </div>
+            </div>
             
             <div class="row" v-if="store.apartments.length === 0">
                 <div class="col-12 mt-5">
