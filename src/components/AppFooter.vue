@@ -4,72 +4,8 @@
 export default {
     data() {
         return {
-            Assistenza: [
-                {
-                    title: "Centro Assistenza"
-                    
-                },
-                {
-                    title: "AirCover"
-                },
-                {
-                    title: "Antidiscriminazione"
-                },
-                {
-                    title: "Supporto alla disabilità"
-                },
-                {
-                    title: "Opzioni di cancellazione"
-                },
-                {
-                    title: "Segnala problema nel quartiere"
-                },
-                
-            ],
-            Ospitare: [
-                {
-                    title: "Apri un Boolbnb"
-                    
-                },
-                {
-                    title: "AirCover per gli host"
-                },
-                {
-                    title: "Risorse per gli host"
-                },
-                {
-                    title: "Forum della community"
-                },
-                {
-                    title: "Ospitare responsabilmente"
-                },
-                {
-                    title: "Partecipa a una lezione gratuita sull'ospitalità"
-                },
-                
-            ],
-            Boolbnb: [
-                {
-                    title: "Newsroom"
-                    
-                },
-                {
-                    title: "Nuove funzionalità"
-                },
-                {
-                    title: "Opportunità di lavoro"
-                },
-                {
-                    title: "Investitori"
-                },
-                {
-                    title: "Gift card"
-                },
-                {
-                    title: "Soggiorni con Airbnb.org"
-                },
-                
-            ],
+           
+           
         };
     },
     methods: {
@@ -91,7 +27,7 @@ export default {
                             -
                         </li>
                         <li>
-                            <a href="">Privay</a>
+                            <a href="">Privacy</a>
                         </li>
                         <li>
                             <a href="">Termini</a>
@@ -103,7 +39,14 @@ export default {
                 </div>
                 <div class="col-6">
                     <div class="d-flex justify-content-end ">
+                        <div class="me-2 ">
+                            <i class="fa-brands fa-square-facebook"></i>
+                            <i class="fa-brands fa-square-twitter"></i>
+                            <i class="fa-brands fa-square-instagram"></i>
+                            <i class="fa-brands fa-square-whatsapp"></i>
+                        </div>
                         <div class="me-2">
+                            
                             <i class="fa-solid fa-globe"></i> Italiano
                         </div>
                         <div>
@@ -168,5 +111,7 @@ export default {
     @use '../assets/SCSS/footer.scss';
 
 
-
+    i{
+        margin: 2px;
+    }
 </style>
