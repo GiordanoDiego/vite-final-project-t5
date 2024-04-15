@@ -178,7 +178,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                             {{ apartment.address }}
                         </div>
                         <p>
-                            <span>{{ apartment.n_rooms }} <i class="fa-solid fa-person-shelter"></i> - </span> 
+                            <span>{{ apartment.n_rooms }} <abbr title="camere"><i class="fa-solid fa-person-shelter"></i></abbr> - </span> 
                             <span>{{ apartment.n_beds }}<abbr title="letti"><i class="fa-solid fa-bed px-1"></i></abbr> - </span> 
                             <span> {{ apartment.n_baths }}  <abbr title="bagno"><i class="fa-solid fa-bath px-1 "></i></abbr> - </span>
                             <span>{{ apartment.mq }} mq</span>  
