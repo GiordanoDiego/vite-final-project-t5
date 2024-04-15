@@ -64,7 +64,7 @@ export default {
         
             <div class="card h-100">
                 <router-link
-                    :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn p-0">
+                    :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn p-0 router_link_class">
                     <div class="img_container">
                         <img
                             :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img"
@@ -170,7 +170,12 @@ export default {
     // img{
     //     border-radius: 20px;
     // }
-
+    .btn:first-child:active, .btn.active, .btn.show {
+    color: var(--bs-btn-active-color);
+    background-color: var(--bs-btn-active-bg);
+    border-color: white;
+}
+ 
     .img_container {
         position: relative;
         overflow: hidden;
