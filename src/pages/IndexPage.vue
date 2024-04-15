@@ -95,8 +95,8 @@ import { store } from '../store';
             <div class="row g-0 justify-content-center align-items-center mb-2 mt-2">
                 <div class="col-4 my-container">
                     <span class="input-with-button">
-                        <input v-model="store.searchAddress" @input="handleInput" list="suggestions" type="text" class="w-100 border-0" placeholder="Inserisci un indirizzo...">
-                        <router-link :to="{ name:'apartments.search'}"  class="row g-0 justify-content-center align-items-center mb-2 mt-2">
+                        <input v-model="store.searchAddress" @input="handleInput" list="suggestions" type="text" class="w-100 border-0 ps-3" placeholder="Inserisci un indirizzo..." >
+                        <router-link :to="{ name:'apartments.search'}"  class="row g-0 justify-content-center align-items-center">
                             <button class="go-button">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
@@ -125,8 +125,10 @@ import { store } from '../store';
 
     .my-container {
         cursor: pointer;
-        border: 0.5px solid rgba(0, 0, 0, 0.521);
-        border-radius: 50px;
+        &:hover {
+            border: 0.5px solid rgba(0, 0, 0, 0.521);
+            border-radius: 40px;
+        }
         position: relative;
         .input-with-button {
             display: flex;
@@ -145,7 +147,7 @@ import { store } from '../store';
             .go-button {
                 border: 0;
                 padding: 4px 8px;
-                border-radius: 50px;
+                border-radius: 40px;
                 background-color: #ea4c89f8;
                 color: white;
             }
