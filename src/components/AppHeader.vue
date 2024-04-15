@@ -38,7 +38,7 @@ export default {
     <header class="shadow">
         <div class="row justify-content-between ">
             <div class="col-3">
-                <div class="d-flex justify-content-center align-items-center me-3  ">
+                <div class="d-flex align-items-center me-3  ">
                     <!-- <a href="http://localhost:5174" class="link_home_container"> -->
                     <router-link :to="{ name: 'home' }" class="link_home_container">
                         <!-- <i class="fa-solid fa-house"></i> -->
