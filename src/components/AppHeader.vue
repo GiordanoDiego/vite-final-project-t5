@@ -70,6 +70,7 @@ export default {
                         <div class="d-flex justify-content-center align-items-center me-3 " role="group">
                             <div class="dropdown">
                                 <button class="btn dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa-solid fa-bars me-3"></i>
                                     <i class="fa-solid fa-user"></i>
                                 </button>
                                 <ul class="dropdown-menu">
@@ -85,29 +86,6 @@ export default {
                                     </li>
                                 </ul>
                             </div>
-                            <!-- <button type="button" class="btn d-flex align-items-center justify-content-between p-0" data-bs-toggle="dropdown" aria-expanded="false">        
-                                <div class="dropdown">
-                                        <button class="btn-secondary dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            <i class="fa-solid fa-user"></i>
-                                        </button>
-                                        <ul class="dropdown-menu" style="margin:0;">
-                                            <li>
-                                                <a href="http://127.0.0.1:8000/login" class="text-decoration-none dropdown-item">
-                                                    <span>
-                                                        Login
-                                                    </span>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="http://127.0.0.1:8000/register" class="text-decoration-none dropdown-item">
-                                                    <span>
-                                                        Register
-                                                    </span>
-                                                </a>
-                                            </li>
-                                        </ul>
-                                </div>
-                            </button>                                 -->
                         </div>
                     </div>
                 </nav>              
