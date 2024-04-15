@@ -66,6 +66,9 @@ export default {
                 <router-link
                     :to="{ name: 'apartments.show', params: { slug: apartment.slug } }" class="btn p-0 router_link_class">
                     <div class="img_container">
+                        <div v-if="apartment.latestSponsorship" class="latest-sponsorship rounded-pill">
+                            Amato dagli ospiti
+                        </div>
                         <img
                             :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img"
                             :alt="apartment.title"
@@ -186,10 +189,10 @@ export default {
     //     border-radius: 20px;
     // }
     .btn:first-child:active, .btn.active, .btn.show {
-    color: var(--bs-btn-active-color);
-    background-color: var(--bs-btn-active-bg);
-    border-color: white;
-}
+        color: var(--bs-btn-active-color);
+        background-color: var(--bs-btn-active-bg);
+        border-color: white;
+    }
  
     .img_container {
         position: relative;
@@ -219,8 +222,12 @@ export default {
         cursor: pointer;
         background-color: white;
         // box-shadow: 0px 0px 10px 3px #252525;
-        transform: scale(1.05);
+        transform: scale(1.02);
 
+        .latest-sponsorship {
+            transition: transform 0.5s;
+            transform: scaleX(1.05) scaleY(1.05);
+        }
 
         img {
             transition: transform 0.5s;

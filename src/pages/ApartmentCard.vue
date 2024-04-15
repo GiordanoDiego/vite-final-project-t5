@@ -170,7 +170,7 @@ import { computed } from 'vue';
         cursor: pointer;
         background-color: white;
         // box-shadow: 0px 0px 10px 3px #252525;
-        transform: scale(1.05);
+        transform: scale(1.1);
 
          .latest-sponsorship {
             transition: transform 0.5s;
