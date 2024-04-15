@@ -149,6 +149,21 @@ export default {
     background-color: #FAFAFA;
 
 }
+
+.swiper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+  grid-gap: 20px; 
+}
+
+.swiper-slide {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  flex: 1;
+}
 .swiper-slide img {
     display: block;
     width: 100%;
