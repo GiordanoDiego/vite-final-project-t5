@@ -172,28 +172,32 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                     <div>
                         <img :src="'http://127.0.0.1:8000/storage/' + apartment.cover_img" :alt="apartment.title">
                     </div>
-                    <div class="mt-3">
-                        <h2 >
-                            {{ apartment.title }}
-                        </h2>
-                        <div class="color-1">
-                            {{ apartment.address }}
-                        </div>
-                        <p class="info-apt">
-                            <span>{{ apartment.n_rooms }} <abbr title="camere"><i class="fa-solid fa-person-shelter"></i></abbr> • </span> 
-                            <span>{{ apartment.n_beds }}<abbr title="letti"><i class="fa-solid fa-bed px-1"></i></abbr> • </span> 
-                            <span> {{ apartment.n_baths }}  <abbr title="bagni"><i class="fa-solid fa-bath px-1 "></i></abbr> • </span>
-                            <span>{{ apartment.mq }} mq</span>  
-                        </p>
+                    <div class="mt-3 row">
+                        <div class="col-12">
 
-                        <div class="mb-2 d-flex align-items-center">
-                            Nome dell'host: 
-                            <span class="fw-bold ps-1">
-                                {{ owner.name }}
-                            </span> 
+                            <h2 >
+                                {{ apartment.title }}
+                            </h2>
+                            <div class="color-1">
+                                {{ apartment.address }}
+                            </div>
+                            <p class="info-apt">
+                                <span>{{ apartment.n_rooms }} <abbr title="camere"><i class="fa-solid fa-person-shelter"></i></abbr> • </span> 
+                                <span>{{ apartment.n_beds }}<abbr title="letti"><i class="fa-solid fa-bed px-1"></i></abbr> • </span> 
+                                <span> {{ apartment.n_baths }}  <abbr title="bagni"><i class="fa-solid fa-bath px-1 "></i></abbr> • </span>
+                                <span>{{ apartment.mq }} mq</span>  
+                            </p>
 
-                            <i class="fa-regular fa-circle-user fs-5 ps-1"></i>
+                            <div class="mb-2 d-flex align-items-center">
+                                Nome dell'host: 
+                                <span class="fw-bold ps-1">
+                                    {{ owner.name }}
+                                </span> 
+
+                                <i class="fa-regular fa-circle-user fs-5 ps-1"></i>
+                            </div>
                         </div>
+
                     </div>
 
                     <div v-if="latestSponsorship" class="row g-0">
@@ -395,9 +399,10 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                 background-color: #ea4c89f8;
                 color: white;
                 padding: 5px 12px;
+                transition: transform 0.5s;
+
             &:hover{
-                background-color: #880437f8;
-                transition: 0.5s;
+                transform: scale(1.05);
             }
         }
         
@@ -410,9 +415,10 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
         border-radius: 50px;
         color: white;
         padding: 5px 12px;
+        transition: transform 0.5s;
 
         &:hover{
-                background-color: #474646;
+                transform: scale(1.05);
             }
     }
 
