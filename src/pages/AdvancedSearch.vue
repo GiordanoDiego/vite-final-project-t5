@@ -205,11 +205,6 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
                         // Aggiungi l'evento click al marker per aprire il popup
                         marker.on('click', () => {
-                            // Chiudi tutti i popup aperti
-                            map.closePopup();
-
-                            console.log('QUESTOOOOOOOOOOO');
-
                             // Apri il popup del marker cliccato
                             map.addTo(map);
                         }); 
