@@ -61,11 +61,11 @@ import { store } from '../store';
                     <div class="card-text row">
                         <div class="col-12">
                             <strong>
-                                {{ apartment.title }}
+                                {{ store.truncateString(apartment.title, 25) }}
                             </strong>
                         </div>
                         <div class="col-12 address_container">
-                            {{ apartment.address }} <!-- Modifica questa riga -->
+                            {{ store.truncateString(apartment.address, 30) }} <!-- Modifica questa riga -->
                         </div>
                         <div class="mt-2 mb-2 carateristic">
                             <span>
