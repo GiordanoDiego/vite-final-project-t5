@@ -45,8 +45,17 @@ import { store } from '../store';
             // Definisco una funzione per gli appartamenti sponsorizzati
             sponsoredApartments() {
                 return this.store.apartments.filter(apartment => apartment.sponsors.length > 0);
-                }
-             },
+                },
+                filtersActive() {
+                return (
+                    this.selectedRoom !== null ||
+                    this.selectedBed !== null ||
+                    this.searchRadius !== '20' ||
+                    this.selectedServices.length > 0
+                );
+            },
+        },
+            
         methods: {
             // Definisco una funzione per ottenere i suggerimenti di indirizzo dall'API di TomTom
             async getSuggestionsFromAddress(address) {
@@ -255,7 +264,29 @@ import { store } from '../store';
                 </div>
             </div>
 
-            
+            <!-- filtri attivi -->
+            <div class="row g-0 justify-content-center mb-2 mt-2" v-if="filtersActive">
+                <div class="col-auto me-2 ">
+                    <h5>Filtri Attivi:</h5>
+                </div>
+                <!-- numero di stanze selezionato -->
+                <div class="col-auto me-1" v-if="selectedRoom !== null">
+                    <span class="badge bg-secondary">{{ selectedRoom }} stanze</span>
+                </div>
+                <!-- numero di letti selezionato -->
+                <div class="col-auto me-1" v-if="selectedBed !== null">
+                    <span class="badge bg-secondary">{{ selectedBed }} letti</span>
+                </div>
+                <!-- raggio di ricerca selezionato -->
+                <div class="col-auto me-1" v-if="searchRadius !== '20'">
+                    <span class="badge bg-secondary">Raggio: {{ searchRadius }} km</span>
+                </div>
+                <!-- servizi selezionati -->
+                <div class="col-auto" v-if="selectedServices.length > 0">
+                    <span class="badge bg-secondary me-1 " v-for="service in selectedServices" :key="service.id">{{ service.title }}</span>
+                </div>
+            </div>
+
             <div class="row" v-if="store.apartments === undefined">
                 <div class="col-12 mt-5">
                     <h2 class="text-center">
