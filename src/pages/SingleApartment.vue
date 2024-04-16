@@ -17,7 +17,8 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                 messageSent: false,
                 apartmentId: null,
                 showError: false,
-                latestSponsorship: null
+                latestSponsorship: null,
+                owner: null
                 
             };
         },
@@ -40,6 +41,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                         // Si vedrà il singolo appartamento
                         this.apartment = res.data.results;
                         console.log(this.apartment);
+                        this.owner = res.data.owner;
                         // Assegna l'ID dell'appartamento
                         this.apartmentId = this.apartment.id; 
 
@@ -183,6 +185,15 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                             <span> {{ apartment.n_baths }}  <abbr title="bagni"><i class="fa-solid fa-bath px-1 "></i></abbr> • </span>
                             <span>{{ apartment.mq }} mq</span>  
                         </p>
+
+                        <div class="mb-2 d-flex align-items-center">
+                            Nome dell'host: 
+                            <span class="fw-bold ps-1">
+                                {{ owner.name }}
+                            </span> 
+
+                            <i class="fa-regular fa-circle-user fs-5 ps-1"></i>
+                        </div>
                     </div>
 
                     <div v-if="latestSponsorship" class="row g-0">
