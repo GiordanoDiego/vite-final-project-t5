@@ -4,6 +4,8 @@ import ApartmentCard from './ApartmentCard.vue';
 import ApartmentSponsored from './ApartmentSponsored.vue';
 import { RouterView } from 'vue-router';
 import { store } from '../store';
+import tt from '@tomtom-international/web-sdk-maps';
+import '@tomtom-international/web-sdk-maps/dist/maps.css';
 
 
     export default {
@@ -98,6 +100,21 @@ import { store } from '../store';
                     console.log(this.filterTitle);
                     this.store.apartments = response.data.results;
                     this.store.distance = true;
+
+                    // Memorizza le coordinate di ogni appartamento
+                    this.store.apartments = response.data.results.map(apartment => ({
+                    ...apartment,
+                    lat: apartment.lat || 0, // Imposta la latitudine a 0 se non è valida
+                    lon: apartment.lon || 0 // Imposta la longitudine a 0 se non è valida
+                    }));
+
+                    console.log(this.store.apartments);
+
+                    setTimeout(() => {
+                        // Verifica che ci siano almeno un paio di appartamenti con coordinate valide
+                        this.initTomTomMap();
+                    }, 500);
+
                 } catch (error) {
                     console.error('Errore durante la ricerca avanzata degli appartamenti:', error);
                 }
@@ -143,7 +160,29 @@ import { store } from '../store';
                 this.selectedBed = 1; 
                 this.selectedRoom = 1;
                 this.selectedServices = [];
+                this.filterTitle = '';
             },
+            initTomTomMap() {
+                const map = tt.map({
+                    key: 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq',
+                    container: 'mapId',
+                    center: [this.store.apartments[0].lon, this.store.apartments[0].lat], // Inverti l'ordine di lon e lat
+                    zoom: 10
+
+                    
+                });
+
+                // Aggiungi un marker al centro della mappa
+                map.on('load', () => {
+                    this.store.apartments.forEach(apartment => {
+                        new tt.Marker()
+                            .setLngLat([apartment.lon, apartment.lat])
+                            .addTo(map);
+                    });
+
+                    console.log('Queste sono le coordinate: ',this.store.apartments[0].lon, this.store.apartments[0].lat);
+                });
+            }
         },
         created() {
             // Alla creazione della pagina richiamo tutti i servizi
@@ -155,95 +194,101 @@ import { store } from '../store';
 </script>
 
 <template>
-
     <!-- card con appartamenti sponsorizzate con background verde chiaro -->
     <div class="container">
-        
         <div class="row g-0">
-                         
-            <!-- Filtro per indirizzo -->
-            <div class="row g-0 justify-content-center align-items-center mb-2 mt-2">
-                <div class="col-12 col-sm-8 col-md-6 my-container">
-                    <span class="input-with-button">
-                        <input v-model="store.searchAddress" @input="handleInput" list="suggestions" type="text" class="w-100 border-0 ps-3" placeholder="Inserisci un indirizzo...">
-                        <button @click="advancedSearch()" class="go-button">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+            <div class="col-12">
+
+                <!-- Mappa -->
+                <div v-if="store.apartments !== undefined" class="col-sm-12 my-3">
+                    <div id="mapId" style="height: 400px; width: 100%; border-radius: 25px;"></div>
+                </div>
+
+
+                <!-- Filtro per indirizzo -->
+                <div class="row g-0 justify-content-center align-items-center mb-2 mt-2">
+                    <div class="col-12 col-sm-8 col-md-6 my-container">
+                        <span class="input-with-button">
+                            <input v-model="store.searchAddress" @input="handleInput" list="suggestions" type="text" class="w-100 border-0 ps-3" placeholder="Inserisci un indirizzo...">
+                            <button @click="advancedSearch()" class="go-button">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            <ul v-if="suggestions.length > 0" class="list-group search-suggestions">
+                                <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item" @click="selectAddress(suggestion)">{{ suggestion }}</li>
+                            </ul>
+                        </span>
+                    </div>
+                    <div class="col-auto ps-2">
+                        <button type="button" class="filter-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-sliders"></i>
                         </button>
-                        <ul v-if="suggestions.length > 0" class="list-group search-suggestions">
-                            <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item" @click="selectAddress(suggestion)">{{ suggestion }}</li>
-                        </ul>
-                    </span>
+                    </div>
                 </div>
-                <div class="col-auto ps-2">
-                    <button type="button" class="filter-button" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        <i class="fa-solid fa-sliders"></i>
-                    </button>
-                </div>
-            </div>
-            <!-- Modale per filtraggio avanzato -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header border-0 text-center">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">
-                                Filtri
-                            </h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Filtaggio avanzato -->
-                            <div class="advanced-search-container my-2">
-                                <div class="row justify-content-center g-0 my-2">
-                                    <div class="col-12 ">
-                                        <!-- Filtro appartamenti per title -->
-                                        <div class="row g-0 justify-content-center">
-                                            <div class="col-12 col-lg-6">
-                                                <div>
-                                                    <input v-model="filterTitle" type="text" name="filter" id="filter" class="form-control" placeholder="cerca per nome...">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- filtro per numero minimo di stanze -->
-                                        <div class="row g-0 justify-content-center">
-                                            <h5 class="mt-2">
-                                                Stanze e letti
-                                            </h5>
-                                            <!-- Filtro per il numero di stanze -->
-                                            <div class="col-12">
-                                                <p class="text-light-emphasis">Camere da letto</p>
-                                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between filter-container">
-                                                    <div v-for="(option, index) in roomOptions" :key="index" class="col-auto mx-1">
-                                                        <input class="filter-checkbox" type="checkbox" :value="option" :id="'numRooms_' + index" v-model="selectedRoom" @change="handleRoomSelection(option)">
-                                                        <label :for="'numRooms_' + index" :class="{ 'checked': selectedRoom === option }">{{ option }}</label>
+                <!-- Modale per filtraggio avanzato -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header border-0 text-center">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                    Filtri
+                                </h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <!-- Filtaggio avanzato -->
+                                <div class="advanced-search-container my-2">
+                                    <div class="row justify-content-center g-0 my-2">
+                                        <div class="col-12 ">
+                                            <!-- Filtro appartamenti per title -->
+                                            <div class="row g-0 justify-content-center">
+                                                <div class="col-12 col-lg-6">
+                                                    <div>
+                                                        <input v-model="filterTitle" type="text" name="filter" id="filter" class="form-control" placeholder="cerca per nome...">
                                                     </div>
                                                 </div>
                                             </div>
-                                            <!-- Filtro per il numero di letti -->
-                                            <div class="col-12 mt-2">
-                                                <p class="text-light-emphasis">Numero Letti</p>
-                                                <div class="row g-0 flex-nowrap overflow-auto justify-content-between filter-container">
-                                                    <div v-for="(option, index) in bedOptions" :key="index" class="col-auto mx-1">
-                                                        <input class="filter-checkbox" type="checkbox" :value="option" :id="'numBeds_' + index" v-model="selectedBed" @change="handleBedSelection(option)">
-                                                        <label :for="'numBeds_' + index" :class="{ 'checked': selectedBed === option }">{{ option }}</label>
+                                            <!-- filtro per numero minimo di stanze -->
+                                            <div class="row g-0 justify-content-center">
+                                                <h5 class="mt-2">
+                                                    Stanze e letti
+                                                </h5>
+                                                <!-- Filtro per il numero di stanze -->
+                                                <div class="col-12">
+                                                    <p class="text-light-emphasis">Camere da letto</p>
+                                                    <div class="row g-0 flex-nowrap overflow-auto justify-content-between filter-container">
+                                                        <div v-for="(option, index) in roomOptions" :key="index" class="col-auto mx-1">
+                                                            <input class="filter-checkbox" type="checkbox" :value="option" :id="'numRooms_' + index" v-model="selectedRoom" @change="handleRoomSelection(option)">
+                                                            <label :for="'numRooms_' + index" :class="{ 'checked': selectedRoom === option }">{{ option }}</label>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- Filtro per il raggio di km -->
-                                            <div class="col-10 col-sm-6 mt-2">
-                                                <label for="searchRadius">Nelle vicinanze ({{ searchRadius }} km):</label>
-                                                <input type="range" id="searchRadius" v-model="searchRadius" min="5" max="50" step="5" class="form-range">
-                                            </div>
-                                            <!-- Filtro per i servizi -->
-                                            <div class="col-12 mt-2">
-                                                <div class="row justify-content-around">
-                                                    <div v-for="(singleService, index) in store.services" :key="index" class="col-sm-6 col-3">
-                                                        <input v-model="selectedServices" :value="singleService" class="form-check-input" type="checkbox" :id="'service_' + index">
-                                                        <label :for="'service_' + index">
-                                                                <i :class="singleService.icon" class="ps-1 px-sm-1"></i>
-                                                                <span class="d-none d-sm-inline-block">  
-                                                                    {{ singleService.title }} 
-                                                                </span>
-                                                        </label>
+                                                <!-- Filtro per il numero di letti -->
+                                                <div class="col-12 mt-2">
+                                                    <p class="text-light-emphasis">Numero Letti</p>
+                                                    <div class="row g-0 flex-nowrap overflow-auto justify-content-between filter-container">
+                                                        <div v-for="(option, index) in bedOptions" :key="index" class="col-auto mx-1">
+                                                            <input class="filter-checkbox" type="checkbox" :value="option" :id="'numBeds_' + index" v-model="selectedBed" @change="handleBedSelection(option)">
+                                                            <label :for="'numBeds_' + index" :class="{ 'checked': selectedBed === option }">{{ option }}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Filtro per il raggio di km -->
+                                                <div class="col-10 col-sm-6 mt-2">
+                                                    <label for="searchRadius">Nelle vicinanze ({{ searchRadius }} km):</label>
+                                                    <input type="range" id="searchRadius" v-model="searchRadius" min="5" max="50" step="5" class="form-range">
+                                                </div>
+                                                <!-- Filtro per i servizi -->
+                                                <div class="col-12 mt-2">
+                                                    <div class="row justify-content-around">
+                                                        <div v-for="(singleService, index) in store.services" :key="index" class="col-sm-6 col-3">
+                                                            <input v-model="selectedServices" :value="singleService" class="form-check-input" type="checkbox" :id="'service_' + index">
+                                                            <label :for="'service_' + index">
+                                                                    <i :class="singleService.icon" class="ps-1 px-sm-1"></i>
+                                                                    <span class="d-none d-sm-inline-block">  
+                                                                        {{ singleService.title }} 
+                                                                    </span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -251,58 +296,60 @@ import { store } from '../store';
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="modal-footer border-0 justify-content-center align-items-center">
-                            <div class="col-4 col-sm-2">
-                                <button @click="resetForm()" type="button" class="w-100 clear-button border-0">Pulisci</button>
-                            </div>
-                            <div class="col-4 col-sm-2">
-                                <button type="button" @click="advancedSearch" class="my-button w-100 border-0" data-bs-dismiss="modal">Cerca</button>
+                            <div class="modal-footer border-0 justify-content-center align-items-center">
+                                <div class="col-4 col-sm-2">
+                                    <button @click="resetForm()" type="button" class="w-100 clear-button border-0">Pulisci</button>
+                                </div>
+                                <div class="col-4 col-sm-2">
+                                    <button type="button" @click="advancedSearch" class="my-button w-100 border-0" data-bs-dismiss="modal">Cerca</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!-- filtri attivi -->
-            <div class="row g-0 justify-content-center mb-2 mt-2" v-if="filtersActive">
-                <div class="col-auto me-2 ">
-                    <h5>Filtri Attivi:</h5>
-                </div>
-                <!-- numero di stanze selezionato -->
-                <div class="col-auto me-1" v-if="selectedRoom !== null">
-                    <span class="badge bg-secondary">{{ selectedRoom }} stanze</span>
-                </div>
-                <!-- numero di letti selezionato -->
-                <div class="col-auto me-1" v-if="selectedBed !== null">
-                    <span class="badge bg-secondary">{{ selectedBed }} letti</span>
-                </div>
-                <!-- raggio di ricerca selezionato -->
-                <div class="col-auto me-1" v-if="searchRadius !== '20'">
-                    <span class="badge bg-secondary">Raggio: {{ searchRadius }} km</span>
-                </div>
-                <!-- servizi selezionati -->
-                <div class="col-auto" v-if="selectedServices.length > 0">
-                    <span class="badge bg-secondary me-1 " v-for="service in selectedServices" :key="service.id">{{ service.title }}</span>
-                </div>
-            </div>
-
-            <div class="row" v-if="store.apartments === undefined">
-                <div class="col-12 mt-5">
-                    <h2 class="text-center">
-                        Oops.. non abbiamo trovato appartamenti per questo indirizzo!
-                    </h2>
-                </div>
-                <div class="col-12 mt-4">
-                    <div class="row justify-content-center">
-                        <div class="col-6">
-                            <img src="/img/not-found.png" alt="Nessun appartamento trovato">
-                        </div>
+                <!-- filtri attivi -->
+                <div class="row g-0 justify-content-center mb-2 mt-2" v-if="filtersActive">
+                    <div class="col-auto me-2 ">
+                        <h5>Filtri Attivi:</h5>
+                    </div>
+                    <!-- numero di stanze selezionato -->
+                    <div class="col-auto me-1" v-if="selectedRoom !== null">
+                        <span class="badge bg-secondary">{{ selectedRoom }} stanze</span>
+                    </div>
+                    <!-- numero di letti selezionato -->
+                    <div class="col-auto me-1" v-if="selectedBed !== null">
+                        <span class="badge bg-secondary">{{ selectedBed }} letti</span>
+                    </div>
+                    <!-- raggio di ricerca selezionato -->
+                    <div class="col-auto me-1" v-if="searchRadius !== '20'">
+                        <span class="badge bg-secondary">Raggio: {{ searchRadius }} km</span>
+                    </div>
+                    <!-- servizi selezionati -->
+                    <div class="col-auto" v-if="selectedServices.length > 0">
+                        <span class="badge bg-secondary me-1 " v-for="service in selectedServices" :key="service.id">{{ service.title }}</span>
                     </div>
                 </div>
             </div>
-            <!-- tutti gli appartamenti -->
-            <ApartmentCard v-else v-for="singleApartment in store.apartments" :key="singleApartment.id" :apartment="singleApartment" class="apartment-card"/>
+            <div class="col-12">
+                <div class="row">
+                    <div v-if="store.apartments === undefined" class="col-12 mt-5">
+                        <h2 class="text-center">
+                            Oops.. non abbiamo trovato appartamenti per questo indirizzo!
+                        </h2>
+                        <div class="row justify-content-center">
+                            <div class="col-6">
+                                <img src="/img/not-found.png" alt="Nessun appartamento trovato">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div v-else  class="col-12 d-flex flex-wrap">
+                        <!-- tutti gli appartamenti -->
+                        <ApartmentCard v-for="singleApartment in store.apartments" :key="singleApartment.id" :apartment="singleApartment"/>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -313,7 +360,7 @@ import { store } from '../store';
     @import '../assets/SCSS/partials/variables.scss';
     .my-container {
         cursor: pointer;
-        border: 0.5px solid rgba(0, 0, 0, 0.521);
+        // border: 0.5px solid rgba(0, 0, 0, 0.521);
         border-radius: 50px;
         .input-with-button {
             display: flex;
@@ -336,6 +383,11 @@ import { store } from '../store';
                 border-radius: 50px;
                 background-color: #ea4c89f8;
                 color: white;
+                transition: transform 0.5s;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
             }
 
             .search-suggestions {
@@ -369,14 +421,20 @@ import { store } from '../store';
 
     .filter-button {
         background-color: #cbcbcb;
-        border: 0.5px solid rgba(0, 0, 0, 0.521);
+        // border: 0.5px solid rgba(0, 0, 0, 0.521);
+        border:none;
         border-radius: 50px;
         color: white;
         padding: 4px 8px;
+        transition: transform 0.5s;
+
+        &:hover {
+                    transform: scale(1.1);
+        }
     }
 
     .go-button:hover, .filter-button:hover, .my-container:hover{
-        box-shadow: 0px 0px 5px 1px #000000;
+        // box-shadow: 0px 0px 5px 1px #000000;
     }
 
     .modal {
@@ -434,7 +492,8 @@ import { store } from '../store';
             background-color: #cbcbcb;
         }
         .clear-button:hover, .my-button:hover {
-            box-shadow: 0px 0px 5px 1px #000000;
+            transition: transform 0.5s;
+            transform: scale(1.1);
         }
     }
 
