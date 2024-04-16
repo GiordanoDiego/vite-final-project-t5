@@ -105,7 +105,8 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                     this.store.apartments = response.data.results.map(apartment => ({
                     ...apartment,
                     lat: apartment.lat || 0, // Imposta la latitudine a 0 se non è valida
-                    lon: apartment.lon || 0 // Imposta la longitudine a 0 se non è valida
+                    lon: apartment.lon || 0, // Imposta la longitudine a 0 se non è valida
+                    coverImgUrl: `http://127.0.0.1:8000/storage/${apartment.cover_img}`
                     }));
 
                     console.log(this.store.apartments);
@@ -167,21 +168,54 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                     key: 'x5vTIPGVXKGawffLrAoysmnVC9V0S8cq',
                     container: 'mapId',
                     center: [this.store.apartments[0].lon, this.store.apartments[0].lat], // Inverti l'ordine di lon e lat
-                    zoom: 10
-
-                    
+                    zoom: 10,
                 });
 
+                // Definisci gli offset del popup personalizzato
+                const popupOffsets = {
+                    'top': [0, 0],
+                    'top-left': [0, 0],
+                    'top-right': [0, 0],
+                    'bottom': [0, -50],
+                    'bottom-left': [25, -50],
+                    'bottom-right': [-25, -50],
+                    'left': [25, -25],
+                    'right': [-25, -25]
+                };              
+
                 // Aggiungi un marker al centro della mappa
-                map.on('load', () => {
                     this.store.apartments.forEach(apartment => {
-                        new tt.Marker()
+
+                        const popup = new tt.Popup({ offset: popupOffsets});
+
+                        const marker = new tt.Marker()
                             .setLngLat([apartment.lon, apartment.lat])
+                            .setPopup(popup)
                             .addTo(map);
+
+
+                        popup.setLngLat([apartment.lon, apartment.lat])
+                            .setHTML(`
+                                <h3>${apartment.title}</h3>
+                                <img src="${apartment.coverImgUrl}" alt="${apartment.title}" style="width: 100%; height:100px">
+                                <p>${apartment.address}</p>
+                                <p>${apartment.n_rooms} camere, ${apartment.n_beds} letti</p>
+                                <p>Prezzo: €${apartment.price} / notte</p>
+                            `);
+
+                        // Aggiungi l'evento click al marker per aprire il popup
+                        marker.on('click', () => {
+                            // Chiudi tutti i popup aperti
+                            map.closePopup();
+
+                            console.log('QUESTOOOOOOOOOOO');
+
+                            // Apri il popup del marker cliccato
+                            map.addTo(map);
+                        }); 
                     });
 
                     console.log('Queste sono le coordinate: ',this.store.apartments[0].lon, this.store.apartments[0].lat);
-                });
             }
         },
         created() {
