@@ -70,7 +70,7 @@ export default {
                         <div class="d-flex justify-content-center align-items-center me-3 " role="group">
                             <div class="dropdown">
                                 <button class="btn dropdown_button" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-bars me-3"></i>
+                                    <i class="fa-solid fa-bars me-3 d-none d-md-inline-block"></i>
                                     <i class="fa-solid fa-user"></i>
                                 </button>
                                 <ul class="dropdown-menu">
