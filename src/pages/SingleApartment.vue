@@ -178,10 +178,10 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                             <h2 >
                                 {{ apartment.title }}
                             </h2>
-                            <div class="color-1">
+                            <div class="color-1 fw-normal">
                                 {{ apartment.address }}
                             </div>
-                            <p class="info-apt">
+                            <p class="info-apt fw-normal">
                                 <span>{{ apartment.n_rooms }} <abbr title="camere"><i class="fa-solid fa-person-shelter"></i></abbr> • </span> 
                                 <span>{{ apartment.n_beds }}<abbr title="letti"><i class="fa-solid fa-bed px-1"></i></abbr> • </span> 
                                 <span> {{ apartment.n_baths }}  <abbr title="bagni"><i class="fa-solid fa-bath px-1 "></i></abbr> • </span>
@@ -220,7 +220,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                     <hr>
 
                     <div class="row g-0">
-                        <div class="col-12">
+                        <div class="col-12 fw-normal">
                             <div v-if="apartment.services.length > 0">Servizi inclusi:
                                 <div class="row g-0">
                                     <div v-for="service in apartment.services" :key="service.id" class="m-2 service-item col-auto">
@@ -237,7 +237,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                     <hr>
 
                     <div>
-                        <p>
+                        <p class="fw-bolder">
                             <b> 
                                 <span  class="price-integer">
                                     {{ priceInteger }}
@@ -252,7 +252,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                 </div>     
 
                 <!-- form -->
-                <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-4 mt-lg-0 justify-content-end form_container ps-lg-5 ">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-4 mt-lg-0 justify-content-end form_container ps-lg-5">
                     <div v-if="!alert && !messageSent"  id="form-container" >
                         <h3>
                             Vuoi contattare il propretario dell'immobile?
