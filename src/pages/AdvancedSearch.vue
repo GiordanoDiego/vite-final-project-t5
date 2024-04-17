@@ -242,8 +242,8 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                             <button @click="advancedSearch()" class="go-button">
                                 <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
-                            <ul v-if="suggestions.length > 0" class="list-group search-suggestions">
-                                <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item" @click="selectAddress(suggestion)">{{ suggestion }}</li>
+                            <ul v-if="suggestions.length > 0" class="list-group search-suggestions border-0">
+                                <li v-for="suggestion in suggestions" :key="suggestion" class="list-group-item fw-medium" @click="selectAddress(suggestion)">{{ suggestion }}</li>
                             </ul>
                         </span>
                     </div>
