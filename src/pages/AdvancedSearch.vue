@@ -527,6 +527,7 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
     }
 
     img {
-        width: 100%;
+        margin-top: 15px;
+        width: 75%;
     }
 </style>

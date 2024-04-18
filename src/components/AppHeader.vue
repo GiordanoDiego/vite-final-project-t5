@@ -75,12 +75,12 @@ export default {
                                 </button>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a class="dropdown-item" href="http://127.0.0.1:8000/login">
+                                        <a class="dropdown-item" href="http://127.0.0.1:8000/login" target="_blank">
                                             Login
                                         </a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="http://127.0.0.1:8000/register">
+                                        <a class="dropdown-item" href="http://127.0.0.1:8000/register" target="_blank">
                                             Register
                                         </a>
                                     </li>
