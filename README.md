@@ -48,5 +48,3 @@ The application offers an intuitive and user-friendly interface, with simple nav
 - This README focuses on the front-end features of the BoolBnB application.
 - The described features interface with a backend that handles business logic and database interactions.
 - Specific details about the backend implementation can be added in a separate README.
-
-Feel free to customize and add further details based on the specifics of your front-end project.

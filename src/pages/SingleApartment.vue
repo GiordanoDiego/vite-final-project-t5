@@ -260,11 +260,11 @@ import '@tomtom-international/web-sdk-maps/dist/maps.css';
                         <form method="POST" @submit.prevent="sendMessage()">
                             <div class="mb-3">
                                 <label for="name" class="form-label">Nome</label>
-                                <input v-model="name" type="text" class="form-control" id="name" name="name" placeholder="Inserisci il tuo nome.." required maxlength="64">
+                                <input v-model="name" type="text" class="form-control" id="name" name="name" placeholder="Inserisci il tuo nome.." required maxlength="64" autocomplete="off">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                                <input v-model="email" type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="name@example.com" required maxlength="255">
+                                <label for="exampleFormControlInput1" class="form-label">Indirizzo email</label>
+                                <input v-model="email" type="email" class="form-control" id="exampleFormControlInput1" name="email" placeholder="name@example.com" required maxlength="255" autocomplete="off">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlTextarea1" class="form-label">Scrivi un messaggio</label>
